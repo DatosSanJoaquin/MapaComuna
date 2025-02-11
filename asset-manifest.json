@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/MapaComuna/static/css/main.323d7611.css",
+    "main.js": "/MapaComuna/static/js/main.ffe7dc23.js",
+    "static/js/453.e90ee282.chunk.js": "/MapaComuna/static/js/453.e90ee282.chunk.js",
+    "index.html": "/MapaComuna/index.html",
+    "main.323d7611.css.map": "/MapaComuna/static/css/main.323d7611.css.map",
+    "main.ffe7dc23.js.map": "/MapaComuna/static/js/main.ffe7dc23.js.map",
+    "453.e90ee282.chunk.js.map": "/MapaComuna/static/js/453.e90ee282.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.323d7611.css",
+    "static/js/main.ffe7dc23.js"
+  ]
+}
