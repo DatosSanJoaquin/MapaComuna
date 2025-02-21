@@ -1,0 +1,144 @@
+/* 📌 Contenedor principal del marcador */
+.marker-container {
+  position: relative;
+  width: 40px;
+  height: 50px; /* Se mantiene más alto para dar espacio a la punta */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 📌 Burbuja del marcador */
+.marker-icon {
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* 📌 Imagen dentro de la burbuja */
+.marker-icon img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+}
+
+/* 📌 Control Alto Contraste */
+.controlStyleAltoContraste {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  background: rgb(234, 83, 35);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 📌 Control Zoom */
+.controlStyleZoom {
+  position: absolute;
+  bottom: 20px; /* Mantiene en la parte inferior */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  background: rgb(234, 83, 35);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: row; /* Se alinean horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+}
+
+.controlStyleAltoContraste2 {
+  background: rgb(234, 83, 35);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  gap: 5px;
+}
+
+.contenedorControl {
+  position: absolute;
+  bottom: 20px; /* Mantiene en la parte inferior */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row; /* Se alinean horizontalmente */
+  gap: 10px; /* Espacio entre elementos */
+  height: 45px;
+}
+
+.controlZoom {
+  background: rgb(234, 83, 35);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 📌 Panel lateral */
+.panel-lateral {
+  position: absolute;
+  top: 20px; /* Margen superior */
+  left: 10px; /* Margen izquierdo */
+  width: 200px; /* Ancho del panel */
+  height: calc(100vh - 100px);
+  background: white; /* ✅ Fondo blanco */
+  color: black; /* ✅ Texto en negro para contraste */
+  padding: 20px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2); /* ✅ Sombrado más sutil */
+  z-index: 1001; /* Asegura que esté sobre el mapa */
+  overflow: hidden; /* Evita que se desborde */
+  transition: left 0.4s ease-in-out; /* Efecto suave */
+}
+
+.panel-lateral.active {
+  left: -245px; /* Muestra el panel */
+}
+
+/* 📌 Boton para panel de filtros */
+
+.top-right-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Asegura que esté sobre el mapa */
+  background-color: #5d428b;
+  padding: 10px 10px 6px 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.top-right-button :hover {
+  background-color: #553b81;
+
+  border-radius: 5px;
+}
+
+.map-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
