@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -135,6 +135,8 @@ const position = [-33.4928, -70.6405];
 
 // 📌 Definir un nivel de zoom mínimo para mostrar los marcadores
 const MIN_ZOOM_FOR_MARKERS = 16;
+const MIN_ZOOM_FOR_MARKERS_First_Level = 15;
+const SHOW_FIRST_LEVEL_MARKERS_ZOOM = 15; // Nivel de zoom para volver a mostrar firstLevel
 
 // const customIcon = new L.Icon({
 //   iconUrl: `${process.env.PUBLIC_URL}/icons/marker-icon.png`,
@@ -150,6 +152,16 @@ const MIN_ZOOM_FOR_MARKERS = 16;
 //   popupAnchor: [0, -45],
 // });
 
+// 📍 Definir la lista de marcadores Nivel 1
+const markersDataFirstLevel = [
+  {
+    id: 1,
+    name: "Parque Isabel Riquelme",
+    position: [-33.483, -70.632],
+    icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`),
+  },
+];
+
 // 📍 Definir la lista de marcadores con el nuevo estilo
 const markersData = [
   {
@@ -160,7 +172,7 @@ const markersData = [
   },
   {
     id: 2,
-    name: "Restaurante",
+    name: "Punto Prueba 2",
     position: [-33.495, -70.635],
     icon: createCustomMarker(
       `${process.env.PUBLIC_URL}/icons/marker-icon2.png`
@@ -309,6 +321,7 @@ function App() {
   const [tileLayer, setTileLayer] = useState(tileLayers.normal);
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [showMarkers, setShowMarkers] = useState(false);
+  const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
 
   const [zona1Style, setZona1Style] = useState({
@@ -324,6 +337,31 @@ function App() {
     weight: 2,
     fillOpacity: 0.1,
   };
+
+  function MarkerVisibilityController() {
+    const map = useMap();
+
+    useEffect(() => {
+      const updateMarkersVisibility = () => {
+        const currentZoom = map.getZoom();
+        console.log("zoom effect", currentZoom);
+        setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS);
+        setShowMarkersFirstLevel(currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM);
+      };
+
+      // 📌 Ejecutar la función al cargar la página
+      updateMarkersVisibility();
+
+      // 📌 Escuchar cambios en el zoom
+      map.on("zoomend", updateMarkersVisibility);
+
+      return () => {
+        map.off("zoomend", updateMarkersVisibility);
+      };
+    }, [map]);
+
+    return null;
+  }
 
   // 📌 Evento al pasar el mouse
   const onMouseOver = () => {
@@ -364,17 +402,45 @@ function App() {
     //5D428B
   }
 
-  // 📌 Componente para manejar el cambio de zoom y mostrar/ocultar marcadores
-  const MarkerVisibilityController = ({ setShowMarkers }) => {
-    useMapEvents({
-      zoomend: (e) => {
-        const currentZoom = e.target.getZoom();
-        setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS); // ✅ Se actualiza correctamente al hacer zoom in y out
-      },
-    });
+  // // 📌 Componente para manejar el cambio de zoom y mostrar/ocultar marcadores
+  // const MarkerVisibilityController = ({ setShowMarkers }) => {
+  //   useMapEvents({
+  //     zoomend: (e) => {
+  //       const currentZoom = e.target.getZoom();
+  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS); // ✅ Se actualiza correctamente al hacer zoom in y out
+  //     },
+  //   });
 
-    return null; // No renderiza nada, solo maneja eventos
-  };
+  //   return null; // No renderiza nada, solo maneja eventos
+  // };
+
+  // // 📌 Componente para manejar el zoom y mostrar/ocultar marcadores
+  // const MarkerVisibilityController = () => {
+  //   useMapEvents({
+  //     zoomend: (e) => {
+  //       const currentZoom = e.target.getZoom();
+  //       console.log("zoom", currentZoom);
+  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS); // ✅ Se activan solo al acercar
+  //       setShowMarkersFirstLevel(
+  //         currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM || currentZoom === 14.5
+  //       ); // ✅ Se muestran al alejar
+  //     },
+  //   });
+  //   return null; // No renderiza nada, solo maneja eventos
+  // };
+
+  // 📌 Componente para manejar el cambio de zoom y mostrar/ocultar marcadores
+  // const MarkerVisibilityControllerFirstLevel = ({ setShowMarkers }) => {
+  //   useMapEvents({
+  //     zoomend: (e) => {
+  //       const currentZoom = e.target.getZoom();
+  //       console.log("zoom first", currentZoom);
+  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS_First_Level); // ✅ Se actualiza correctamente al hacer zoom in y out
+  //     },
+  //   });
+
+  //   return null; // No renderiza nada, solo maneja eventos
+  // };
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -397,7 +463,10 @@ function App() {
           url={tileLayer}
           attribution="&copy; OpenStreetMap contributors"
         />
-        <MarkerVisibilityController setShowMarkers={setShowMarkers} />
+        <MarkerVisibilityController />
+        {/* <MarkerVisibilityControllerFirstLevel
+          setShowMarkers={setShowMarkersFirstLevel}
+        /> */}
         {/* **Controles personalizados** */}
         <CustomControls_
           setTileLayer={setTileLayer}
@@ -480,6 +549,18 @@ function App() {
           />
         ))}
         {/* 📍 Renderizar marcadores con iconos personalizados */}
+        {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
+        <MarkerVisibilityController />
+        {showMarkersFirstLevel &&
+          markersDataFirstLevel.map((marker) => (
+            <Marker
+              key={marker.id}
+              position={marker.position}
+              icon={marker.icon}
+            >
+              <Popup>{marker.name}</Popup>
+            </Marker>
+          ))}
         {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
         {showMarkers
           ? markersData.map((marker) => (
@@ -492,6 +573,24 @@ function App() {
               </Marker>
             ))
           : null}
+        {/* <Marker
+          key={4}
+          position={[-33.483, -70.632]}
+          icon={createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`)}
+        >
+          <Popup>Parque Isabel Riquelme</Popup>
+        </Marker> */}
+        {/* {showMarkersFirstLevel
+          ? markersDataFirstLevel.map((marker) => (
+              <Marker
+                key={marker.id}
+                position={marker.position}
+                icon={marker.icon}
+              >
+                <Popup>{marker.name}</Popup>
+              </Marker>
+            ))
+          : null} */}
       </MapContainer>
     </div>
   );
