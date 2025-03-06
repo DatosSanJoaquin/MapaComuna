@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -12,10 +12,14 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "./CSS/Estilos.css";
 import { createCustomMarker } from "./Funciones";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Contrast, Add, Remove, Tune } from "@mui/icons-material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { readCSVFile } from "./Function/readFile";
+import { Row } from "react-bootstrap";
+import { CampoDropDownSearchSimple } from "./Function/Campos";
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -103,20 +107,173 @@ const zona2GeoJSON = {
         type: "Polygon",
         coordinates: [
           [
-            [-70.62863788630588, -33.494552900036446],
-            [-70.61702188404143, -33.49510131605335],
-            [-70.617786871239, -33.49195312375639],
-            [-70.61871814012747, -33.48757041404239],
-            [-70.6292450291646, -33.4845051687902],
-            [-70.62939470057245, -33.484921271793624],
-            [-70.6295111116674, -33.48526802276999],
-            [-70.62964415291948, -33.48561477235932],
-            [-70.62968601537186, -33.486048981774886],
-            [-70.62931168356263, -33.49314188181485],
-            [-70.62925179047325, -33.49360389916234],
-            [-70.62913200429448, -33.49395353227372],
-            [-70.62890740520871, -33.49429067715071],
-            [-70.62863788630588, -33.494552900036446],
+            [-70.62873080676333, -33.49447213227842],
+            [-70.61702802114368, -33.49506746357986],
+            [-70.61765031737245, -33.492493395420006],
+            [-70.61780053280718, -33.491874500111244],
+            [-70.61791039320438, -33.491339739011345],
+            [-70.61869532001406, -33.48757716188838],
+            [-70.61922430756114, -33.48742326251127],
+            [-70.62925340647404, -33.48451117504671],
+            [-70.62930089234268, -33.48463835000919],
+            [-70.62943660485149, -33.485024998534826],
+            [-70.62964490159776, -33.4856137670009],
+            [-70.62968229954222, -33.48604303545963],
+            [-70.62950565702425, -33.489441722667465],
+            [-70.62944350799768, -33.49062307906245],
+            [-70.62938628217636, -33.491735966540936],
+            [-70.62931148900755, -33.49314047832069],
+            [-70.62927834302536, -33.49340124133554],
+            [-70.62925286620253, -33.493601687263],
+            [-70.62913202110238, -33.49395373934823],
+            [-70.62890815089506, -33.4942899107362],
+            [-70.62873080676333, -33.49447213227842],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const zona3GeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Zona 3" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.6292541322674, -33.48450832485099],
+            [-70.64180073211287, -33.48086749811504],
+            [-70.6401687615225, -33.4953027326352],
+            [-70.63355764067805, -33.49569884213655],
+            [-70.63348269117542, -33.49434951018601],
+            [-70.62872547592306, -33.49446728493356],
+            [-70.62890802528423, -33.49429018939613],
+            [-70.62913216887655, -33.493953471802314],
+            [-70.62925259067583, -33.49360180337262],
+            [-70.62931164770932, -33.49314191180191],
+            [-70.62968244289007, -33.48604284420904],
+            [-70.62964502289606, -33.48561483356125],
+            [-70.6292541322674, -33.48450832485099],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const zona4GeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Zona 4" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62591727377149, -33.50748948250254],
+            [-70.62852698542208, -33.495716021228624],
+            [-70.62864458188302, -33.49476285735156],
+            [-70.62873640417725, -33.4944676802021],
+            [-70.6334822649486, -33.49435022806495],
+            [-70.63355762368445, -33.49569792459454],
+            [-70.64005300463121, -33.49530943342911],
+            [-70.64017705077237, -33.49530373168444],
+            [-70.63961374916174, -33.50031286312337],
+            [-70.63886129095667, -33.507011459008005],
+            [-70.6388449439563, -33.50712595452595],
+            [-70.63213468130482, -33.50705515326358],
+            [-70.62591727377149, -33.50748948250254],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const zona5GeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Zona 5" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.6287370311583, -33.49446818330502],
+            [-70.62864454489107, -33.49476267120667],
+            [-70.62852683509688, -33.49571624420515],
+            [-70.62801395670687, -33.498008983358325],
+            [-70.62591714824667, -33.507489623647665],
+            [-70.6138700195153, -33.50814887140895],
+            [-70.61702807350042, -33.49506826911785],
+            [-70.6287370311583, -33.49446818330502],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const zona6GeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Zona 6" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62591718293768, -33.50748937457517],
+            [-70.63213433772793, -33.50705504406083],
+            [-70.63884530573755, -33.50712586491835],
+            [-70.63765614891791, -33.511827615555966],
+            [-70.6364106590797, -33.518700617216076],
+            [-70.62713297315615, -33.517811247994054],
+            [-70.62412364022622, -33.51640423705381],
+            [-70.62468109915297, -33.51548785990036],
+            [-70.62481770723055, -33.514847160422725],
+            [-70.62481314070283, -33.514431323031545],
+            [-70.62480756107001, -33.51400217486848],
+            [-70.62481758282115, -33.512925535750846],
+            [-70.62591718293768, -33.50748937457517],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const zona7GeoJSON = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { name: "Zona 7" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62591721096223, -33.507489760236396],
+            [-70.62495288564863, -33.512296713770006],
+            [-70.62481728903487, -33.512926595065316],
+            [-70.62480760356291, -33.51400061285139],
+            [-70.62481730004147, -33.514848515166264],
+            [-70.62473013078987, -33.51526842415309],
+            [-70.62468099650279, -33.51548833792732],
+            [-70.62412371572667, -33.516404124438964],
+            [-70.61997914362878, -33.51446301163217],
+            [-70.61495907973013, -33.51318117386764],
+            [-70.61128817072773, -33.513207114165056],
+            [-70.6114431274966, -33.51072462811946],
+            [-70.61386428645446, -33.508148742759616],
+            [-70.62591721096223, -33.507489760236396],
           ],
         ],
       },
@@ -128,6 +285,11 @@ const zona2GeoJSON = {
 const zonas = [
   { data: zona1GeoJSON, name: "Zona 1" },
   { data: zona2GeoJSON, name: "Zona 2" },
+  { data: zona3GeoJSON, name: "Zona 3" },
+  { data: zona4GeoJSON, name: "Zona 4" },
+  { data: zona5GeoJSON, name: "Zona 5" },
+  { data: zona6GeoJSON, name: "Zona 6" },
+  { data: zona7GeoJSON, name: "Zona 7" },
 ];
 
 // Centro de la comuna de San Joaquín
@@ -158,27 +320,27 @@ const markersDataFirstLevel = [
     id: 1,
     name: "Parque Isabel Riquelme",
     position: [-33.483, -70.632],
-    icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`),
+    icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/Camioneta.png`),
   },
 ];
 
 // 📍 Definir la lista de marcadores con el nuevo estilo
-const markersData = [
-  {
-    id: 1,
-    name: "Punto Prueba 1",
-    position: [-33.481, -70.628],
-    icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/marker-icon.png`),
-  },
-  {
-    id: 2,
-    name: "Punto Prueba 2",
-    position: [-33.495, -70.635],
-    icon: createCustomMarker(
-      `${process.env.PUBLIC_URL}/icons/marker-icon2.png`
-    ),
-  },
-];
+// const markersData = [
+//   {
+//     id: 1,
+//     name: "Punto Prueba 1",
+//     position: [-33.481, -70.628],
+//     icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/Camioneta.png`),
+//   },
+//   {
+//     id: 2,
+//     name: "Punto Prueba 2",
+//     position: [-33.495, -70.635],
+//     icon: createCustomMarker(
+//       `${process.env.PUBLIC_URL}/icons/marker-icon2.png`
+//     ),
+//   },
+// ];
 
 // // **📌 Lista de marcadores con diferentes iconos**
 // const markersData = [
@@ -323,6 +485,9 @@ function App() {
   const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
+  const [markersData, setMarkersData] = useState([]);
+  const [opcionCategorias, setOpcionCategorias] = useState([]);
+  const hasFetched = useRef(false); // Definir useRef fuera del useEffect
 
   const [zona1Style, setZona1Style] = useState({
     fillColor: "rgba(0, 255, 0, 0.1)", // Verde claro semi-transparente
@@ -362,6 +527,23 @@ function App() {
 
     return null;
   }
+
+  useEffect(() => {
+    if (!hasFetched.current) {
+      hasFetched.current = true;
+
+      readCSVFile()
+        .then(({ markers, categoriasUnicas }) => {
+          console.log("Marcadores desde archivo", markers);
+          console.log("Categorías únicas", categoriasUnicas);
+          setOpcionCategorias(categoriasUnicas);
+          setMarkersData(markers);
+        })
+        .catch((error) =>
+          console.error("Error leyendo el archivo CSV:", error)
+        );
+    }
+  }, []); // Se ejecuta solo una vez al montar el componente
 
   // 📌 Evento al pasar el mouse
   const onMouseOver = () => {
@@ -445,13 +627,31 @@ function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <div className={`panel-lateral ${!showPanel ? "active" : ""}`}>
-        <h3 style={{ color: "#41285E" }}>Panel de Filtros</h3>
+        <h5 style={{ color: "#41285E" }}>Panel de Filtros</h5>
         {/* <p>Aquí puedes agregar información adicional.</p> */}
+        <Row>
+          <CampoDropDownSearchSimple
+            PropiedadesCampo={{
+              Ancho: 12,
+              NombreCampo: "Estado",
+              IdCampo: "Estado",
+              MultiSelect: false,
+              Disabled: false,
+              Opciones: opcionCategorias,
+              Clearable: false,
+            }}
+            Valor={""}
+            OnChange={(e, i) => {
+              console.log("e", e);
+              console.log("i", i);
+            }}
+          />
+        </Row>
       </div>
 
       <MapContainer
         center={position}
-        zoom={14.5}
+        zoom={14}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false} // **Desactiva el zoom por defecto**
         maxBounds={[
@@ -551,7 +751,7 @@ function App() {
         {/* 📍 Renderizar marcadores con iconos personalizados */}
         {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
         <MarkerVisibilityController />
-        {showMarkersFirstLevel &&
+        {/* {showMarkersFirstLevel &&
           markersDataFirstLevel.map((marker) => (
             <Marker
               key={marker.id}
@@ -560,7 +760,7 @@ function App() {
             >
               <Popup>{marker.name}</Popup>
             </Marker>
-          ))}
+          ))} */}
         {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
         {showMarkers
           ? markersData.map((marker) => (
