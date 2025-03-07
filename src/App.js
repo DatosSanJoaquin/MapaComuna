@@ -32,6 +32,15 @@ const LightTooltip = styled(({ className, ...props }) => (
   },
 }));
 
+// Centro de la comuna de San Joaquín
+const position = [-33.4928, -70.6405];
+
+// 📌 Definir un nivel de zoom mínimo para mostrar los marcadores
+const MIN_ZOOM_TO_HIDE_LABELS = 15;
+const MIN_ZOOM_FOR_MARKERS = 16;
+const MIN_ZOOM_FOR_MARKERS_First_Level = 15;
+const SHOW_FIRST_LEVEL_MARKERS_ZOOM = 15; // Nivel de zoom para volver a mostrar firstLevel
+
 // Estilos de mapas disponibles
 const tileLayers = {
   normal: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -283,36 +292,32 @@ const zona7GeoJSON = {
 
 // Agregar las dos zonas en un solo array
 const zonas = [
-  { data: zona1GeoJSON, name: "Zona 1" },
-  { data: zona2GeoJSON, name: "Zona 2" },
-  { data: zona3GeoJSON, name: "Zona 3" },
-  { data: zona4GeoJSON, name: "Zona 4" },
-  { data: zona5GeoJSON, name: "Zona 5" },
-  { data: zona6GeoJSON, name: "Zona 6" },
-  { data: zona7GeoJSON, name: "Zona 7" },
+  { data: zona1GeoJSON, name: "1", center: [-33.476, -70.629] },
+  { data: zona2GeoJSON, name: "2", center: [-33.488, -70.636] },
+  { data: zona3GeoJSON, name: "3", center: [-33.488, -70.625] },
+  { data: zona4GeoJSON, name: "4", center: [-33.499, -70.634] },
+  {
+    data: zona5GeoJSON,
+    name: "5",
+    center: [-33.49955463741224, -70.62225250078757],
+  },
+  { data: zona6GeoJSON, name: "6", center: [-33.51, -70.633] },
+  {
+    data: zona7GeoJSON,
+    name: "7",
+    center: [-33.509267361282426, -70.61983410949249],
+  },
 ];
 
-// Centro de la comuna de San Joaquín
-const position = [-33.4928, -70.6405];
-
-// 📌 Definir un nivel de zoom mínimo para mostrar los marcadores
-const MIN_ZOOM_FOR_MARKERS = 16;
-const MIN_ZOOM_FOR_MARKERS_First_Level = 15;
-const SHOW_FIRST_LEVEL_MARKERS_ZOOM = 15; // Nivel de zoom para volver a mostrar firstLevel
-
-// const customIcon = new L.Icon({
-//   iconUrl: `${process.env.PUBLIC_URL}/icons/marker-icon.png`,
-//   iconSize: [35, 35],
-//   iconAnchor: [17, 45],
-//   popupAnchor: [0, -45],
-// });
-
-// const customIcon2 = new L.Icon({
-//   iconUrl: `${process.env.PUBLIC_URL}/icons/marker-icon2.png`, // Nuevo icono
-//   iconSize: [35, 35],
-//   iconAnchor: [17, 45],
-//   popupAnchor: [0, -45],
-// });
+const ZoneLabels = ({ setShowLabels }) => {
+  const map = useMapEvents({
+    zoomend: () => {
+      const zoom = map.getZoom();
+      setShowLabels(zoom < MIN_ZOOM_TO_HIDE_LABELS);
+    },
+  });
+  return null;
+};
 
 // 📍 Definir la lista de marcadores Nivel 1
 const markersDataFirstLevel = [
@@ -324,45 +329,12 @@ const markersDataFirstLevel = [
   },
 ];
 
-// 📍 Definir la lista de marcadores con el nuevo estilo
-// const markersData = [
-//   {
-//     id: 1,
-//     name: "Punto Prueba 1",
-//     position: [-33.481, -70.628],
-//     icon: createCustomMarker(`${process.env.PUBLIC_URL}/icons/Camioneta.png`),
-//   },
-//   {
-//     id: 2,
-//     name: "Punto Prueba 2",
-//     position: [-33.495, -70.635],
-//     icon: createCustomMarker(
-//       `${process.env.PUBLIC_URL}/icons/marker-icon2.png`
-//     ),
-//   },
-// ];
-
-// // **📌 Lista de marcadores con diferentes iconos**
-// const markersData = [
-//   {
-//     id: 1,
-//     name: "Marcador 1",
-//     position: [-33.497, -70.635],
-//     icon: customIcon,
-//   },
-//   {
-//     id: 2,
-//     name: "Marcador 2 (Nuevo Icono)",
-//     position: [-33.495, -70.635],
-//     icon: customIcon2,
-//   }, // Nuevo marcador con icono 2
-// ];
-
 // **Componente para Zoom Personalizado (Horizontal)**
 const CustomControls_ = ({
   setTileLayer,
   isHighContrast,
   setIsHighContrast,
+  setAllowManualZoom,
 }) => {
   const map = useMap();
 
@@ -371,113 +343,53 @@ const CustomControls_ = ({
     setTileLayer(isHighContrast ? tileLayers.normal : tileLayers.dark);
   };
 
-  return (
-    // <div style={zoomControlStyle}>
-    //   <button onClick={() => map.zoomOut()} style={zoomButtonStyle}>
-    //     ➖
-    //   </button>
-    //   <button onClick={() => map.zoomIn()} style={zoomButtonStyle}>
-    //     ➕
-    //   </button>
-    // </div>
-    <>
-      <div className="contenedorControl" style={{ cursor: "pointer" }}>
-        <div className="controlZoom">
-          <Add style={{ color: "white" }} onClick={() => map.zoomIn()} />
-        </div>
-        <div className="controlZoom">
-          <Remove style={{ color: "white" }} onClick={() => map.zoomOut()} />
-        </div>
+  const handleZoomOut = () => {
+    setAllowManualZoom(true); // 🚀 Habilita el zoom manual
+    map.zoomOut();
+  };
 
-        <div
-          className="controlStyleAltoContraste2"
-          style={{ cursor: "pointer" }}
-          onClick={toggleContrast}
-        >
-          <LightTooltip title="Alto Contraste" placement="right">
-            <Contrast
-              style={{
-                color: isHighContrast ? "#A2A09F" : "white",
-              }}
-            />
-          </LightTooltip>
-        </div>
+  return (
+    <div className="contenedorControl" style={{ cursor: "pointer" }}>
+      <div className="controlZoom">
+        <Add style={{ color: "white" }} onClick={() => map.zoomIn()} />
       </div>
-    </>
+      <div className="controlZoom">
+        <Remove style={{ color: "white" }} onClick={handleZoomOut} />
+      </div>
+      <div
+        className="controlStyleAltoContraste2"
+        style={{ cursor: "pointer" }}
+        onClick={toggleContrast}
+      >
+        <LightTooltip title="Alto Contraste" placement="right">
+          <Contrast style={{ color: isHighContrast ? "#A2A09F" : "white" }} />
+        </LightTooltip>
+      </div>
+    </div>
   );
 };
 
-// // **Componente de Alto Contraste**
-// const HighContrastToggle = ({
-//   setTileLayer,
-//   isHighContrast,
-//   setIsHighContrast,
-// }) => {
-//   const toggleContrast = () => {
-//     setIsHighContrast(!isHighContrast);
-//     setTileLayer(isHighContrast ? tileLayers.normal : tileLayers.dark);
-//   };
+const FloatingBox = () => {
+  return (
+    <div className="floating-box">
+      <div className="box-border"></div>
+      <span className="box-text">TERRITORIOS</span>
+    </div>
+  );
+};
 
-//   return (
-//     <div
-//       className="controlStyleAltoContraste"
-//       onClick={toggleContrast}
-//       style={{ cursor: "pointer" }}
-//     >
-//       <LightTooltip
-//         title={
-//           isHighContrast
-//             ? "Desactivar alto contraste"
-//             : "Activar alto contraste"
-//         }
-//         placement="right"
-//       >
-//         <Contrast
-//           style={{
-//             color: isHighContrast ? "#A2A09F" : "white",
-//           }}
-//         />
-//       </LightTooltip>
+const CenterLogger = () => {
+  const [center, setCenter] = useState(null);
+  const map = useMapEvents({
+    moveend: () => {
+      const newCenter = map.getCenter();
+      setCenter(newCenter);
+      console.log("📍 Nueva posición central del mapa:", newCenter);
+    },
+  });
 
-//       {/* <button
-//         onClick={toggleContrast}
-//         style={{
-//           background: isHighContrast ? "#ff6347" : "#ffffff",
-//           padding: "8px",
-//           borderRadius: "5px",
-//           fontWeight: "bold",
-//         }}
-//       >
-//         {isHighContrast ? "🌍 Modo Normal" : "🌑 Alto Contraste"}
-//       </button> */}
-//     </div>
-//   );
-// };
-
-// // **Estilos de los controles**
-// const controlStyle = {
-//   position: "absolute",
-//   bottom: "20px",
-//   left: "10px",
-//   background: "white",
-//   padding: "10px",
-//   borderRadius: "5px",
-//   boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
-//   zIndex: 1000,
-//   display: "flex",
-//   flexDirection: "column",
-//   gap: "5px",
-// };
-
-// const zoomButtonStyle = {
-//   fontSize: "18px",
-//   padding: "8px 12px",
-//   background: "#ffffff",
-//   border: "1px solid #ccc",
-//   borderRadius: "5px",
-//   cursor: "pointer",
-//   fontWeight: "bold",
-// };
+  return null; // No necesita renderizar nada en pantalla
+};
 
 function App() {
   const [tileLayer, setTileLayer] = useState(tileLayers.normal);
@@ -487,6 +399,10 @@ function App() {
   const [showPanel, setShowPanel] = useState(false);
   const [markersData, setMarkersData] = useState([]);
   const [opcionCategorias, setOpcionCategorias] = useState([]);
+  const [opcionTerritorios, setOpcionTerritorios] = useState([]);
+  const [selectedTerritory, setSelectedTerritory] = useState(null);
+  const [showLabels, setShowLabels] = useState(true);
+  const [allowManualZoom, setAllowManualZoom] = useState(false);
   const hasFetched = useRef(false); // Definir useRef fuera del useEffect
 
   const [zona1Style, setZona1Style] = useState({
@@ -505,13 +421,33 @@ function App() {
 
   function MarkerVisibilityController() {
     const map = useMap();
+    const lastZoom = useRef(null); // Guarda el último nivel de zoom para evitar estados innecesarios
 
     useEffect(() => {
       const updateMarkersVisibility = () => {
         const currentZoom = map.getZoom();
+
+        // Evitar ejecuciones innecesarias comparando con el último zoom
+        if (currentZoom === lastZoom.current) return;
+        lastZoom.current = currentZoom; // Actualizamos el zoom solo si cambia
+
         console.log("zoom effect", currentZoom);
-        setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS);
-        setShowMarkersFirstLevel(currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM);
+
+        setShowMarkers((prev) =>
+          prev !== currentZoom >= MIN_ZOOM_FOR_MARKERS
+            ? currentZoom >= MIN_ZOOM_FOR_MARKERS
+            : prev
+        );
+        setShowMarkersFirstLevel((prev) =>
+          prev !== currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
+            ? currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
+            : prev
+        );
+        setShowLabels((prev) =>
+          prev !== (currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14)
+            ? currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14
+            : prev
+        );
       };
 
       // 📌 Ejecutar la función al cargar la página
@@ -523,7 +459,7 @@ function App() {
       return () => {
         map.off("zoomend", updateMarkersVisibility);
       };
-    }, [map]);
+    }, [map]); // ✅ Ahora solo se ejecuta cuando el mapa cambia
 
     return null;
   }
@@ -533,9 +469,11 @@ function App() {
       hasFetched.current = true;
 
       readCSVFile()
-        .then(({ markers, categoriasUnicas }) => {
+        .then(({ markers, categoriasUnicas, territoriosUnicos }) => {
           console.log("Marcadores desde archivo", markers);
           console.log("Categorías únicas", categoriasUnicas);
+          console.log("Territorios únicos", territoriosUnicos);
+          setOpcionTerritorios(territoriosUnicos);
           setOpcionCategorias(categoriasUnicas);
           setMarkersData(markers);
         })
@@ -584,63 +522,125 @@ function App() {
     //5D428B
   }
 
-  // // 📌 Componente para manejar el cambio de zoom y mostrar/ocultar marcadores
-  // const MarkerVisibilityController = ({ setShowMarkers }) => {
-  //   useMapEvents({
-  //     zoomend: (e) => {
-  //       const currentZoom = e.target.getZoom();
-  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS); // ✅ Se actualiza correctamente al hacer zoom in y out
-  //     },
-  //   });
+  const MoveToTerritory = ({
+    selectedTerritory,
+    allowManualZoom,
+    setAllowManualZoom,
+  }) => {
+    const map = useMap();
+    const lastTerritory = useRef("");
+    const hasMoved = useRef(false);
 
-  //   return null; // No renderiza nada, solo maneja eventos
-  // };
+    useEffect(() => {
+      if (
+        !selectedTerritory ||
+        selectedTerritory.label === lastTerritory.current ||
+        allowManualZoom
+      )
+        return;
 
-  // // 📌 Componente para manejar el zoom y mostrar/ocultar marcadores
-  // const MarkerVisibilityController = () => {
-  //   useMapEvents({
-  //     zoomend: (e) => {
-  //       const currentZoom = e.target.getZoom();
-  //       console.log("zoom", currentZoom);
-  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS); // ✅ Se activan solo al acercar
-  //       setShowMarkersFirstLevel(
-  //         currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM || currentZoom === 14.5
-  //       ); // ✅ Se muestran al alejar
-  //     },
-  //   });
-  //   return null; // No renderiza nada, solo maneja eventos
-  // };
+      console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
 
-  // 📌 Componente para manejar el cambio de zoom y mostrar/ocultar marcadores
-  // const MarkerVisibilityControllerFirstLevel = ({ setShowMarkers }) => {
-  //   useMapEvents({
-  //     zoomend: (e) => {
-  //       const currentZoom = e.target.getZoom();
-  //       console.log("zoom first", currentZoom);
-  //       setShowMarkers(currentZoom >= MIN_ZOOM_FOR_MARKERS_First_Level); // ✅ Se actualiza correctamente al hacer zoom in y out
-  //     },
-  //   });
+      const territory = zonas.find(
+        (zona) => zona.name === selectedTerritory.label
+      );
 
-  //   return null; // No renderiza nada, solo maneja eventos
-  // };
+      if (territory) {
+        setAllowManualZoom(false); // ✅ resetea el zoom manual
+        const animationDuration = hasMoved.current ? 1.5 : 0.2;
+
+        map.flyTo(territory.center, 16, {
+          animate: true,
+          duration: animationDuration,
+          easeLinearity: 0.8,
+        });
+
+        hasMoved.current = true;
+        lastTerritory.current = selectedTerritory.label;
+      }
+    }, [selectedTerritory]);
+
+    return null;
+  };
+
+  const ManualZoomHandler = ({ setAllowManualZoom }) => {
+    const map = useMap();
+
+    useEffect(() => {
+      const handleZoom = () => {
+        console.log(
+          "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
+        );
+        setAllowManualZoom(true);
+      };
+
+      map.on("zoomstart", handleZoom);
+
+      return () => {
+        map.off("zoomstart", handleZoom);
+      };
+    }, [map]);
+
+    return null;
+  };
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <div className={`panel-lateral ${!showPanel ? "active" : ""}`}>
-        <h5 style={{ color: "#41285E" }}>Panel de Filtros</h5>
+        <div
+          style={{
+            padding: "10px",
+            background: "#41307C",
+            color: "#fff",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+          }}
+        >
+          <Tune style={{ color: "white", fontSize: "20px" }} />{" "}
+          <span
+            style={{
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              fontWeight: "600",
+            }}
+          >
+            Filtros
+          </span>
+        </div>
         {/* <p>Aquí puedes agregar información adicional.</p> */}
-        <Row>
+        <Row style={{ padding: "20px 14px 20px 14px" }}>
           <CampoDropDownSearchSimple
             PropiedadesCampo={{
               Ancho: 12,
-              NombreCampo: "Estado",
-              IdCampo: "Estado",
+              NombreCampo: "Territorio",
+              IdCampo: "Territorio",
+              MultiSelect: false,
+              Disabled: false,
+              Opciones: opcionTerritorios,
+              Clearable: false,
+              IsSearchable: false,
+            }}
+            Valor={selectedTerritory}
+            OnChange={(e, i) => {
+              console.log("e", e);
+              console.log("i", i);
+              setSelectedTerritory(e);
+              setAllowManualZoom(false);
+            }}
+          />
+          <CampoDropDownSearchSimple
+            PropiedadesCampo={{
+              Ancho: 12,
+              NombreCampo: "Categoría",
+              IdCampo: "Categoría",
               MultiSelect: false,
               Disabled: false,
               Opciones: opcionCategorias,
               Clearable: false,
+              IsSearchable: false,
             }}
-            Valor={""}
+            Valor={null}
             OnChange={(e, i) => {
               console.log("e", e);
               console.log("i", i);
@@ -654,10 +654,16 @@ function App() {
         zoom={14}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false} // **Desactiva el zoom por defecto**
+        // maxBounds={[
+        //   [-33.52, -70.65],
+        //   [-33.47, -70.61],
+        // ]}
         maxBounds={[
-          [-33.52, -70.65],
-          [-33.46, -70.61],
+          [-33.53, -70.66], // 🔽 Más abajo (Sur) y más a la izquierda (Oeste)
+          [-33.46, -70.6], // 🔼 Más arriba (Norte) y más a la derecha (Este)
         ]}
+
+        //maxBounds={[[-33.496635599836075, -70.63123226165773]]}
       >
         <TileLayer
           url={tileLayer}
@@ -672,7 +678,14 @@ function App() {
           setTileLayer={setTileLayer}
           isHighContrast={isHighContrast}
           setIsHighContrast={setIsHighContrast}
-        />{" "}
+          setAllowManualZoom={setAllowManualZoom} // ✅ Pasamos el estado para permitir zoom manual
+        />
+        <MoveToTerritory
+          selectedTerritory={selectedTerritory}
+          allowManualZoom={allowManualZoom} // ✅ Lo pasamos para evitar que `flyTo` se active
+          setAllowManualZoom={setAllowManualZoom} // ✅ Para resetear el estado si es necesario
+        />
+        <ManualZoomHandler setAllowManualZoom={setAllowManualZoom} />
         {/* Zoom manual (horizontal) */}
         {/* <HighContrastToggle
           setTileLayer={setTileLayer}
@@ -748,6 +761,20 @@ function App() {
             }}
           />
         ))}
+        {showLabels &&
+          zonas.map((zona, index) => (
+            <Marker
+              key={index}
+              position={zona.center}
+              icon={L.divIcon({
+                className: "zone-label",
+                html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
+                //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
+                iconSize: [20],
+                //iconAnchor: [50, 15],
+              })}
+            />
+          ))}
         {/* 📍 Renderizar marcadores con iconos personalizados */}
         {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
         <MarkerVisibilityController />
@@ -791,7 +818,9 @@ function App() {
               </Marker>
             ))
           : null} */}
+        <CenterLogger />
       </MapContainer>
+      <FloatingBox />
     </div>
   );
 }

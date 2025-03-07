@@ -14,6 +14,7 @@ export const readCSVFile = async () => {
           complete: (result) => {
             let idCounter = 1; // Generar IDs automáticamente
             let categoriasArray = []; // Almacena todas las categorías
+            let territoriosArray = []; // Almacena todas las zonas
 
             // Convertir cada fila en un marcador
             const markers = result.data.map((row) => {
@@ -26,6 +27,20 @@ export const readCSVFile = async () => {
                 !categoriasArray.some((cat) => cat.value === categoria.value)
               ) {
                 categoriasArray.push(categoria);
+              }
+
+              const territorio = {
+                value: `${row["Territorio (1 al 7)"]}`,
+                label: `${row["Territorio (1 al 7)"]}`,
+              };
+
+              // Agregar solo si no existe en el array
+              if (
+                !territoriosArray.some(
+                  (terr) => terr.value === territorio.value
+                )
+              ) {
+                territoriosArray.push(territorio);
               }
 
               return {
@@ -47,7 +62,11 @@ export const readCSVFile = async () => {
             });
 
             // Resolver con los marcadores y las categorías únicas
-            resolve({ markers, categoriasUnicas: categoriasArray });
+            resolve({
+              markers,
+              categoriasUnicas: categoriasArray,
+              territoriosUnicos: territoriosArray,
+            });
           },
         });
       })

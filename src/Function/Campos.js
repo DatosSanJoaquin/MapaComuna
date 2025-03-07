@@ -68,13 +68,14 @@ export const CampoDropDownSearchSimple = (props) => {
         <span
           style={{
             fontSize: "13px",
-            fontWeight: "500",
+            fontWeight: "600",
             boxSizing: "border-box",
             boxShadow: "none",
             margin: "0px",
             display: "block",
             padding: "5px 0px",
             overflowWrap: "break-word",
+            color: "rgb(105 101 101)",
           }}
         >
           {props.PropiedadesCampo.NombreCampo}
@@ -93,7 +94,7 @@ export const CampoDropDownSearchSimple = (props) => {
       </div>
       <div>
         <Select
-          isSearchable={true}
+          isSearchable={props.PropiedadesCampo.IsSearchable}
           id={props.PropiedadesCampo.IdCampo}
           name={props.PropiedadesCampo.IdCampo}
           isClearable={props.PropiedadesCampo.Clearable}
