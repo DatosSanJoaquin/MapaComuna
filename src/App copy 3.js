@@ -20,7 +20,6 @@ import { styled } from "@mui/material/styles";
 import { readCSVFile } from "./Function/readFile";
 import { Row } from "react-bootstrap";
 import { CampoDropDownSearchSimple } from "./Function/Campos";
-import ModalInformativo from "./Function/Modal";
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -442,8 +441,6 @@ function App() {
   const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
-  const [showPanelInformativo, setShowPanelInformativo] = useState(false);
-  const [informacionMarker, setInformacionMarker] = useState(null);
   const [markersData, setMarkersData] = useState([]);
   const [opcionCategorias, setOpcionCategorias] = useState([]);
   const [opcionTerritorios, setOpcionTerritorios] = useState([]);
@@ -662,167 +659,160 @@ function App() {
     return null;
   };
 
-  const MostrarModalInformativo = (marker) => {
-    setShowPanelInformativo(!showPanelInformativo);
-    console.log("informacion marker", marker);
-    setInformacionMarker(marker);
-  };
-
   return (
-    <>
-      <div style={{ width: "100vw", height: "100vh" }}>
-        <div className={`panel-lateral ${!showPanel ? "active" : ""}`}>
-          <div
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <div className={`panel-lateral ${!showPanel ? "active" : ""}`}>
+        <div
+          style={{
+            padding: "10px",
+            background: "#41307C",
+            color: "#fff",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+          }}
+        >
+          <Tune style={{ color: "white", fontSize: "20px" }} />{" "}
+          <span
             style={{
-              padding: "10px",
-              background: "#41307C",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
+              fontSize: "0.9rem",
+              textTransform: "uppercase",
+              fontWeight: "600",
             }}
           >
-            <Tune style={{ color: "white", fontSize: "20px" }} />{" "}
-            <span
-              style={{
-                fontSize: "0.9rem",
-                textTransform: "uppercase",
-                fontWeight: "600",
-              }}
-            >
-              Filtros
-            </span>
-          </div>
-          {/* <p>Aquí puedes agregar información adicional.</p> */}
-          <Row style={{ padding: "20px 14px 20px 14px" }}>
-            <CampoDropDownSearchSimple
-              PropiedadesCampo={{
-                Ancho: 12,
-                NombreCampo: "Territorio",
-                IdCampo: "Territorio",
-                MultiSelect: false,
-                Disabled: false,
-                Opciones: opcionTerritorios,
-                Clearable: false,
-                IsSearchable: false,
-              }}
-              Valor={selectedFilters.territorio}
-              OnChange={(e, i) => {
-                console.log("e", e);
-                console.log("i", i);
-                setSelectedTerritory(e);
-                filtrarMarcadores({ territorio: e });
-                setAllowManualZoom(false);
-              }}
-            />
-            <CampoDropDownSearchSimple
-              PropiedadesCampo={{
-                Ancho: 12,
-                NombreCampo: "Categoría",
-                IdCampo: "Categoría",
-                MultiSelect: false,
-                Disabled: false,
-                Opciones: opcionCategorias,
-                Clearable: false,
-                IsSearchable: false,
-              }}
-              Valor={selectedFilters.categoria}
-              OnChange={(e, i) => {
-                console.log("e", e);
-                console.log("i", i);
-                filtrarMarcadores({ categoria: e });
-              }}
-            />
-          </Row>
+            Filtros
+          </span>
         </div>
-
-        <MapContainer
-          center={position}
-          zoom={14}
-          style={{ width: "100%", height: "100%" }}
-          zoomControl={false} // **Desactiva el zoom por defecto**
-          // maxBounds={[
-          //   [-33.52, -70.65],
-          //   [-33.47, -70.61],
-          // ]}
-          maxBounds={[
-            [-33.53, -70.66], // 🔽 Más abajo (Sur) y más a la izquierda (Oeste)
-            [-33.46, -70.6], // 🔼 Más arriba (Norte) y más a la derecha (Este)
-          ]}
-
-          //maxBounds={[[-33.496635599836075, -70.63123226165773]]}
-        >
-          <TileLayer
-            url={tileLayer}
-            attribution="&copy; OpenStreetMap contributors"
+        {/* <p>Aquí puedes agregar información adicional.</p> */}
+        <Row style={{ padding: "20px 14px 20px 14px" }}>
+          <CampoDropDownSearchSimple
+            PropiedadesCampo={{
+              Ancho: 12,
+              NombreCampo: "Territorio",
+              IdCampo: "Territorio",
+              MultiSelect: false,
+              Disabled: false,
+              Opciones: opcionTerritorios,
+              Clearable: false,
+              IsSearchable: false,
+            }}
+            Valor={selectedFilters.territorio}
+            OnChange={(e, i) => {
+              console.log("e", e);
+              console.log("i", i);
+              setSelectedTerritory(e);
+              filtrarMarcadores({ territorio: e });
+              setAllowManualZoom(false);
+            }}
           />
-          <MarkerVisibilityController />
-          {/* <MarkerVisibilityControllerFirstLevel
+          <CampoDropDownSearchSimple
+            PropiedadesCampo={{
+              Ancho: 12,
+              NombreCampo: "Categoría",
+              IdCampo: "Categoría",
+              MultiSelect: false,
+              Disabled: false,
+              Opciones: opcionCategorias,
+              Clearable: false,
+              IsSearchable: false,
+            }}
+            Valor={selectedFilters.categoria}
+            OnChange={(e, i) => {
+              console.log("e", e);
+              console.log("i", i);
+              filtrarMarcadores({ categoria: e });
+            }}
+          />
+        </Row>
+      </div>
+
+      <MapContainer
+        center={position}
+        zoom={14}
+        style={{ width: "100%", height: "100%" }}
+        zoomControl={false} // **Desactiva el zoom por defecto**
+        // maxBounds={[
+        //   [-33.52, -70.65],
+        //   [-33.47, -70.61],
+        // ]}
+        maxBounds={[
+          [-33.53, -70.66], // 🔽 Más abajo (Sur) y más a la izquierda (Oeste)
+          [-33.46, -70.6], // 🔼 Más arriba (Norte) y más a la derecha (Este)
+        ]}
+
+        //maxBounds={[[-33.496635599836075, -70.63123226165773]]}
+      >
+        <TileLayer
+          url={tileLayer}
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        <MarkerVisibilityController />
+        {/* <MarkerVisibilityControllerFirstLevel
           setShowMarkers={setShowMarkersFirstLevel}
         /> */}
-          {/* **Controles personalizados** */}
-          <CustomControls_
-            setTileLayer={setTileLayer}
-            isHighContrast={isHighContrast}
-            setIsHighContrast={setIsHighContrast}
-            setAllowManualZoom={setAllowManualZoom} // ✅ Pasamos el estado para permitir zoom manual
-          />
-          <MoveToTerritory
-            selectedTerritory={selectedTerritory}
-            allowManualZoom={allowManualZoom} // ✅ Lo pasamos para evitar que `flyTo` se active
-            setAllowManualZoom={setAllowManualZoom} // ✅ Para resetear el estado si es necesario
-          />
-          <ManualZoomHandler setAllowManualZoom={setAllowManualZoom} />
-          {/* Zoom manual (horizontal) */}
-          {/* <HighContrastToggle
+        {/* **Controles personalizados** */}
+        <CustomControls_
+          setTileLayer={setTileLayer}
+          isHighContrast={isHighContrast}
+          setIsHighContrast={setIsHighContrast}
+          setAllowManualZoom={setAllowManualZoom} // ✅ Pasamos el estado para permitir zoom manual
+        />
+        <MoveToTerritory
+          selectedTerritory={selectedTerritory}
+          allowManualZoom={allowManualZoom} // ✅ Lo pasamos para evitar que `flyTo` se active
+          setAllowManualZoom={setAllowManualZoom} // ✅ Para resetear el estado si es necesario
+        />
+        <ManualZoomHandler setAllowManualZoom={setAllowManualZoom} />
+        {/* Zoom manual (horizontal) */}
+        {/* <HighContrastToggle
           setTileLayer={setTileLayer}
           isHighContrast={isHighContrast}
           setIsHighContrast={setIsHighContrast}
         /> */}
-          {/* Área fuera de los límites de San Joaquín (gris) */}
-          <CustomTopRightButton />
-          <GeoJSON
-            data={{
-              type: "FeatureCollection",
-              features: [
-                {
-                  type: "Feature",
-                  properties: {},
-                  geometry: {
-                    type: "Polygon",
-                    coordinates: [
-                      [
-                        [-180, 90],
-                        [180, 90],
-                        [180, -90],
-                        [-180, -90],
-                        [-180, 90],
-                      ],
-                      sanJoaquinGeoJSON.features[0].geometry.coordinates[0], // Se excluye San Joaquín
+        {/* Área fuera de los límites de San Joaquín (gris) */}
+        <CustomTopRightButton />
+        <GeoJSON
+          data={{
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: {},
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [
+                    [
+                      [-180, 90],
+                      [180, 90],
+                      [180, -90],
+                      [-180, -90],
+                      [-180, 90],
                     ],
-                  },
+                    sanJoaquinGeoJSON.features[0].geometry.coordinates[0], // Se excluye San Joaquín
+                  ],
                 },
-              ],
-            }}
-            style={{
-              fillColor: "#d3d3d3",
-              color: "none",
-              weight: 0,
-              fillOpacity: 0.7,
-            }}
-          />
-          {/* Límite de San Joaquín (borde rojo) */}
-          <GeoJSON
-            data={sanJoaquinGeoJSON}
-            style={{
-              fillColor: "#ffffff",
-              color: "#6C43AF",
-              weight: 2,
-              fillOpacity: 0.3,
-            }}
-          />
-          {/* 🟢 Zona 1 dentro de San Joaquín */}
-          {/* <GeoJSON
+              },
+            ],
+          }}
+          style={{
+            fillColor: "#d3d3d3",
+            color: "none",
+            weight: 0,
+            fillOpacity: 0.7,
+          }}
+        />
+        {/* Límite de San Joaquín (borde rojo) */}
+        <GeoJSON
+          data={sanJoaquinGeoJSON}
+          style={{
+            fillColor: "#ffffff",
+            color: "#6C43AF",
+            weight: 2,
+            fillOpacity: 0.3,
+          }}
+        />
+        {/* 🟢 Zona 1 dentro de San Joaquín */}
+        {/* <GeoJSON
           data={zona1GeoJSON}
           style={zona1Style}
           eventHandlers={{
@@ -830,42 +820,42 @@ function App() {
             mouseout: onMouseOut,
           }}
         /> */}
-          {zonas.map((zona, index) => (
-            <GeoJSON
+        {zonas.map((zona, index) => (
+          <GeoJSON
+            key={index}
+            data={zona.data}
+            style={estilosZonas}
+            eventHandlers={{
+              mouseover: (e) => {
+                e.layer.setStyle({
+                  fillColor: "rgba(0, 255, 0, 0.4)",
+                  fillOpacity: 0.3,
+                });
+              },
+              mouseout: (e) => {
+                e.layer.setStyle(estilosZonas);
+              },
+            }}
+          />
+        ))}
+        {showLabels &&
+          zonas.map((zona, index) => (
+            <Marker
               key={index}
-              data={zona.data}
-              style={estilosZonas}
-              eventHandlers={{
-                mouseover: (e) => {
-                  e.layer.setStyle({
-                    fillColor: "rgba(0, 255, 0, 0.4)",
-                    fillOpacity: 0.3,
-                  });
-                },
-                mouseout: (e) => {
-                  e.layer.setStyle(estilosZonas);
-                },
-              }}
+              position={zona.posicionLabel}
+              icon={L.divIcon({
+                className: "zone-label",
+                html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
+                //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
+                iconSize: [20],
+                //iconAnchor: [50, 15],
+              })}
             />
           ))}
-          {showLabels &&
-            zonas.map((zona, index) => (
-              <Marker
-                key={index}
-                position={zona.posicionLabel}
-                icon={L.divIcon({
-                  className: "zone-label",
-                  html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
-                  //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
-                  iconSize: [20],
-                  //iconAnchor: [50, 15],
-                })}
-              />
-            ))}
-          {/* 📍 Renderizar marcadores con iconos personalizados */}
-          {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
-          <MarkerVisibilityController />
-          {/* {showMarkersFirstLevel &&
+        {/* 📍 Renderizar marcadores con iconos personalizados */}
+        {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
+        <MarkerVisibilityController />
+        {/* {showMarkersFirstLevel &&
           markersDataFirstLevel.map((marker) => (
             <Marker
               key={marker.id}
@@ -875,31 +865,31 @@ function App() {
               <Popup>{marker.name}</Popup>
             </Marker>
           ))} */}
-          {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
-          {showMarkers
-            ? filteredMarkers.map((marker) => (
-                <Marker
-                  key={marker.id}
-                  position={marker.position}
-                  icon={marker.icon}
-                  eventHandlers={{
-                    mouseover: (e) => e.target.openPopup(), // ✅ Abre el popup cuando pasas el mouse
-                    mouseout: (e) => e.target.closePopup(), // ✅ Cierra el popup cuando sales
-                    click: () => MostrarModalInformativo(marker), // ✅ Muestra un alert con el nombre del marcador
-                  }}
-                >
-                  <Popup>{marker.name}</Popup>
-                </Marker>
-              ))
-            : null}
-          {/* <Marker
+        {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
+        {showMarkers
+          ? filteredMarkers.map((marker) => (
+              <Marker
+                key={marker.id}
+                position={marker.position}
+                icon={marker.icon}
+                eventHandlers={{
+                  mouseover: (e) => e.target.openPopup(), // ✅ Abre el popup cuando pasas el mouse
+                  mouseout: (e) => e.target.closePopup(), // ✅ Cierra el popup cuando sales
+                  click: () => alert(`📌 Has hecho clic en: ${marker.name}`), // ✅ Muestra un alert con el nombre del marcador
+                }}
+              >
+                <Popup>{marker.name}</Popup>
+              </Marker>
+            ))
+          : null}
+        {/* <Marker
           key={4}
           position={[-33.483, -70.632]}
           icon={createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`)}
         >
           <Popup>Parque Isabel Riquelme</Popup>
         </Marker> */}
-          {/* {showMarkersFirstLevel
+        {/* {showMarkersFirstLevel
           ? markersDataFirstLevel.map((marker) => (
               <Marker
                 key={marker.id}
@@ -910,19 +900,11 @@ function App() {
               </Marker>
             ))
           : null} */}
-          <CenterLogger />
-          {/* <TestMarker /> */}
-        </MapContainer>
-        <FloatingBox />
-      </div>
-      {showPanelInformativo && (
-        <ModalInformativo
-          show={showPanelInformativo}
-          handleClose={() => setShowPanelInformativo(false)}
-          informacion={informacionMarker}
-        />
-      )}
-    </>
+        <CenterLogger />
+        <TestMarker />
+      </MapContainer>
+      <FloatingBox />
+    </div>
   );
 }
 

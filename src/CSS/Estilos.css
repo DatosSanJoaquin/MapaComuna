@@ -9,6 +9,18 @@ code {
     monospace;
 }
 
+hr {
+  height: 3px; /* Grosor de la línea */
+  background-color: #75c037; /* Color amarillo */
+  opacity: unset !important; /* Opacidad completa */
+  border: none !important; /* Elimina el borde predeterminado */
+  border-top-right-radius: 10px; /* Redondea la esquina superior derecha */
+  border-bottom-right-radius: 10px; /* Redondea la esquina inferior derecha */
+  margin: 20px 0; /* Espaciado opcional */
+  margin-bottom: 7px !important;
+  margin-top: 2px !important;
+}
+
 /* 📌 Contenedor principal del marcador */
 .marker-container {
   position: relative;
@@ -21,11 +33,11 @@ code {
 
 /* 📌 Burbuja del marcador */
 .marker-icon {
-  width: 35px;
-  height: 35px;
+  width: 37px;
+  height: 37px;
   background-color: white;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 2px solid rgb(70, 69, 69);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,8 +48,8 @@ code {
 
 /* 📌 Imagen dentro de la burbuja */
 .marker-icon img {
-  width: 75%;
-  height: 75%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
 }
 
@@ -106,7 +118,8 @@ code {
   top: 20px; /* Margen superior */
   left: 10px; /* Margen izquierdo */
   width: 260px; /* Ancho del panel */
-  height: calc(100vh - 100px);
+  /* height: calc(100vh - 100px); */
+  height: calc(40vh - 100px);
   background: white; /* ✅ Fondo blanco */
   color: black; /* ✅ Texto en negro para contraste */
   /* padding: 20px; */
@@ -163,7 +176,7 @@ code {
   right: 20px;
   display: flex;
   align-items: center;
-  background: rgba(61, 64, 91, 0.4);
+  background: rgb(234, 83, 35, 0.5);
   padding: 7px 10px 7px 10px;
   border-radius: 5px;
   z-index: 1002;
@@ -183,8 +196,52 @@ code {
   letter-spacing: 1px;
 }
 
+/* 📌 Quitar X en popUp de leafmap */
+.leaflet-popup-close-button {
+  display: none !important;
+}
+
 @media (max-width: 768px) {
   .floating-box {
     display: none;
   }
+}
+
+/* 📌 Estilos para Modal Informativo */
+
+.tituloSeccion {
+  font-family: "Mona Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #6c43af;
+  padding-left: 2px;
+  margin-bottom: 1px;
+}
+
+.contenidoSeccion {
+  font-family: "Mona Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #72767d;
+  padding-left: 2px;
+}
+
+.contenidoSeccion img {
+  max-width: 100%; /* Evita que la imagen sea más ancha que su contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  display: block; /* Asegura que la imagen no tenga espacios adicionales */
+  margin: 0 auto; /* Centra la imagen horizontalmente */
+  border-radius: 8px; /* Opcional: agrega bordes redondeados */
+}
+
+.contenidoSeccion a {
+  color: #14a3c4; /* Color morado */
+  text-decoration: none; /* Elimina el subrayado predeterminado */
+  font-weight: 500; /* Texto en negrita */
+}
+
+.contenidoSeccion a:hover {
+  text-decoration: underline; /* Subrayado al pasar el mouse */
 }

@@ -45,19 +45,22 @@ export const readCSVFile = async () => {
 
               return {
                 id: idCounter++, // Genera un ID autoincremental
+                direccion: row["Dirección"],
                 name: row["Nombre"],
                 position: row["Coordenadas (click derecho en maps)"]
-                  .split(",")
-                  .map(Number), // Convierte las coordenadas a array numérico
+                  .split(",") // Divide en latitud y longitud
+                  .map((coord) => parseFloat(coord.trim())), // Limpia espacios y convierte a número
                 icon: createCustomMarker(
-                  `${process.env.PUBLIC_URL}/icons/${row["Icono (JPG o PNG)"]}`
+                  `${process.env.PUBLIC_URL}/icons/marcadores/${row["Icono (JPG o PNG)"]}`
                 ),
                 categoria: row["Categoría"], // Para filtrar
-                territorio: `Zona ${row["Territorio (1 al 7)"]}`, // Coincide con zonas del mapa
+                territorio: `${row["Territorio (1 al 7)"]}`, // Coincide con zonas del mapa
                 link: row["Link (si aplica)"] || null,
                 foto: row["Foto (Si aplica)**"]
-                  ? `${process.env.PUBLIC_URL}/images/${row["Foto (Si aplica)**"]}`
-                  : null,
+                  ? `${process.env.PUBLIC_URL}/images/${row[
+                      "Foto (Si aplica)**"
+                    ].trim()}`
+                  : `${process.env.PUBLIC_URL}/images/No disponible.jpg`,
               };
             });
 
