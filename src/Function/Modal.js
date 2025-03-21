@@ -1,74 +1,79 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import "../CSS/ModalInformativo.css"; // Se asume un archivo CSS externo para estilos adicionales
 
 function ModalInformativo(props) {
   return (
-    <Modal show={props.show} onHide={props.handleClose} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title
-          style={{
-            fontFamily: "Mona Sans",
-            fontSize: "20px",
-            fontWeight: "400",
-            lineHeight: "28px",
-            color: "rgb(61, 61, 78)",
-          }}
-        >
+    <Modal show={props.show} onHide={props.handleClose} size="lg" centered>
+      <Modal.Header
+        closeButton
+        className="encabezadoModal"
+        closeVariant="white"
+      >
+        <Modal.Title className="modal-title">
           {props.informacion ? props.informacion.name : ""}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Row style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-          <Col md={12} style={{ padding: "0px" }}>
-            <p className="tituloSeccion">Fotografia</p>
-            <hr />
-            <p className="contenidoSeccion">
-              <img src={props.informacion.foto} />
-            </p>
+        <Row>
+          {/* Columna izquierda - Fotografía */}
+          <Col md={5} className="foto-container">
+            <p className="titulo-seccion">Fotografía</p>
+            <hr className="divider-Imagen" />
+            <div className="foto-wrapper">
+              <img
+                src={props.informacion.foto || "placeholder.jpg"}
+                alt="Fotografía"
+                className="foto"
+              />
+            </div>
           </Col>
-          <Col md={12} style={{ padding: "0px" }}>
-            <p className="tituloSeccion">Dirección</p>
-            <hr />
-            <p className="contenidoSeccion">
-              {props.informacion ? props.informacion.direccion : ""}
-            </p>
-          </Col>
-          <Col md={12} style={{ padding: "0px" }}>
-            <p className="tituloSeccion">Link Informativo</p>
-            <hr />
-            <p className="contenidoSeccion">
-              {props.informacion.link ? (
-                <a
-                  href={props ? props.informacion.link : ""}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {props.informacion ? props.informacion.link : ""}
-                </a>
-              ) : (
-                "No disponible"
-              )}
-            </p>
-          </Col>
-          <Col md={12} style={{ padding: "0px" }}>
-            <p className="tituloSeccion">Territorio</p>
-            <hr />
-            <p className="contenidoSeccion">
-              {props.informacion ? props.informacion.territorio : ""}
-            </p>
-          </Col>
-          <Col md={12} style={{ padding: "0px" }}>
-            <p className="tituloSeccion">Categoria</p>
-            <hr />
-            <p className="contenidoSeccion">
-              {props.informacion ? props.informacion.categoria : ""}
-            </p>
+
+          {/* Columna derecha - Información */}
+          <Col md={7} className="info-container">
+            <div className="info-item">
+              <p className="titulo-seccion">Dirección</p>
+              <hr className="divider" />
+              <p className="contenido-seccion">
+                {props.informacion?.direccion || "No disponible"}
+              </p>
+            </div>
+            <div className="info-item">
+              <p className="titulo-seccion">Link Informativo</p>
+              <hr className="divider" />
+              <p className="contenido-seccion">
+                {props.informacion?.link ? (
+                  <a
+                    href={props.informacion.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="info-link"
+                  >
+                    {props.informacion.link}
+                  </a>
+                ) : (
+                  "No disponible"
+                )}
+              </p>
+            </div>
+            <div className="info-item">
+              <p className="titulo-seccion">Territorio</p>
+              <hr className="divider" />
+              <p className="contenido-seccion">
+                {props.informacion?.territorio || "No disponible"}
+              </p>
+            </div>
+            <div className="info-item">
+              <p className="titulo-seccion">Categoría</p>
+              <hr className="divider" />
+              <p className="contenido-seccion">
+                {props.informacion?.categoria || "No disponible"}
+              </p>
+            </div>
           </Col>
         </Row>
-        <Row></Row>
       </Modal.Body>
-      {/* <Modal.Footer></Modal.Footer> */}
     </Modal>
   );
 }

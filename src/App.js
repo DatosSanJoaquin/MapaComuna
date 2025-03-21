@@ -7,6 +7,8 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  Rectangle,
+  SVGOverlay,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -14,11 +16,11 @@ import "./CSS/Estilos.css";
 import { createCustomMarker } from "./Funciones";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Contrast, Add, Remove, Tune } from "@mui/icons-material";
+import { Contrast, Add, Remove, Tune, DeleteSweep } from "@mui/icons-material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { readCSVFile } from "./Function/readFile";
-import { Row } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { CampoDropDownSearchSimple } from "./Function/Campos";
 import ModalInformativo from "./Function/Modal";
 
@@ -35,6 +37,10 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 // Centro de la comuna de San Joaquín
 const position = [-33.4928, -70.6405];
+const bounds = [
+  [-33.495, -70.642], // Esquina superior izquierda
+  [-33.49, -70.635], // Esquina inferior derecha
+];
 
 // 📌 Definir un nivel de zoom mínimo para mostrar los marcadores
 const MIN_ZOOM_TO_HIDE_LABELS = 15;
@@ -310,7 +316,7 @@ const zonas = [
     data: zona3GeoJSON,
     name: "3",
     center: [-33.488, -70.625],
-    posicionLabel: [-33.488, -70.625],
+    posicionLabel: [-33.488146199048536, -70.62165711212262],
   },
   {
     data: zona4GeoJSON,
@@ -338,16 +344,71 @@ const zonas = [
   },
 ];
 
-const ZoneLabels = ({ setShowLabels }) => {
-  const map = useMapEvents({
-    zoomend: () => {
-      const zoom = map.getZoom();
-      setShowLabels(zoom < MIN_ZOOM_TO_HIDE_LABELS);
-    },
-  });
-  return null;
-};
+// const ZoneLabels = ({ setShowLabels }) => {
+//   const map = useMapEvents({
+//     zoomend: () => {
+//       const zoom = map.getZoom();
+//       setShowLabels(zoom < MIN_ZOOM_TO_HIDE_LABELS);
+//     },
+//   });
+//   return null;
+// };
 
+const ZoneLabels = () => {
+  const map = useMap();
+  const [zoomLevel, setZoomLevel] = useState(map.getZoom());
+
+  useEffect(() => {
+    const updateZoom = () => {
+      setZoomLevel(map.getZoom());
+    };
+
+    map.on("zoomend", updateZoom);
+    return () => {
+      map.off("zoomend", updateZoom);
+    };
+  }, [map]);
+
+  return (
+    <>
+      {zonas.map((zona, index) => {
+        // 📌 Variables de tamaño y opacidad
+        let fontSize;
+        let opacity;
+
+        if (zoomLevel >= 14) {
+          // 🔹 Cuando el zoom es 14 o mayor, los números crecen progresivamente
+          fontSize = 50 + (zoomLevel - 13) * 5;
+          opacity = Math.max(0.2, 1 - (zoomLevel - 14) * 0.2);
+        } else {
+          // 🔹 Cuando el zoom es menor a 14, reducción MUY agresiva
+          fontSize = Math.max(2, 50 - (14 - zoomLevel) * 15); // 🔥 Llega hasta 2px
+          opacity = 1; // Mantiene opacidad máxima para que no desaparezca
+        }
+
+        return (
+          <Marker
+            key={index}
+            position={zona.posicionLabel}
+            interactive={false}
+            icon={L.divIcon({
+              className: "zone-label",
+              html: `<div style="
+                font-size: ${fontSize}px;
+                opacity: ${opacity};
+                font-weight: bold;
+                color: rgb(237, 103, 23, 0.5);
+                text-align: center;
+      pointer-events: none;">${zona.name}</div>`, // 🚀 Bloqueamos eventos
+
+              iconSize: [20],
+            })}
+          />
+        );
+      })}
+    </>
+  );
+};
 // 📍 Definir la lista de marcadores Nivel 1
 const markersDataFirstLevel = [
   {
@@ -428,18 +489,160 @@ const testIcon = L.icon({
   popupAnchor: [0, -38], // Ajuste del popup
 });
 
-const TestMarker = () => {
-  return (
-    <Marker position={[-33.47815, -70.64164]} icon={testIcon}>
-      <Popup>📍 Marcador con menos decimales</Popup>
-    </Marker>
-  );
+const callesEnReparacion = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: {
+        nombre: "Calle en reparación 1",
+        descripcion: "Trabajos en la vía: reparación de pavimento",
+        estado: "Pavimentación",
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.63922212577691, -33.48853514789772],
+            [-70.63570609788977, -33.489617895671024],
+            [-70.63567555029688, -33.48955930025526],
+            [-70.63918852342515, -33.488481647068646],
+          ],
+        ],
+      },
+    },
+    {
+      type: "Feature",
+      properties: {
+        nombre: "Calle en reparación 2",
+        descripcion: "Reparación de Veredas",
+        estado: "Reparación de Veredas",
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62470154719018, -33.50039546780977],
+            [-70.6238593111893, -33.504587708983],
+            [-70.62370382146582, -33.504587708983],
+            [-70.62455901494384, -33.500384662802404],
+          ],
+        ],
+      },
+    },
+    {
+      type: "Feature",
+      properties: {
+        nombre: "Calle en reparación 3",
+        descripcion: "Proyecto Aceras Calle Primero de Mayo",
+        estado: "Proyecto",
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62432835846798, -33.49027337203907],
+            [-70.62400712780602, -33.49173405142709],
+            [-70.62386180917358, -33.491714916048],
+            [-70.62421363323163, -33.49026699347318],
+          ],
+        ],
+      },
+    },
+    {
+      type: "Feature",
+      properties: {
+        nombre: "Calle en reparación 3",
+        descripcion: "Proyecto Aceras Calle el Pinar",
+        estado: "Proyecto",
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.62401477615673, -33.49164475295804],
+            [-70.62653108300715, -33.4916638883521],
+            [-70.62653108300715, -33.491753186801596],
+            [-70.62399947945894, -33.49174042988618],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const getCalleStyle = (estado) => {
+  console.log("Estado", estado);
+
+  switch (estado) {
+    case "Proyecto":
+      return {
+        color: "transparent", // 🔥 Elimina el borde
+        fillColor: "rgba(255, 0, 0, 0.9)", // 🔥 Rojo intenso
+        weight: 0,
+        fillOpacity: 0.6, // 🔥 Alta opacidad para que se vea bien
+      };
+    case "Pavimentación":
+      return {
+        color: "green",
+        fillColor: "rgba(0, 255, 0, 0.5)",
+        weight: 2,
+        fillPattern: true,
+      };
+    case "Reparación de Veredas":
+      return { color: "#5D428B", fillColor: "rgb(157, 137, 191)", weight: 2 };
+    default:
+      return {
+        color: "gray",
+        fillColor: "rgba(128, 128, 128, 0.5)",
+        weight: 2,
+      };
+  }
+};
+
+// 📌 Componente para aplicar el patrón a las calles en reparación
+// 📌 Componente para renderizar el rectángulo con líneas internas usando `SVG Pattern`
+const PatternedGeoJSON = ({ data }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    // 📌 Crear el patrón SVG para las líneas
+    const svgPattern = `
+      <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
+        <line x1="5" y1="0" x2="5" y2="10" stroke="#00AEEF" stroke-width="1.5" opacity="0.8"/>
+      </svg>
+    `;
+    const encodedSvg = encodeURIComponent(svgPattern);
+    const dataUrl = `data:image/svg+xml,${encodedSvg}`;
+
+    // 📌 Agregar la capa de GeoJSON con el patrón de relleno
+    const geoJsonLayer = L.geoJSON(data, {
+      style: () => ({
+        color: "#00AEEF", // Color del borde
+        weight: 2, // Grosor del borde
+        fillOpacity: 0.2, // Transparencia del fondo
+        fillPattern: { patternUrl: dataUrl }, // 📌 Aplicamos el patrón SVG
+      }),
+    }).addTo(map);
+  }, [map, data]);
+
+  return null;
+};
+
+// 📌 Estilos para el rectángulo con líneas verticales en su interior
+// 📌 Estilos para el rectángulo con líneas internas
+const estiloCalles = {
+  color: "#00AEEF", // Borde celeste
+  weight: 2, // Grosor del borde
+  fillOpacity: 0.3, // Semitransparente
+  fill: "url(#linePattern)", // Aplicar el patrón de líneas celestes
 };
 
 function App() {
   const [tileLayer, setTileLayer] = useState(tileLayers.normal);
   const [isHighContrast, setIsHighContrast] = useState(false);
-  const [showMarkers, setShowMarkers] = useState(false);
+  //const [showMarkers, setShowMarkers] = useState(false);
+  const [showMarkers, setShowMarkers] = useState(true);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
@@ -470,51 +673,99 @@ function App() {
     fillOpacity: 0.1,
   };
 
-  function MarkerVisibilityController() {
+  // const callesEnReparacion = {
+  //   type: "FeatureCollection",
+  //   features: [
+  //     {
+  //       type: "Feature",
+  //       properties: { name: "Calle en reparación" },
+  //       geometry: {
+  //         type: "Polygon",
+  //         coordinates: [
+  //           [
+  //             [-70.6384304892283, -33.488722060236924], // Esquina 1
+  //             [-70.63760004911441, -33.488974335375275], // Esquina 2
+  //             [-70.63763011029482, -33.48903701231364], // Esquina 3
+  //             [-70.63847370217533, -33.488776902720254], // Esquina 4
+  //           ],
+  //         ],
+  //       },
+  //     },
+  //   ],
+  // };
+
+  // // const estiloCalles = {
+  // //   color: "#00AEEF", // Azul celeste
+  // //   weight: 3, // Grosor de la línea
+  // //   dashArray: "4,3", // Línea punteada para indicar reparación
+  // //   fillOpacity: 0.7,
+  // // };
+
+  // // 📌 Aplicamos estilos personalizados para usar el patrón SVG en la reparación
+  // const estiloCalles = () => ({
+  //   color: "transparent", // Quitamos el borde
+  //   weight: 0, // Sin borde
+  //   fillOpacity: 1, // Opacidad total del fondo
+  //   fill: "url(#patronSegmentado)", // Referencia al patrón SVG
+  // });
+
+  // function MarkerVisibilityController() {
+  //   const map = useMap();
+  //   const lastZoom = useRef(null); // Guarda el último nivel de zoom para evitar estados innecesarios
+
+  //   useEffect(() => {
+  //     const updateMarkersVisibility = () => {
+  //       const currentZoom = map.getZoom();
+
+  //       // Evitar ejecuciones innecesarias comparando con el último zoom
+  //       if (currentZoom === lastZoom.current) return;
+  //       lastZoom.current = currentZoom; // Actualizamos el zoom solo si cambia
+
+  //       console.log("zoom effect", currentZoom);
+
+  //       setShowMarkers((prev) =>
+  //         prev !== currentZoom >= MIN_ZOOM_FOR_MARKERS
+  //           ? currentZoom >= MIN_ZOOM_FOR_MARKERS
+  //           : prev
+  //       );
+  //       setShowMarkersFirstLevel((prev) =>
+  //         prev !== currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
+  //           ? currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
+  //           : prev
+  //       );
+  //       setShowLabels((prev) =>
+  //         prev !== (currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14)
+  //           ? currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14
+  //           : prev
+  //       );
+  //     };
+
+  //     // 📌 Ejecutar la función al cargar la página
+  //     updateMarkersVisibility();
+
+  //     // 📌 Escuchar cambios en el zoom
+  //     map.on("zoomend", updateMarkersVisibility);
+
+  //     return () => {
+  //       map.off("zoomend", updateMarkersVisibility);
+  //     };
+  //   }, [map]); // ✅ Ahora solo se ejecuta cuando el mapa cambia
+
+  //   return null;
+  // }
+
+  const MarkerVisibilityController = () => {
     const map = useMap();
-    const lastZoom = useRef(null); // Guarda el último nivel de zoom para evitar estados innecesarios
+    //const lastZoom = useRef(null);
 
     useEffect(() => {
-      const updateMarkersVisibility = () => {
-        const currentZoom = map.getZoom();
-
-        // Evitar ejecuciones innecesarias comparando con el último zoom
-        if (currentZoom === lastZoom.current) return;
-        lastZoom.current = currentZoom; // Actualizamos el zoom solo si cambia
-
-        console.log("zoom effect", currentZoom);
-
-        setShowMarkers((prev) =>
-          prev !== currentZoom >= MIN_ZOOM_FOR_MARKERS
-            ? currentZoom >= MIN_ZOOM_FOR_MARKERS
-            : prev
-        );
-        setShowMarkersFirstLevel((prev) =>
-          prev !== currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
-            ? currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
-            : prev
-        );
-        setShowLabels((prev) =>
-          prev !== (currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14)
-            ? currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14
-            : prev
-        );
-      };
-
-      // 📌 Ejecutar la función al cargar la página
-      updateMarkersVisibility();
-
-      // 📌 Escuchar cambios en el zoom
-      map.on("zoomend", updateMarkersVisibility);
-
-      return () => {
-        map.off("zoomend", updateMarkersVisibility);
-      };
-    }, [map]); // ✅ Ahora solo se ejecuta cuando el mapa cambia
+      const currentZoom = map.getZoom();
+      console.log("zoom effect", currentZoom);
+      setShowMarkers(true); // ✅ Mantener siempre visibles los marcadores
+    }, [map]);
 
     return null;
-  }
-
+  };
   useEffect(() => {
     if (!hasFetched.current) {
       hasFetched.current = true;
@@ -668,6 +919,46 @@ function App() {
     setInformacionMarker(marker);
   };
 
+  const CallesReparacionLayer = () => {
+    const map = useMap();
+
+    return (
+      <GeoJSON
+        data={callesEnReparacion}
+        style={(feature) => ({
+          ...getCalleStyle(feature.properties.estado),
+          interactive: true, // Asegura que los eventos del mouse sigan funcionando
+        })}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.descripcion) {
+            layer.bindTooltip(feature.properties.descripcion, {
+              permanent: false,
+              direction: "top",
+              opacity: 0.9,
+              className: "custom-tooltip",
+            });
+          }
+
+          layer.on({
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({
+                weight: 3, // Resalta al pasar el mouse
+              });
+            },
+            mouseout: (e) => {
+              e.target.closeTooltip();
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
+            },
+            click: (e) => {
+              e.originalEvent.preventDefault(); // Evita selección predeterminada
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
+            },
+          });
+        }}
+      />
+    );
+  };
   return (
     <>
       <div style={{ width: "100vw", height: "100vh" }}>
@@ -685,7 +976,7 @@ function App() {
             <Tune style={{ color: "white", fontSize: "20px" }} />{" "}
             <span
               style={{
-                fontSize: "0.9rem",
+                fontSize: "0.8rem",
                 textTransform: "uppercase",
                 fontWeight: "600",
               }}
@@ -733,6 +1024,37 @@ function App() {
                 filtrarMarcadores({ categoria: e });
               }}
             />
+          </Row>
+          <Row style={{ margin: "5px 10px 10px 10px", justifyContent: "end" }}>
+            <Button
+              className="remove-filter"
+              style={{
+                display: "flex",
+                gap: "7px",
+                justifyContent: "center",
+                width: "137px",
+              }}
+              onClick={() => {
+                setSelectedFilters({ territorio: null, categoria: null }); // 🔹 Limpia filtros
+                setFilteredMarkers(markersData); // 🔹 Muestra todos los marcadores
+                setSelectedTerritory(null); // 🔹 Evita mover la vista a un territorio
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.8rem",
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                Limpiar Filtro
+              </div>
+              <div>
+                {" "}
+                <DeleteSweep style={{ color: "white" }} />
+              </div>
+            </Button>
           </Row>
         </div>
 
@@ -821,6 +1143,11 @@ function App() {
               fillOpacity: 0.3,
             }}
           />
+          {/* Calles en reparación */}
+          {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
+          {/* <PatternedGeoJSON data={callesEnReparacion} /> */}
+          <CallesReparacionLayer />
+          {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
           {/* 🟢 Zona 1 dentro de San Joaquín */}
           {/* <GeoJSON
           data={zona1GeoJSON}
@@ -848,20 +1175,25 @@ function App() {
               }}
             />
           ))}
-          {showLabels &&
+          {/* {showLabels &&
             zonas.map((zona, index) => (
               <Marker
                 key={index}
                 position={zona.posicionLabel}
+                // icon={L.divIcon({
+                //   className: "zone-label",
+                //   html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
+                //   //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
+                //   iconSize: [20],
+                //   //iconAnchor: [50, 15],
+                // })}
                 icon={L.divIcon({
                   className: "zone-label",
-                  html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
-                  //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
+                  html: `<div class="floating-label">${zona.name}</div>`,
                   iconSize: [20],
-                  //iconAnchor: [50, 15],
                 })}
               />
-            ))}
+            ))} */}
           {/* 📍 Renderizar marcadores con iconos personalizados */}
           {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
           <MarkerVisibilityController />
@@ -888,7 +1220,7 @@ function App() {
                     click: () => MostrarModalInformativo(marker), // ✅ Muestra un alert con el nombre del marcador
                   }}
                 >
-                  <Popup>{marker.name}</Popup>
+                  <Popup className="custom-popup">{marker.name}</Popup>
                 </Marker>
               ))
             : null}
@@ -912,7 +1244,12 @@ function App() {
           : null} */}
           <CenterLogger />
           {/* <TestMarker /> */}
+          <ZoneLabels />
+
+          {/* 📌 Agregamos el patrón SVG sobre el mapa */}
         </MapContainer>
+        {/* 📌 Definir patrón de líneas verticales como SVG */}
+
         <FloatingBox />
       </div>
       {showPanelInformativo && (

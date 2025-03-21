@@ -1,6 +1,10 @@
 ﻿Dirección,Territorio (1 al 7),Coordenadas (click derecho en maps),Nombre,Categoría,Subcategoría?,Icono (JPG o PNG),Link (si aplica),Foto (Si aplica)**
-Santa Rosa 2606,1,"-33.483, -70.632",Karate,Seguridad,pendiente,03 KARATE.png
-Santa Rosa 100,2,"-33.484334816046385, -70.62890581279926",Club Deportivo San Joaquin,Deporte,pendiente,05 FÚTBOL.png,https://sanjoaquin.cl/municipalidad.jpg,EjemploImagen.jpg
-Santa Rosa 200,2,"-33.48431696073071, -70.62890582244377",Estadio,Deporte,pendiente,0018 CECOSF.png,https://sanjoaquin.cl/municipalidad.jpg
-Santa Rosa 22323,2,"-33.483072036102115, -70.63177217617591",gym,Cultura,pendiente,0019 CESFAM.png,https://sanjoaquin.cl/municipalidad.jpg
-Santa Rosa 22323,3,"-33.479031278926364, -70.6415140946447",VECINALES,Cultura,pendiente,0020 SEDES VECINALES.png,https://sanjoaquin.cl/municipalidad.jpg
+Santa Rosa 2606,1,"-33.48261554857042, -70.63261970736518,",Parque Isabel Riquelme,Actividades recreativas,pendiente,0072 P. ÁREAS VERDES EJECUTADOS.png
+Santa Rosa 22323,1,"-33.484334816046385, -70.62890581279926",Club Deportivo San Joaquin,Deporte,pendiente,05 FÚTBOL.png,https://sanjoaquin.cl/municipalidad,DeportivoSanJoaquin.jpg
+Santa Rosa 22323,1,"-33.48317082107947, -70.63148499456837",Gimnacio Municipal,Deporte,pendiente,0019 CESFAM.png,https://sanjoaquin.cl/municipalidad.jpg
+Santa Rosa 22323,1,"-33.479031278926364, -70.6415140946447",Municipalidad,Cultura,pendiente,0020 SEDES VECINALES.png,https://sanjoaquin.cl/municipalidad.jpg
+Santa Rosa 22323,2,"-33.490033936934324, -70.63158346659264",Plaza  Salvador Allende,Deporte,pendiente,0068 PLAZA PARA CALISTENIA.png,https://sanjoaquin.cl/municipalidad.jpg
+Santa Rosa 2606,3,"-33.492801660564375, -70.62335134195746,",Plaza el Pinar,Actividades recreativas,pendiente,0072 P. ÁREAS VERDES EJECUTADOS.png
+Santa Rosa 2606,2,"-33.49209004349675, -70.63342585414055,", Seguridad Municipal,Seguridad,pendiente,00120 GESTIÓN SEGURIDAD COMUNIDAD.png
+Santa Rosa 2606,5,"-33.5006958643834, -70.6222645742704,", Seguridad Municipal,Seguridad,pendiente,00120 GESTIÓN SEGURIDAD COMUNIDAD.png
+Santa Rosa 2606,3,"-33.48697307208287, -70.62650523214056,", Festival de Teatro,Cultura,pendiente,0067 FESTIVAL MULTICULTURAL.png,,FiestaTeatro.png

@@ -99,11 +99,15 @@ export const CampoDropDownSearchSimple = (props) => {
           name={props.PropiedadesCampo.IdCampo}
           isClearable={props.PropiedadesCampo.Clearable}
           isMulti={props.PropiedadesCampo.MultiSelect}
-          styles={customStyles}
+          styles={{
+            ...customStyles,
+            menuPortal: (base) => ({ ...base, zIndex: 9999 }), // 🔥 Asegura que el dropdown esté visible
+          }}
           placeholder={"Seleccionar"}
           options={props.PropiedadesCampo.Opciones}
           value={props.Valor}
           isDisabled={props.PropiedadesCampo.Disabled}
+          menuPortalTarget={document.body} // 🔥 Permite que el menú flote sobre el panel
           onChange={(e, i) => {
             //Verificar que es un array
             //console.log("i", i.id);

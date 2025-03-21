@@ -1,5 +1,6 @@
 body {
   /* font-family: "roboto", sans-serif !important; */
+  font-family: "Mona Sans", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -119,14 +120,14 @@ hr {
   left: 10px; /* Margen izquierdo */
   width: 260px; /* Ancho del panel */
   /* height: calc(100vh - 100px); */
-  height: calc(40vh - 100px);
+  height: calc(39vh - 100px);
   background: white; /* ✅ Fondo blanco */
   color: black; /* ✅ Texto en negro para contraste */
   /* padding: 20px; */
   /* border-radius: 10px; */
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2); /* ✅ Sombrado más sutil */
+  /* border-bottom-left-radius: 10px; */
+  /* border-bottom-right-radius: 10px; */
+  box-shadow: 20px 15px 15px rgba(0, 0, 0, 0.2); /* ✅ Sombrado más sutil */
   z-index: 1001; /* Asegura que esté sobre el mapa */
   overflow: hidden; /* Evita que se desborde */
   transition: left 0.4s ease-in-out; /* Efecto suave */
@@ -244,4 +245,46 @@ hr {
 
 .contenidoSeccion a:hover {
   text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* 📌 Estilos para label territorio */
+
+.floating-label {
+  /* color: rgba(132, 55, 123, 0.5); */
+  color: rgb(237, 103, 23, 0.5);
+  font-weight: bold;
+  font-size: 50px;
+  padding: 4px;
+  border-radius: 4px;
+
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* 📌 Estilos para el botón de filtro */
+
+.remove-filter {
+  background-color: #fa3247 !important;
+  border-color: #fa3247 !important;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease-in-out;
+  border-radius: 0% !important;
+}
+
+.remove-filter:hover {
+  background-color: #d32f3f !important;
+}
+
+.leaflet-interactive {
+  outline: none !important; /* 🔥 Evita el cuadro negro al hacer clic */
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  padding: 1px !important;
+  margin: 0px !important;
 }

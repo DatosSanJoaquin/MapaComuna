@@ -1,0 +1,92 @@
+/* Estilos generales del modal */
+.modal-title {
+  font-family: "Mona Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgb(248, 248, 248);
+}
+
+/* Contenedor de la fotografía */
+.foto-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.foto-wrapper {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  overflow: hidden;
+}
+
+.foto {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: none; /* 🔹 Eliminado el borde redondeado */
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3); /* 🔹 Aumentada la sombra */
+}
+
+/* Contenedor de la información */
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info-item {
+  margin-bottom: 15px;
+}
+
+.titulo-seccion {
+  font-weight: bold;
+  font-size: 16px;
+  color: #3d3d4e;
+  margin-bottom: 0px;
+}
+
+/* Nueva línea divisoria con forma inclinada */
+.divider {
+  width: 100%;
+  height: 11px;
+  background: #67b730;
+  clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 0% 100%);
+  margin: 10px 0;
+}
+
+.divider-Imagen {
+  width: 100%;
+  height: 11px;
+  background: #67b730;
+  /* clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 6% 100%); */
+  clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 0% 100%);
+  margin: 10px 0;
+}
+
+.contenido-seccion {
+  font-size: 13px;
+  color: #3d3d4e;
+  margin-bottom: 3px;
+}
+
+/* Estilos para el enlace */
+.info-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.info-link:hover {
+  text-decoration: underline;
+}
+
+/* Modal */
+
+.encabezadoModal {
+  background: linear-gradient(#873f70, #963e66);
+}
+
+.modal-header {
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
