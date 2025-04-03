@@ -27,7 +27,6 @@ import {
   CampoDropDownSearchSimple,
 } from "./Function/Campos";
 import ModalInformativo from "./Function/Modal";
-import Mapa from "./Mapa";
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -670,7 +669,7 @@ function App() {
   //const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkers, setShowMarkers] = useState(true);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
-  const [showPanel, setShowPanel] = useState(true);
+  const [showPanel, setShowPanel] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
   const [informacionMarker, setInformacionMarker] = useState(null);
   const [markersData, setMarkersData] = useState([]);
@@ -907,67 +906,67 @@ function App() {
     //5D428B
   }
 
-  // const MoveToTerritory = ({
-  //   selectedTerritory,
-  //   allowManualZoom,
-  //   setAllowManualZoom,
-  // }) => {
-  //   const map = useMap();
-  //   const lastTerritory = useRef("");
-  //   const hasMoved = useRef(false);
+  const MoveToTerritory = ({
+    selectedTerritory,
+    allowManualZoom,
+    setAllowManualZoom,
+  }) => {
+    const map = useMap();
+    const lastTerritory = useRef("");
+    const hasMoved = useRef(false);
 
-  //   useEffect(() => {
-  //     if (
-  //       !selectedTerritory ||
-  //       selectedTerritory.label === lastTerritory.current ||
-  //       allowManualZoom
-  //     )
-  //       return;
+    useEffect(() => {
+      if (
+        !selectedTerritory ||
+        selectedTerritory.label === lastTerritory.current ||
+        allowManualZoom
+      )
+        return;
 
-  //     console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
+      console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
 
-  //     const territory = zonas.find(
-  //       (zona) => zona.name === selectedTerritory.label
-  //     );
+      const territory = zonas.find(
+        (zona) => zona.name === selectedTerritory.label
+      );
 
-  //     if (territory) {
-  //       setAllowManualZoom(false); // ✅ resetea el zoom manual
-  //       const animationDuration = hasMoved.current ? 1.5 : 0.2;
+      if (territory) {
+        setAllowManualZoom(false); // ✅ resetea el zoom manual
+        const animationDuration = hasMoved.current ? 1.5 : 0.2;
 
-  //       map.flyTo(territory.center, 16, {
-  //         animate: true,
-  //         duration: animationDuration,
-  //         easeLinearity: 0.8,
-  //       });
+        map.flyTo(territory.center, 16, {
+          animate: true,
+          duration: animationDuration,
+          easeLinearity: 0.8,
+        });
 
-  //       hasMoved.current = true;
-  //       lastTerritory.current = selectedTerritory.label;
-  //     }
-  //   }, [selectedTerritory]);
+        hasMoved.current = true;
+        lastTerritory.current = selectedTerritory.label;
+      }
+    }, [selectedTerritory]);
 
-  //   return null;
-  // };
+    return null;
+  };
 
-  // const ManualZoomHandler = ({ setAllowManualZoom }) => {
-  //   const map = useMap();
+  const ManualZoomHandler = ({ setAllowManualZoom }) => {
+    const map = useMap();
 
-  //   useEffect(() => {
-  //     const handleZoom = () => {
-  //       console.log(
-  //         "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
-  //       );
-  //       setAllowManualZoom(true);
-  //     };
+    useEffect(() => {
+      const handleZoom = () => {
+        console.log(
+          "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
+        );
+        setAllowManualZoom(true);
+      };
 
-  //     map.on("zoomstart", handleZoom);
+      map.on("zoomstart", handleZoom);
 
-  //     return () => {
-  //       map.off("zoomstart", handleZoom);
-  //     };
-  //   }, [map]);
+      return () => {
+        map.off("zoomstart", handleZoom);
+      };
+    }, [map]);
 
-  //   return null;
-  // };
+    return null;
+  };
 
   const MostrarModalInformativo = (marker) => {
     setShowPanelInformativo(!showPanelInformativo);
@@ -975,58 +974,54 @@ function App() {
     setInformacionMarker(marker);
   };
 
-  // const CallesReparacionLayer = () => {
-  //   const map = useMap();
+  const CallesReparacionLayer = () => {
+    const map = useMap();
 
-  //   return (
-  //     <GeoJSON
-  //       data={callesEnReparacion}
-  //       style={(feature) => ({
-  //         ...getCalleStyle(feature.properties.estado),
-  //         interactive: true, // Asegura que los eventos del mouse sigan funcionando
-  //       })}
-  //       onEachFeature={(feature, layer) => {
-  //         if (feature.properties && feature.properties.descripcion) {
-  //           layer.bindTooltip(feature.properties.descripcion, {
-  //             permanent: false,
-  //             direction: "top",
-  //             opacity: 0.9,
-  //             className: "custom-tooltip",
-  //           });
-  //         }
+    return (
+      <GeoJSON
+        data={callesEnReparacion}
+        style={(feature) => ({
+          ...getCalleStyle(feature.properties.estado),
+          interactive: true, // Asegura que los eventos del mouse sigan funcionando
+        })}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.descripcion) {
+            layer.bindTooltip(feature.properties.descripcion, {
+              permanent: false,
+              direction: "top",
+              opacity: 0.9,
+              className: "custom-tooltip",
+            });
+          }
 
-  //         layer.on({
-  //           mouseover: (e) => {
-  //             e.target.openTooltip();
-  //             e.target.setStyle({
-  //               weight: 3, // Resalta al pasar el mouse
-  //             });
-  //           },
-  //           mouseout: (e) => {
-  //             e.target.closeTooltip();
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
-  //           },
-  //           click: (e) => {
-  //             e.originalEvent.preventDefault(); // Evita selección predeterminada
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
-  //           },
-  //         });
-  //       }}
-  //     />
-  //   );
-  // };
+          layer.on({
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({
+                weight: 3, // Resalta al pasar el mouse
+              });
+            },
+            mouseout: (e) => {
+              e.target.closeTooltip();
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
+            },
+            click: (e) => {
+              e.originalEvent.preventDefault(); // Evita selección predeterminada
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
+            },
+          });
+        }}
+      />
+    );
+  };
 
-  // const crearPatronSVG = () => {
-  //   const svgPattern = `
-  //     <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  //       <line x1="5" y1="0" x2="5" y2="10" stroke="#67B730" stroke-width="2" />
-  //     </svg>
-  //   `;
-  //   return `data:image/svg+xml;base64,${btoa(svgPattern)}`;
-  // };
-
-  const mostrarPanel = () => {
-    setShowPanel(!showPanel);
+  const crearPatronSVG = () => {
+    const svgPattern = `
+      <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
+        <line x1="5" y1="0" x2="5" y2="10" stroke="#67B730" stroke-width="2" />
+      </svg>
+    `;
+    return `data:image/svg+xml;base64,${btoa(svgPattern)}`;
   };
 
   return (
@@ -1145,18 +1140,198 @@ function App() {
             </Button>
           </Row>
         </div>
-        <Mapa
-          position={[-33.488, -70.625]}
-          zonas={zonas}
-          sanJoaquinGeoJSON={sanJoaquinGeoJSON}
-          estilosZonas={estilosZonas}
-          filteredMarkers={filteredMarkers}
-          selectedTerritory={selectedTerritory}
-          allowManualZoom={allowManualZoom}
-          setAllowManualZoom={setAllowManualZoom}
-          MostrarModalInformativo={MostrarModalInformativo}
-          ShowPanel={mostrarPanel}
-        />
+
+        <MapContainer
+          center={position}
+          zoom={14}
+          style={{ width: "100%", height: "100%" }}
+          zoomControl={false} // **Desactiva el zoom por defecto**
+          // maxBounds={[
+          //   [-33.52, -70.65],
+          //   [-33.47, -70.61],
+          // ]}
+          maxBounds={[
+            [-33.53, -70.647], // 🔽 Más abajo (Sur) y más a la izquierda (Oeste)
+            [-33.46, -70.6], // 🔼 Más arriba (Norte) y más a la derecha (Este)
+          ]}
+
+          //maxBounds={[[-33.496635599836075, -70.63123226165773]]}
+        >
+          <TileLayer
+            url={tileLayer}
+            attribution="&copy; OpenStreetMap contributors"
+          />
+          <MarkerVisibilityController />
+
+          {/* <MarkerVisibilityControllerFirstLevel
+          setShowMarkers={setShowMarkersFirstLevel}
+        /> */}
+          {/* **Controles personalizados** */}
+          <CustomControls_
+            setTileLayer={setTileLayer}
+            isHighContrast={isHighContrast}
+            setIsHighContrast={setIsHighContrast}
+            setAllowManualZoom={setAllowManualZoom} // ✅ Pasamos el estado para permitir zoom manual
+          />
+          <MoveToTerritory
+            selectedTerritory={selectedTerritory}
+            allowManualZoom={allowManualZoom} // ✅ Lo pasamos para evitar que `flyTo` se active
+            setAllowManualZoom={setAllowManualZoom} // ✅ Para resetear el estado si es necesario
+          />
+          <ManualZoomHandler setAllowManualZoom={setAllowManualZoom} />
+          {/* Zoom manual (horizontal) */}
+          {/* <HighContrastToggle
+          setTileLayer={setTileLayer}
+          isHighContrast={isHighContrast}
+          setIsHighContrast={setIsHighContrast}
+        /> */}
+          {/* Área fuera de los límites de San Joaquín (gris) */}
+          <CustomTopRightButton />
+          <GeoJSON
+            data={{
+              type: "FeatureCollection",
+              features: [
+                {
+                  type: "Feature",
+                  properties: {},
+                  geometry: {
+                    type: "Polygon",
+                    coordinates: [
+                      [
+                        [-180, 90],
+                        [180, 90],
+                        [180, -90],
+                        [-180, -90],
+                        [-180, 90],
+                      ],
+                      sanJoaquinGeoJSON.features[0].geometry.coordinates[0], // Se excluye San Joaquín
+                    ],
+                  },
+                },
+              ],
+            }}
+            style={{
+              fillColor: "#d3d3d3",
+              color: "none",
+              weight: 0,
+              fillOpacity: 0.7,
+            }}
+          />
+          {/* Límite de San Joaquín (borde rojo) */}
+          <GeoJSON
+            data={sanJoaquinGeoJSON}
+            style={{
+              fillColor: "#ffffff",
+              color: "#6C43AF",
+              weight: 2,
+              fillOpacity: 0.3,
+            }}
+          />
+          {/* Calles en reparación */}
+          {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
+          {/* <PatternedGeoJSON data={callesEnReparacion} /> */}
+          <CallesReparacionLayer />
+          {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
+          {/* 🟢 Zona 1 dentro de San Joaquín */}
+          {/* <GeoJSON
+          data={zona1GeoJSON}
+          style={zona1Style}
+          eventHandlers={{
+            mouseover: onMouseOver,
+            mouseout: onMouseOut,
+          }}
+        /> */}
+          {zonas.map((zona, index) => (
+            <GeoJSON
+              key={index}
+              data={zona.data}
+              style={estilosZonas}
+              eventHandlers={{
+                mouseover: (e) => {
+                  e.layer.setStyle({
+                    fillColor: "rgba(0, 255, 0, 0.4)",
+                    fillOpacity: 0.3,
+                  });
+                },
+                mouseout: (e) => {
+                  e.layer.setStyle(estilosZonas);
+                },
+              }}
+            />
+          ))}
+          {/* {showLabels &&
+            zonas.map((zona, index) => (
+              <Marker
+                key={index}
+                position={zona.posicionLabel}
+                // icon={L.divIcon({
+                //   className: "zone-label",
+                //   html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
+                //   //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
+                //   iconSize: [20],
+                //   //iconAnchor: [50, 15],
+                // })}
+                icon={L.divIcon({
+                  className: "zone-label",
+                  html: `<div class="floating-label">${zona.name}</div>`,
+                  iconSize: [20],
+                })}
+              />
+            ))} */}
+          {/* 📍 Renderizar marcadores con iconos personalizados */}
+          {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
+          <MarkerVisibilityController />
+          {/* {showMarkersFirstLevel &&
+          markersDataFirstLevel.map((marker) => (
+            <Marker
+              key={marker.id}
+              position={marker.position}
+              icon={marker.icon}
+            >
+              <Popup>{marker.name}</Popup>
+            </Marker>
+          ))} */}
+          {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
+          {showMarkers
+            ? filteredMarkers.map((marker) => (
+                <Marker
+                  key={marker.id}
+                  position={marker.position}
+                  icon={marker.icon}
+                  eventHandlers={{
+                    mouseover: (e) => e.target.openPopup(), // ✅ Abre el popup cuando pasas el mouse
+                    mouseout: (e) => e.target.closePopup(), // ✅ Cierra el popup cuando sales
+                    click: () => MostrarModalInformativo(marker), // ✅ Muestra un alert con el nombre del marcador
+                  }}
+                >
+                  <Popup className="custom-popup">{marker.name}</Popup>
+                </Marker>
+              ))
+            : null}
+          {/* <Marker
+          key={4}
+          position={[-33.483, -70.632]}
+          icon={createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`)}
+        >
+          <Popup>Parque Isabel Riquelme</Popup>
+        </Marker> */}
+          {/* {showMarkersFirstLevel
+          ? markersDataFirstLevel.map((marker) => (
+              <Marker
+                key={marker.id}
+                position={marker.position}
+                icon={marker.icon}
+              >
+                <Popup>{marker.name}</Popup>
+              </Marker>
+            ))
+          : null} */}
+          <CenterLogger />
+          {/* <TestMarker /> */}
+          <ZoneLabels />
+
+          {/* 📌 Agregamos el patrón SVG sobre el mapa */}
+        </MapContainer>
         {/* 📌 Definir patrón de líneas verticales como SVG */}
 
         <FloatingBox />

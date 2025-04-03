@@ -118,9 +118,10 @@ hr {
   position: absolute;
   top: 20px; /* Margen superior */
   left: 10px; /* Margen izquierdo */
-  width: 260px; /* Ancho del panel */
+  width: 300px; /* Ancho del panel */
   /* height: calc(100vh - 100px); */
-  height: calc(39vh - 100px);
+  /* height: calc(40vh - 100px); */
+  /* height: 280px; */
   background: white; /* ✅ Fondo blanco */
   color: black; /* ✅ Texto en negro para contraste */
   /* padding: 20px; */
@@ -134,7 +135,7 @@ hr {
 }
 
 .panel-lateral.active {
-  left: -280px; /* Muestra el panel */
+  left: -300px; /* Muestra el panel */
 }
 
 /* 📌 Boton para panel de filtros */

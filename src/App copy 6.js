@@ -670,7 +670,7 @@ function App() {
   //const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkers, setShowMarkers] = useState(true);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
-  const [showPanel, setShowPanel] = useState(true);
+  const [showPanel, setShowPanel] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
   const [informacionMarker, setInformacionMarker] = useState(null);
   const [markersData, setMarkersData] = useState([]);
@@ -907,67 +907,67 @@ function App() {
     //5D428B
   }
 
-  // const MoveToTerritory = ({
-  //   selectedTerritory,
-  //   allowManualZoom,
-  //   setAllowManualZoom,
-  // }) => {
-  //   const map = useMap();
-  //   const lastTerritory = useRef("");
-  //   const hasMoved = useRef(false);
+  const MoveToTerritory = ({
+    selectedTerritory,
+    allowManualZoom,
+    setAllowManualZoom,
+  }) => {
+    const map = useMap();
+    const lastTerritory = useRef("");
+    const hasMoved = useRef(false);
 
-  //   useEffect(() => {
-  //     if (
-  //       !selectedTerritory ||
-  //       selectedTerritory.label === lastTerritory.current ||
-  //       allowManualZoom
-  //     )
-  //       return;
+    useEffect(() => {
+      if (
+        !selectedTerritory ||
+        selectedTerritory.label === lastTerritory.current ||
+        allowManualZoom
+      )
+        return;
 
-  //     console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
+      console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
 
-  //     const territory = zonas.find(
-  //       (zona) => zona.name === selectedTerritory.label
-  //     );
+      const territory = zonas.find(
+        (zona) => zona.name === selectedTerritory.label
+      );
 
-  //     if (territory) {
-  //       setAllowManualZoom(false); // ✅ resetea el zoom manual
-  //       const animationDuration = hasMoved.current ? 1.5 : 0.2;
+      if (territory) {
+        setAllowManualZoom(false); // ✅ resetea el zoom manual
+        const animationDuration = hasMoved.current ? 1.5 : 0.2;
 
-  //       map.flyTo(territory.center, 16, {
-  //         animate: true,
-  //         duration: animationDuration,
-  //         easeLinearity: 0.8,
-  //       });
+        map.flyTo(territory.center, 16, {
+          animate: true,
+          duration: animationDuration,
+          easeLinearity: 0.8,
+        });
 
-  //       hasMoved.current = true;
-  //       lastTerritory.current = selectedTerritory.label;
-  //     }
-  //   }, [selectedTerritory]);
+        hasMoved.current = true;
+        lastTerritory.current = selectedTerritory.label;
+      }
+    }, [selectedTerritory]);
 
-  //   return null;
-  // };
+    return null;
+  };
 
-  // const ManualZoomHandler = ({ setAllowManualZoom }) => {
-  //   const map = useMap();
+  const ManualZoomHandler = ({ setAllowManualZoom }) => {
+    const map = useMap();
 
-  //   useEffect(() => {
-  //     const handleZoom = () => {
-  //       console.log(
-  //         "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
-  //       );
-  //       setAllowManualZoom(true);
-  //     };
+    useEffect(() => {
+      const handleZoom = () => {
+        console.log(
+          "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
+        );
+        setAllowManualZoom(true);
+      };
 
-  //     map.on("zoomstart", handleZoom);
+      map.on("zoomstart", handleZoom);
 
-  //     return () => {
-  //       map.off("zoomstart", handleZoom);
-  //     };
-  //   }, [map]);
+      return () => {
+        map.off("zoomstart", handleZoom);
+      };
+    }, [map]);
 
-  //   return null;
-  // };
+    return null;
+  };
 
   const MostrarModalInformativo = (marker) => {
     setShowPanelInformativo(!showPanelInformativo);
@@ -975,58 +975,54 @@ function App() {
     setInformacionMarker(marker);
   };
 
-  // const CallesReparacionLayer = () => {
-  //   const map = useMap();
+  const CallesReparacionLayer = () => {
+    const map = useMap();
 
-  //   return (
-  //     <GeoJSON
-  //       data={callesEnReparacion}
-  //       style={(feature) => ({
-  //         ...getCalleStyle(feature.properties.estado),
-  //         interactive: true, // Asegura que los eventos del mouse sigan funcionando
-  //       })}
-  //       onEachFeature={(feature, layer) => {
-  //         if (feature.properties && feature.properties.descripcion) {
-  //           layer.bindTooltip(feature.properties.descripcion, {
-  //             permanent: false,
-  //             direction: "top",
-  //             opacity: 0.9,
-  //             className: "custom-tooltip",
-  //           });
-  //         }
+    return (
+      <GeoJSON
+        data={callesEnReparacion}
+        style={(feature) => ({
+          ...getCalleStyle(feature.properties.estado),
+          interactive: true, // Asegura que los eventos del mouse sigan funcionando
+        })}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.descripcion) {
+            layer.bindTooltip(feature.properties.descripcion, {
+              permanent: false,
+              direction: "top",
+              opacity: 0.9,
+              className: "custom-tooltip",
+            });
+          }
 
-  //         layer.on({
-  //           mouseover: (e) => {
-  //             e.target.openTooltip();
-  //             e.target.setStyle({
-  //               weight: 3, // Resalta al pasar el mouse
-  //             });
-  //           },
-  //           mouseout: (e) => {
-  //             e.target.closeTooltip();
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
-  //           },
-  //           click: (e) => {
-  //             e.originalEvent.preventDefault(); // Evita selección predeterminada
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
-  //           },
-  //         });
-  //       }}
-  //     />
-  //   );
-  // };
+          layer.on({
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({
+                weight: 3, // Resalta al pasar el mouse
+              });
+            },
+            mouseout: (e) => {
+              e.target.closeTooltip();
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
+            },
+            click: (e) => {
+              e.originalEvent.preventDefault(); // Evita selección predeterminada
+              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
+            },
+          });
+        }}
+      />
+    );
+  };
 
-  // const crearPatronSVG = () => {
-  //   const svgPattern = `
-  //     <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  //       <line x1="5" y1="0" x2="5" y2="10" stroke="#67B730" stroke-width="2" />
-  //     </svg>
-  //   `;
-  //   return `data:image/svg+xml;base64,${btoa(svgPattern)}`;
-  // };
-
-  const mostrarPanel = () => {
-    setShowPanel(!showPanel);
+  const crearPatronSVG = () => {
+    const svgPattern = `
+      <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
+        <line x1="5" y1="0" x2="5" y2="10" stroke="#67B730" stroke-width="2" />
+      </svg>
+    `;
+    return `data:image/svg+xml;base64,${btoa(svgPattern)}`;
   };
 
   return (
@@ -1155,7 +1151,6 @@ function App() {
           allowManualZoom={allowManualZoom}
           setAllowManualZoom={setAllowManualZoom}
           MostrarModalInformativo={MostrarModalInformativo}
-          ShowPanel={mostrarPanel}
         />
         {/* 📌 Definir patrón de líneas verticales como SVG */}
 

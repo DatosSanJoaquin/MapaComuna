@@ -40,6 +40,13 @@ function ModalInformativo(props) {
               </p>
             </div>
             <div className="info-item">
+              <p className="titulo-seccion">Descripción</p>
+              <hr className="divider" />
+              <p className="contenido-seccion">
+                {props.informacion?.descripcion || "No disponible"}
+              </p>
+            </div>
+            <div className="info-item">
               <p className="titulo-seccion">Link Informativo</p>
               <hr className="divider" />
               <p className="contenido-seccion">
