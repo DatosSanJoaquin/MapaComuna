@@ -47,21 +47,34 @@
 }
 
 /* Nueva línea divisoria con forma inclinada */
-.divider {
+/* .divider {
   width: 100%;
   height: 11px;
   background: #67b730;
   clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 0% 100%);
   margin: 10px 0;
+} */
+
+.divider {
+  width: 100%;
+  height: 5px;
+  background-color: #67b730;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 15px 0;
 }
 
 .divider-Imagen {
   width: 100%;
-  height: 11px;
-  background: #67b730;
-  /* clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 6% 100%); */
-  clip-path: polygon(0% 25%, 100% 25%, 95% 100%, 69% 100%, 0% 100%);
-  margin: 10px 0;
+  height: 5px;
+  background-color: #67b730;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 15px 0;
 }
 
 .contenido-seccion {

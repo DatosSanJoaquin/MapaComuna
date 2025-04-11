@@ -14,17 +14,27 @@ import "leaflet/dist/leaflet.css";
 
 import L from "leaflet";
 import "./CSS/Estilos.css";
+import "./CSS/Paneles.css";
 import { createCustomMarker } from "./Funciones";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Contrast, Add, Remove, Tune, DeleteSweep } from "@mui/icons-material";
+import {
+  Contrast,
+  Add,
+  Remove,
+  Tune,
+  DeleteSweep,
+  VisibilityOff,
+  Info,
+} from "@mui/icons-material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { readCSVFile } from "./Function/readFile";
+import { leerTerritoriosCSV, readCSVFile } from "./Function/readFile";
 import { Row, Col, Button } from "react-bootstrap";
 import {
   CampoDropDownSearch,
   CampoDropDownSearchSimple,
+  SelectWithCheckboxes,
 } from "./Function/Campos";
 import ModalInformativo from "./Function/Modal";
 import Mapa from "./Mapa";
@@ -671,9 +681,12 @@ function App() {
   const [showMarkers, setShowMarkers] = useState(true);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(true);
+  const [showPanelTerritorios, setShowPanelTerritorios] = useState(true);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
   const [informacionMarker, setInformacionMarker] = useState(null);
   const [markersData, setMarkersData] = useState([]);
+  const [informacionTerritorios, setInformacionTerritorios] = useState([]);
+  const [territorioSeleccionado, setTerritorioSeleccionado] = useState(null);
   const [opcionCategorias, setOpcionCategorias] = useState([]);
   const [opcionTerritorios, setOpcionTerritorios] = useState([]);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
@@ -809,33 +822,61 @@ function App() {
         .catch((error) =>
           console.error("Error leyendo el archivo CSV:", error)
         );
+
+      leerTerritoriosCSV()
+        .then(({ territorios }) => {
+          console.log("Territorios desde archivo", territorios);
+          setInformacionTerritorios(territorios);
+        })
+        .catch((error) =>
+          console.error("Error leyendo el archivo CSV Territorio:", error)
+        );
     }
   }, []); // Se ejecuta solo una vez al montar el componente
 
   // 📌 Lógica de filtrado en tiempo real
   // 📌 Método para filtrar marcadores
-  const filtrarMarcadores = (nuevoFiltro) => {
-    const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
-    setSelectedFilters(filtrosActualizados);
+  // const filtrarMarcadores = (nuevoFiltro) => {
+  //   const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
+  //   setSelectedFilters(filtrosActualizados);
 
-    console.log("Filtros actualizados:", filtrosActualizados);
+  //   console.log("Filtros actualizados:", filtrosActualizados);
 
-    let filtrados = markersData;
-    console.log("Filtrados por territorio:", filtrados);
+  //   let filtrados = markersData;
+  //   console.log("Filtrados por territorio:", filtrados);
 
-    if (filtrosActualizados.territorio) {
-      filtrados = filtrados.filter(
-        (marker) => marker.territorio === filtrosActualizados.territorio.label
+  //   if (filtrosActualizados.territorio) {
+  //     filtrados = filtrados.filter(
+  //       (marker) => marker.territorio === filtrosActualizados.territorio.label
+  //     );
+  //   }
+
+  //   if (filtrosActualizados.categoria) {
+  //     filtrados = filtrados.filter(
+  //       (marker) => marker.categoria === filtrosActualizados.categoria.label
+  //     );
+  //   }
+
+  //   setFilteredMarkers(filtrados);
+  // };
+
+  const getInformacionTerritorio = (territorio) => {
+    console.warn("Territorio seleccionado:", territorio);
+
+    let numeroTerritorio = territorio?.label;
+
+    if (numeroTerritorio) {
+      const territorioEncontrado = informacionTerritorios.find(
+        (t) => t.territorio === numeroTerritorio
       );
-    }
 
-    if (filtrosActualizados.categoria) {
-      filtrados = filtrados.filter(
-        (marker) => marker.categoria === filtrosActualizados.categoria.label
-      );
+      if (territorioEncontrado) {
+        console.log("Información del territorio:", territorioEncontrado);
+        setTerritorioSeleccionado(territorioEncontrado);
+      } else {
+        console.warn("Territorio no encontrado");
+      }
     }
-
-    setFilteredMarkers(filtrados);
   };
 
   const actualizarFiltros = (nuevoFiltro) => {
@@ -852,10 +893,14 @@ function App() {
 
     let filtrados = markersData;
 
+    console.info("filtro actualizado", filtrosActualizados);
+
     if (territorioSeleccionado) {
       filtrados = filtrados.filter(
         (marker) => marker.territorio === territorioSeleccionado.label
       );
+
+      getInformacionTerritorio(filtrosActualizados.territorio);
     }
 
     if (categoriasSeleccionadas.length > 0) {
@@ -887,25 +932,6 @@ function App() {
       fillOpacity: 0.1,
     });
   };
-
-  function CustomTopRightButton() {
-    return (
-      <div
-        className="top-right-button"
-        onClick={() => setShowPanel(!showPanel)}
-        style={{
-          cursor: "pointer",
-        }}
-      >
-        {/* <button className="map-button">🔘</button> */}
-        <LightTooltip title="Filtrar por tematicas" placement="left">
-          <Tune style={{ color: "white" }} />
-        </LightTooltip>
-      </div>
-    );
-
-    //5D428B
-  }
 
   // const MoveToTerritory = ({
   //   selectedTerritory,
@@ -1029,6 +1055,10 @@ function App() {
     setShowPanel(!showPanel);
   };
 
+  const mostrarPanelTerritorios = () => {
+    setShowPanelTerritorios(!showPanelTerritorios);
+  };
+
   return (
     <>
       <div style={{ width: "100vw", height: "100vh" }}>
@@ -1041,18 +1071,25 @@ function App() {
               display: "flex",
               alignItems: "center",
               gap: "6px",
+              justifyContent: "space-between",
             }}
           >
-            <Tune style={{ color: "white", fontSize: "20px" }} />{" "}
-            <span
-              style={{
-                fontSize: "0.8rem",
-                textTransform: "uppercase",
-                fontWeight: "600",
-              }}
-            >
-              Filtros
-            </span>
+            <div>
+              <Tune className="icon-panel" />{" "}
+              <span className="titulo-panel">Filtros</span>
+            </div>
+            <div>
+              <LightTooltip title="Ocultar Panel" placement="bottom">
+                <VisibilityOff
+                  style={{
+                    color: "white",
+                    fontSize: "17px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowPanel(!showPanel)}
+                />{" "}
+              </LightTooltip>
+            </div>
           </div>
           {/* <p>Aquí puedes agregar información adicional.</p> */}
           <Row style={{ padding: "20px 14px 20px 14px" }}>
@@ -1115,34 +1152,123 @@ function App() {
           <Row style={{ margin: "5px 10px 10px 10px", justifyContent: "end" }}>
             <Button
               className="remove-filter"
-              style={{
-                display: "flex",
-                gap: "7px",
-                justifyContent: "center",
-                width: "137px",
-              }}
               onClick={() => {
                 setSelectedFilters({ territorio: null, categoria: null }); // 🔹 Limpia filtros
                 setFilteredMarkers(markersData); // 🔹 Muestra todos los marcadores
                 setSelectedTerritory(null); // 🔹 Evita mover la vista a un territorio
+                setTerritorioSeleccionado(null); // 🔹 Limpia la información del territorio
               }}
             >
-              <div
-                style={{
-                  fontSize: "0.8rem",
-                  textAlign: "center",
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: "2px",
-                }}
-              >
-                Limpiar Filtro
-              </div>
-              <div>
-                {" "}
+              <div className="texto-boton-panel">Limpiar Filtro</div>
+              <div style={{ marginTop: "-2px" }}>
                 <DeleteSweep style={{ color: "white" }} />
               </div>
             </Button>
+          </Row>
+        </div>
+        <div
+          className={`panel-izquierdo ${!showPanelTerritorios ? "active" : ""}`}
+        >
+          <div
+            style={{
+              padding: "10px",
+              background: "#41307C",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                gap: "3px",
+                alignItems: "anchor-center",
+              }}
+            >
+              <Info className="icon-panel" />{" "}
+              <div>
+                <span className="titulo-panel">
+                  Información Territorio{" "}
+                  {territorioSeleccionado
+                    ? territorioSeleccionado.territorio
+                    : ""}
+                </span>
+              </div>
+            </div>
+            <div>
+              <LightTooltip title="Ocultar Panel" placement="bottom">
+                <VisibilityOff
+                  style={{
+                    color: "white",
+                    fontSize: "17px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowPanelTerritorios(!showPanelTerritorios)}
+                />{" "}
+              </LightTooltip>
+            </div>
+          </div>
+          <Row style={{ padding: "20px 14px 20px 14px" }}>
+            {territorioSeleccionado ? (
+              territorioSeleccionado.categorias.map((categoria, index) => (
+                <div style={{ marginBottom: "10px" }} key={index}>
+                  <Col md={12}>
+                    <p className="titulo-seccion-panel">{categoria.nombre}</p>
+                    <hr className="divider" />
+                  </Col>
+                  <Col md={12}>
+                    <p
+                      className="contenido-seccion-panel"
+                      style={{ whiteSpace: "pre-line" }}
+                    >
+                      {categoria.informacion}
+                    </p>
+                  </Col>
+                </div>
+              ))
+            ) : (
+              <Col md={12}>
+                <p className="titulo-seccion-panel">
+                  Selecciona un territorio para ver su información
+                </p>
+              </Col>
+            )}
+
+            {/* <div style={{ marginBottom: "10px" }}>
+              <Col md={12}>
+                <p className="titulo-seccion-panel">Seccion 1</p>
+                <hr className="divider" />
+              </Col>
+              <Col md={12}>
+                <p className="contenido-seccion-panel">
+                  Aquí puedes agregar información adicional sobre el territorio
+                </p>
+              </Col>
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <Col md={12}>
+                <p className="titulo-seccion-panel">Seccion 2</p>
+                <hr className="divider" />
+              </Col>
+              <Col md={12}>
+                <p className="contenido-seccion-panel">
+                  Aquí puedes agregar información adicional sobre el territorio
+                </p>
+              </Col>
+            </div>
+            <div>
+              <Col md={12}>
+                <p className="titulo-seccion-panel">Seccion 3</p>
+                <hr className="divider" />
+              </Col>
+              <Col md={12}>
+                <p className="contenido-seccion-panel">
+                  Aquí puedes agregar información adicional sobre el territorio
+                </p>
+              </Col>
+            </div> */}
           </Row>
         </div>
         <Mapa
@@ -1156,6 +1282,7 @@ function App() {
           setAllowManualZoom={setAllowManualZoom}
           MostrarModalInformativo={MostrarModalInformativo}
           ShowPanel={mostrarPanel}
+          ShowPanelInfoTerritorios={mostrarPanelTerritorios}
         />
         {/* 📌 Definir patrón de líneas verticales como SVG */}
 

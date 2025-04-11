@@ -10,7 +10,14 @@ import {
   Rectangle,
   SVGOverlay,
 } from "react-leaflet";
-import { Contrast, Add, Remove, Tune, DeleteSweep } from "@mui/icons-material";
+import {
+  Contrast,
+  Add,
+  Remove,
+  Tune,
+  DeleteSweep,
+  Info,
+} from "@mui/icons-material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { readCSVFile } from "./Function/readFile";
@@ -35,6 +42,7 @@ function Mapa(props) {
     setAllowManualZoom,
     MostrarModalInformativo,
     ShowPanel,
+    ShowPanelInfoTerritorios,
   } = props;
 
   const [showMarkers, setShowMarkers] = useState(true);
@@ -179,6 +187,25 @@ function Mapa(props) {
         {/* <button className="map-button">🔘</button> */}
         <LightTooltip title="Filtrar por tematicas" placement="left">
           <Tune style={{ color: "white" }} />
+        </LightTooltip>
+      </div>
+    );
+
+    //5D428B
+  }
+
+  function CustomTopLeftButton() {
+    return (
+      <div
+        className="top-left-button"
+        onClick={() => ShowPanelInfoTerritorios()}
+        style={{
+          cursor: "pointer",
+        }}
+      >
+        {/* <button className="map-button">🔘</button> */}
+        <LightTooltip title="Información Territorio" placement="left">
+          <Info style={{ color: "white" }} />
         </LightTooltip>
       </div>
     );
@@ -454,6 +481,7 @@ function Mapa(props) {
             /> */}
       {/* Área fuera de los límites de San Joaquín (gris) */}
       <CustomTopRightButton />
+      <CustomTopLeftButton />
       <GeoJSON
         data={{
           type: "FeatureCollection",

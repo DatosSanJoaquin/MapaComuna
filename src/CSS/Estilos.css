@@ -5,6 +5,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important; /* ✅ Bloquea el scroll horizontal */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -112,30 +119,28 @@ hr {
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-
-/* 📌 Panel lateral */
+/* 📌 Panel lateral (ahora en el lado derecho) */
 .panel-lateral {
   position: absolute;
   top: 20px; /* Margen superior */
-  left: 10px; /* Margen izquierdo */
-  width: 300px; /* Ancho del panel */
-  /* height: calc(100vh - 100px); */
-  /* height: calc(40vh - 100px); */
-  /* height: 280px; */
-  background: white; /* ✅ Fondo blanco */
-  color: black; /* ✅ Texto en negro para contraste */
-  /* padding: 20px; */
-  /* border-radius: 10px; */
-  /* border-bottom-left-radius: 10px; */
-  /* border-bottom-right-radius: 10px; */
-  box-shadow: 20px 15px 15px rgba(0, 0, 0, 0.2); /* ✅ Sombrado más sutil */
-  z-index: 1001; /* Asegura que esté sobre el mapa */
-  overflow: hidden; /* Evita que se desborde */
-  transition: left 0.4s ease-in-out; /* Efecto suave */
+  right: 10px; /* ✅ Cambiado de 'left' a 'right' */
+  width: 300px;
+  background: white;
+  color: black;
+  box-shadow: 20px 15px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  overflow: hidden;
+
+  /* ✨ Efecto animado */
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
+/* 📌 Estado oculto (panel hacia la derecha, fuera de la pantalla) */
 .panel-lateral.active {
-  left: -300px; /* Muestra el panel */
+  transform: translateX(calc(100% + 30px)); /* Empuja hacia fuera */
+  opacity: 0; /* Suaviza la desaparición */
 }
 
 /* 📌 Boton para panel de filtros */
@@ -152,6 +157,25 @@ hr {
 }
 
 .top-right-button :hover {
+  background-color: #553b81;
+
+  border-radius: 5px;
+}
+
+/* 📌 Boton para panel de Informacion Territorio */
+
+.top-left-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000; /* Asegura que esté sobre el mapa */
+  background-color: #5d428b;
+  padding: 10px 10px 10px 10px;
+  border-radius: 25px;
+  transition: background 0.3s ease-in-out;
+}
+
+.top-left-button :hover {
   background-color: #553b81;
 
   border-radius: 5px;
@@ -264,19 +288,6 @@ hr {
 
 /* 📌 Estilos para el botón de filtro */
 
-.remove-filter {
-  background-color: #fa3247 !important;
-  border-color: #fa3247 !important;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s ease-in-out;
-  border-radius: 0% !important;
-}
-
 .remove-filter:hover {
   background-color: #d32f3f !important;
 }
@@ -288,4 +299,47 @@ hr {
 .custom-popup .leaflet-popup-content-wrapper {
   padding: 1px !important;
   margin: 0px !important;
+}
+
+/*css panel filtro derecha */
+
+.top-right-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1002;
+}
+
+.top-right-button {
+  background-color: #5d428b;
+  padding: 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.top-right-button:hover {
+  background-color: #553b81;
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: 50px; /* debajo del botón */
+  right: 0;
+  width: 280px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.dropdown-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }

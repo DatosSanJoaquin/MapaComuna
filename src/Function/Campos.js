@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { Col, Form, Row, Button, InputGroup } from "react-bootstrap";
 
 function Campos() {
@@ -65,19 +65,7 @@ export const CampoDropDownSearchSimple = (props) => {
       style={{ display: "flex", flexDirection: "column", marginBottom: "10px" }}
     >
       <div style={{ display: "flex" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "600",
-            boxSizing: "border-box",
-            boxShadow: "none",
-            margin: "0px",
-            display: "block",
-            padding: "5px 0px",
-            overflowWrap: "break-word",
-            color: "rgb(105 101 101)",
-          }}
-        >
+        <span className="titulo-campo-panel">
           {props.PropiedadesCampo.NombreCampo}
         </span>
         {props.PropiedadesCampo.Required && (
@@ -180,19 +168,7 @@ export const CampoDropDownSearch = (props) => {
       style={{ display: "flex", flexDirection: "column", marginBottom: "10px" }}
     >
       <div style={{ display: "flex" }}>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: "600",
-            boxSizing: "border-box",
-            boxShadow: "none",
-            margin: "0px",
-            display: "block",
-            padding: "5px 0px",
-            overflowWrap: "break-word",
-            color: "rgb(105 101 101)",
-          }}
-        >
+        <span className="titulo-campo-panel">
           {props.PropiedadesCampo.NombreCampo}
         </span>
         {props.PropiedadesCampo.Required && (
@@ -233,5 +209,42 @@ export const CampoDropDownSearch = (props) => {
         />
       </div>
     </Col>
+  );
+};
+
+const options = [
+  { value: "rojo", label: "Rojo" },
+  { value: "verde", label: "Verde" },
+  { value: "azul", label: "Azul" },
+];
+
+// Componente personalizado de opción
+const CheckboxOption = (props) => {
+  return (
+    <components.Option {...props}>
+      <input
+        type="checkbox"
+        checked={props.isSelected}
+        onChange={() => null} // prevenir warning, no se necesita handler aquí
+      />{" "}
+      <label>{props.label}</label>
+    </components.Option>
+  );
+};
+
+export const SelectWithCheckboxes = () => {
+  const [selectedOptions, setSelectedOptions] = React.useState([]);
+
+  return (
+    <Select
+      closeMenuOnSelect={false}
+      hideSelectedOptions={false}
+      isMulti
+      options={options}
+      components={{ Option: CheckboxOption }}
+      onChange={setSelectedOptions}
+      value={selectedOptions}
+      placeholder="Selecciona colores"
+    />
   );
 };

@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 import { createCustomMarker } from "../Funciones";
 
-const FILE_PATH = `${process.env.PUBLIC_URL}/data/datos1.csv`;
+const FILE_PATH = `${process.env.PUBLIC_URL}/data/datos2.csv`;
 
 export const readCSVFile = async () => {
   return new Promise((resolve, reject) => {
@@ -15,6 +15,7 @@ export const readCSVFile = async () => {
             let idCounter = 1;
             let categoriasArray = [];
             let territoriosArray = [];
+            const iconCache = new Set();
 
             const markers = result.data
               .filter((row) => {
@@ -28,6 +29,7 @@ export const readCSVFile = async () => {
               })
               .map((row) => {
                 // Reemplaza campos vacíos con "No disponible", excepto la foto
+
                 const cleanRow = {};
                 Object.keys(row).forEach((key) => {
                   if (key === "Foto (Si aplica)**") {
@@ -39,6 +41,14 @@ export const readCSVFile = async () => {
                         : "No disponible";
                   }
                 });
+
+                // 🔥 Precarga de ícono
+                const iconPath = `${process.env.PUBLIC_URL}/icons/marcadores/${cleanRow["Icono (JPG o PNG)"]}`;
+                if (!iconCache.has(iconPath)) {
+                  const img = new Image();
+                  img.src = iconPath;
+                  iconCache.add(iconPath);
+                }
 
                 // Validación de coordenadas
                 const coordString =
@@ -95,6 +105,7 @@ export const readCSVFile = async () => {
                   icon: createCustomMarker(
                     `${process.env.PUBLIC_URL}/icons/marcadores/${cleanRow["Icono (JPG o PNG)"]}`
                   ),
+                  urlIcon: `${process.env.PUBLIC_URL}/icons/marcadores/${cleanRow["Icono (JPG o PNG)"]}`,
                   categoria: cleanRow["Categoría"],
                   territorio: cleanRow["Territorio (1 al 7)"],
                   link:
@@ -105,7 +116,7 @@ export const readCSVFile = async () => {
                     ? `${process.env.PUBLIC_URL}/images/${cleanRow[
                         "Foto (Si aplica)**"
                       ].trim()}`
-                    : `${process.env.PUBLIC_URL}/images/No disponible.jpg`,
+                    : `${process.env.PUBLIC_URL}/images/No disponible.png`,
                   descripcion: cleanRow["Descripción"],
                   subcategoria: cleanRow["Subcategoría?"],
                 };
@@ -118,6 +129,57 @@ export const readCSVFile = async () => {
             });
           },
           error: (err) => reject(err),
+        });
+      })
+      .catch((error) => reject(error));
+  });
+};
+
+export const leerTerritoriosCSV = async () => {
+  return new Promise((resolve, reject) => {
+    fetch(process.env.PUBLIC_URL + "/data/Territorios.csv")
+      .then((response) => response.text())
+      .then((csvText) => {
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (result) => {
+            const datosFiltrados = result.data.filter(
+              (row) =>
+                row.Territorio?.trim() &&
+                row.Categoría?.trim() &&
+                row.Información?.trim()
+            );
+
+            const agrupado = {};
+
+            datosFiltrados.forEach((row) => {
+              const territorio = row.Territorio.trim();
+              const categoria = row.Categoría.trim();
+              const informacion = row.Información.trim();
+
+              if (!agrupado[territorio]) {
+                agrupado[territorio] = [];
+              }
+
+              agrupado[territorio].push({
+                nombre: categoria,
+                informacion: informacion,
+              });
+            });
+
+            const territorios = Object.entries(agrupado).map(
+              ([territorio, categorias]) => ({
+                territorio,
+                categorias,
+              })
+            );
+            console.log("resultadoFinal", territorios);
+            resolve({ territorios });
+          },
+          error: (error) => {
+            reject(error);
+          },
         });
       })
       .catch((error) => reject(error));

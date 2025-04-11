@@ -1,0 +1,116 @@
+.titulo-seccion-panel {
+  font-weight: bold;
+  font-size: 13px;
+  color: #3d3d4e;
+  margin-bottom: 0px;
+}
+
+.titulo-panel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.icon-panel {
+  font-size: 20px !important;
+  color: white;
+}
+
+.contenido-seccion-panel {
+  font-size: 13px;
+  color: #3d3d4e;
+  margin-bottom: 3px;
+}
+
+.titulo-campo-panel {
+  font-size: 13px;
+  font-weight: 600;
+  box-sizing: border-box;
+  box-shadow: none;
+  margin: 0px;
+  display: block;
+  padding: 5px 0px;
+  overflow-wrap: break-word;
+  color: rgb(105 101 101);
+}
+
+.texto-boton-panel {
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.remove-filter {
+  background-color: #fa3247 !important;
+  border-color: #fa3247 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 10px 20px;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  transition: background 0.3s ease-in-out !important;
+  border-radius: 0% !important;
+  display: flex !important;
+  gap: 7px;
+  justify-content: center;
+  width: 137px !important;
+}
+
+/* 📌 Panel lateral */
+.panel-izquierdo {
+  position: absolute;
+  top: 20px; /* Margen superior */
+  left: 10px; /* Margen izquierdo */
+  width: 350px; /* Ancho del panel */
+  /* height: calc(100vh - 100px); */
+  /* height: calc(40vh - 100px); */
+  /* height: 280px; */
+  background: white; /* ✅ Fondo blanco */
+  color: black; /* ✅ Texto en negro para contraste */
+  /* padding: 20px; */
+  /* border-radius: 10px; */
+  /* border-bottom-left-radius: 10px; */
+  /* border-bottom-right-radius: 10px; */
+  box-shadow: 20px 15px 15px rgba(0, 0, 0, 0.2); /* ✅ Sombrado más sutil */
+  z-index: 1001; /* Asegura que esté sobre el mapa */
+  overflow: hidden; /* Evita que se desborde */
+  transition: left 0.4s ease-in-out; /* Efecto suave */
+}
+
+.panel-izquierdo.active {
+  left: -350px; /* Muestra el panel */
+}
+
+@media only screen and (max-width: 600px) {
+  .titulo-panel {
+    font-size: 0.6rem;
+  }
+
+  .icon-panel {
+    font-size: 16px !important;
+  }
+
+  .titulo-campo-panel {
+    font-size: 12px;
+  }
+
+  .texto-boton-panel {
+    font-size: 0.7rem;
+  }
+
+  .remove-filter {
+    height: 35px;
+    width: 135px !important;
+  }
+
+  .titulo-seccion-panel {
+    font-size: 12px;
+  }
+
+  .contenido-seccion-panel {
+    font-size: 12px;
+  }
+}
