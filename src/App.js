@@ -26,10 +26,15 @@ import {
   DeleteSweep,
   VisibilityOff,
   Info,
+  FilterAlt,
 } from "@mui/icons-material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { leerTerritoriosCSV, readCSVFile } from "./Function/readFile";
+import {
+  leerTerritoriosCSV,
+  readCSVFile,
+  leerMatrizCallesSegmentos,
+} from "./Function/readFile";
 import { Row, Col, Button } from "react-bootstrap";
 import {
   CampoDropDownSearch,
@@ -38,6 +43,7 @@ import {
 } from "./Function/Campos";
 import ModalInformativo from "./Function/Modal";
 import Mapa from "./Mapa";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -680,12 +686,17 @@ function App() {
   //const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkers, setShowMarkers] = useState(true);
   const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
-  const [showPanel, setShowPanel] = useState(true);
-  const [showPanelTerritorios, setShowPanelTerritorios] = useState(true);
+  const [showPanel, setShowPanel] = useState(false);
+  const [showPanelTerritorios, setShowPanelTerritorios] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
   const [informacionMarker, setInformacionMarker] = useState(null);
+
+  //STATE DE MATRICES
   const [markersData, setMarkersData] = useState([]);
   const [informacionTerritorios, setInformacionTerritorios] = useState([]);
+  const [callesSegmentos, setCallesSegmentos] = useState([]);
+  //
+
   const [territorioSeleccionado, setTerritorioSeleccionado] = useState(null);
   const [opcionCategorias, setOpcionCategorias] = useState([]);
   const [opcionTerritorios, setOpcionTerritorios] = useState([]);
@@ -711,6 +722,8 @@ function App() {
     weight: 2,
     fillOpacity: 0.1,
   };
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // const callesEnReparacion = {
   //   type: "FeatureCollection",
@@ -831,6 +844,15 @@ function App() {
         .catch((error) =>
           console.error("Error leyendo el archivo CSV Territorio:", error)
         );
+
+      leerMatrizCallesSegmentos()
+        .then(({ matrizCallesSegmentos }) => {
+          console.log("Calles Segmentos desde archivo", matrizCallesSegmentos);
+          setCallesSegmentos(matrizCallesSegmentos);
+        })
+        .catch((error) =>
+          console.error("Error leyendo el archivo CSV Territorio:", error)
+        );
     }
   }, []); // Se ejecuta solo una vez al montar el componente
 
@@ -879,28 +901,65 @@ function App() {
     }
   };
 
+  // const actualizarFiltros = (nuevoFiltro) => {
+  //   const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
+  //   setSelectedFilters(filtrosActualizados);
+
+  //   // ✅ Sincronizar también selectedTerritory (para mover el mapa)
+  //   if (nuevoFiltro.territorio !== undefined) {
+  //     setSelectedTerritory(nuevoFiltro.territorio);
+  //   }
+
+  //   const territorioSeleccionado = filtrosActualizados.territorio;
+  //   const categoriasSeleccionadas = filtrosActualizados.categoria || [];
+
+  //   let filtrados = markersData;
+
+  //   console.info("filtro actualizado", filtrosActualizados);
+
+  //   if (territorioSeleccionado) {
+  //     filtrados = filtrados.filter(
+  //       (marker) => marker.territorio === territorioSeleccionado.label
+  //     );
+
+  //     getInformacionTerritorio(filtrosActualizados.territorio);
+  //   }
+
+  //   if (categoriasSeleccionadas.length > 0) {
+  //     const categoriasLabels = categoriasSeleccionadas.map((c) => c.label);
+  //     filtrados = filtrados.filter((marker) =>
+  //       categoriasLabels.includes(marker.categoria)
+  //     );
+  //   }
+
+  //   setFilteredMarkers(filtrados);
+  // };
+
   const actualizarFiltros = (nuevoFiltro) => {
     const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
     setSelectedFilters(filtrosActualizados);
+  };
 
-    // ✅ Sincronizar también selectedTerritory (para mover el mapa)
-    if (nuevoFiltro.territorio !== undefined) {
-      setSelectedTerritory(nuevoFiltro.territorio);
+  const filtrarMarcadores = () => {
+    let filtros_ = selectedFilters;
+
+    console.log("Filtros aplicados:", filtros_);
+
+    if (filtros_.territorio !== undefined) {
+      setSelectedTerritory(filtros_.territorio);
     }
 
-    const territorioSeleccionado = filtrosActualizados.territorio;
-    const categoriasSeleccionadas = filtrosActualizados.categoria || [];
+    const territorioSeleccionado = filtros_.territorio;
+    const categoriasSeleccionadas = filtros_.categoria || [];
 
     let filtrados = markersData;
-
-    console.info("filtro actualizado", filtrosActualizados);
 
     if (territorioSeleccionado) {
       filtrados = filtrados.filter(
         (marker) => marker.territorio === territorioSeleccionado.label
       );
 
-      getInformacionTerritorio(filtrosActualizados.territorio);
+      getInformacionTerritorio(filtros_.territorio);
     }
 
     if (categoriasSeleccionadas.length > 0) {
@@ -911,6 +970,11 @@ function App() {
     }
 
     setFilteredMarkers(filtrados);
+
+    if (filtros_.territorio) {
+      setShowPanelTerritorios(true);
+      setShowPanel(false);
+    }
   };
 
   // 📌 Evento al pasar el mouse
@@ -1059,6 +1123,25 @@ function App() {
     setShowPanelTerritorios(!showPanelTerritorios);
   };
 
+  const limpiarFiltros = () => {
+    setIsLoading(true); // 🔄 Mostrar spinner y overlay
+    setShowPanelTerritorios(false); // Ocultar panel lateral
+    setShowPanel(false); // Ocultar filtro
+
+    // Opcional: quitar momentáneamente los marcadores
+    setFilteredMarkers([]);
+
+    setTimeout(() => {
+      setSelectedFilters({ territorio: null, categoria: [] });
+      setSelectedTerritory(null);
+      setTerritorioSeleccionado(null);
+
+      // Restaurar marcadores después del "limpio"
+      setFilteredMarkers(markersData);
+      setIsLoading(false); // 🔚 Ocultar spinner y dejar mapa limpio
+    }, 900); // Ajusta el tiempo según lo que necesites
+  };
+
   return (
     <>
       <div style={{ width: "100vw", height: "100vh" }}>
@@ -1079,7 +1162,7 @@ function App() {
               <span className="titulo-panel">Filtros</span>
             </div>
             <div>
-              <LightTooltip title="Ocultar Panel" placement="bottom">
+              {/* <LightTooltip title="Ocultar Panel" placement="bottom">
                 <VisibilityOff
                   style={{
                     color: "white",
@@ -1088,7 +1171,14 @@ function App() {
                   }}
                   onClick={() => setShowPanel(!showPanel)}
                 />{" "}
-              </LightTooltip>
+              </LightTooltip> */}
+              <span
+                className="ocultar-panel"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowPanel(!showPanel)}
+              >
+                Ocultar
+              </span>
             </div>
           </div>
           {/* <p>Aquí puedes agregar información adicional.</p> */}
@@ -1149,17 +1239,38 @@ function App() {
               }}
             />
           </Row>
-          <Row style={{ margin: "5px 10px 10px 10px", justifyContent: "end" }}>
+          <Row
+            style={{
+              margin: "5px 10px 10px 10px",
+              justifyContent: "center",
+              gap: "10px",
+            }}
+          >
+            <Button
+              className="filter"
+              onClick={() => {
+                filtrarMarcadores(); // 🔹 Filtra los marcadores
+              }}
+              disabled={
+                selectedFilters.territorio == null &&
+                selectedFilters.categoria.length === 0
+                  ? true
+                  : false
+              }
+            >
+              <div className="texto-boton-panel">Filtrar</div>
+              <div style={{ marginTop: "-2px" }}>
+                <FilterAlt style={{ color: "white" }} />
+              </div>
+            </Button>
+
             <Button
               className="remove-filter"
               onClick={() => {
-                setSelectedFilters({ territorio: null, categoria: null }); // 🔹 Limpia filtros
-                setFilteredMarkers(markersData); // 🔹 Muestra todos los marcadores
-                setSelectedTerritory(null); // 🔹 Evita mover la vista a un territorio
-                setTerritorioSeleccionado(null); // 🔹 Limpia la información del territorio
+                limpiarFiltros(); // 🔹 Limpia los filtros
               }}
             >
-              <div className="texto-boton-panel">Limpiar Filtro</div>
+              <div className="texto-boton-panel">Borrar Filtro</div>
               <div style={{ marginTop: "-2px" }}>
                 <DeleteSweep style={{ color: "white" }} />
               </div>
@@ -1198,7 +1309,7 @@ function App() {
               </div>
             </div>
             <div>
-              <LightTooltip title="Ocultar Panel" placement="bottom">
+              {/* <LightTooltip title="Ocultar Panel" placement="bottom">
                 <VisibilityOff
                   style={{
                     color: "white",
@@ -1207,7 +1318,14 @@ function App() {
                   }}
                   onClick={() => setShowPanelTerritorios(!showPanelTerritorios)}
                 />{" "}
-              </LightTooltip>
+              </LightTooltip> */}
+              <span
+                className="ocultar-panel"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowPanelTerritorios(!showPanelTerritorios)}
+              >
+                Ocultar
+              </span>
             </div>
           </div>
           <Row style={{ padding: "20px 14px 20px 14px" }}>
@@ -1235,40 +1353,6 @@ function App() {
                 </p>
               </Col>
             )}
-
-            {/* <div style={{ marginBottom: "10px" }}>
-              <Col md={12}>
-                <p className="titulo-seccion-panel">Seccion 1</p>
-                <hr className="divider" />
-              </Col>
-              <Col md={12}>
-                <p className="contenido-seccion-panel">
-                  Aquí puedes agregar información adicional sobre el territorio
-                </p>
-              </Col>
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <Col md={12}>
-                <p className="titulo-seccion-panel">Seccion 2</p>
-                <hr className="divider" />
-              </Col>
-              <Col md={12}>
-                <p className="contenido-seccion-panel">
-                  Aquí puedes agregar información adicional sobre el territorio
-                </p>
-              </Col>
-            </div>
-            <div>
-              <Col md={12}>
-                <p className="titulo-seccion-panel">Seccion 3</p>
-                <hr className="divider" />
-              </Col>
-              <Col md={12}>
-                <p className="contenido-seccion-panel">
-                  Aquí puedes agregar información adicional sobre el territorio
-                </p>
-              </Col>
-            </div> */}
           </Row>
         </div>
         <Mapa
@@ -1283,10 +1367,39 @@ function App() {
           MostrarModalInformativo={MostrarModalInformativo}
           ShowPanel={mostrarPanel}
           ShowPanelInfoTerritorios={mostrarPanelTerritorios}
+          CallesSegmentos={callesSegmentos}
         />
         {/* 📌 Definir patrón de líneas verticales como SVG */}
 
         <FloatingBox />
+        {isLoading && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo oscuro semitransparente
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 9999,
+            }}
+          >
+            <ClipLoader color="#ffffff" size={60} />
+            <div
+              style={{
+                marginTop: "7px",
+                marginLeft: "9px",
+                color: "#ffffff",
+                fontSize: "18px",
+              }}
+            >
+              Cargando Mapa...
+            </div>
+          </div>
+        )}
       </div>
       {showPanelInformativo && (
         <ModalInformativo

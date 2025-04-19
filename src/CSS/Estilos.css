@@ -286,12 +286,6 @@ hr {
   transition: transform 0.3s ease-in-out;
 }
 
-/* 📌 Estilos para el botón de filtro */
-
-.remove-filter:hover {
-  background-color: #d32f3f !important;
-}
-
 .leaflet-interactive {
   outline: none !important; /* 🔥 Evita el cuadro negro al hacer clic */
 }

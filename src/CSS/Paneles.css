@@ -11,6 +11,12 @@
   font-weight: 600;
 }
 
+.ocultar-panel {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 .icon-panel {
   font-size: 20px !important;
   color: white;
@@ -56,7 +62,28 @@
   display: flex !important;
   gap: 7px;
   justify-content: center;
-  width: 137px !important;
+  width: 130px !important;
+}
+
+.remove-filter:hover {
+  background-color: #d32f3f !important;
+}
+
+.filter {
+  background-color: #68961f !important;
+  border-color: #68961f !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 10px 20px;
+  cursor: pointer !important;
+  font-weight: 500 !important;
+  transition: background 0.3s ease-in-out !important;
+  border-radius: 0% !important;
+  display: flex !important;
+  gap: 7px;
+  justify-content: center;
+  width: 130px !important;
 }
 
 /* 📌 Panel lateral */
@@ -64,7 +91,7 @@
   position: absolute;
   top: 20px; /* Margen superior */
   left: 10px; /* Margen izquierdo */
-  width: 350px; /* Ancho del panel */
+  width: 320px; /* Ancho del panel */
   /* height: calc(100vh - 100px); */
   /* height: calc(40vh - 100px); */
   /* height: 280px; */

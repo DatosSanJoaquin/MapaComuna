@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 import { createCustomMarker } from "../Funciones";
 
-const FILE_PATH = `${process.env.PUBLIC_URL}/data/datos2.csv`;
+const FILE_PATH = `${process.env.PUBLIC_URL}/data/Marcadores.csv`;
 
 export const readCSVFile = async () => {
   return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ export const readCSVFile = async () => {
             let idCounter = 1;
             let categoriasArray = [];
             let territoriosArray = [];
-            const iconCache = new Set();
+            //const iconCache = new Set();
 
             const markers = result.data
               .filter((row) => {
@@ -44,11 +44,11 @@ export const readCSVFile = async () => {
 
                 // 🔥 Precarga de ícono
                 const iconPath = `${process.env.PUBLIC_URL}/icons/marcadores/${cleanRow["Icono (JPG o PNG)"]}`;
-                if (!iconCache.has(iconPath)) {
-                  const img = new Image();
-                  img.src = iconPath;
-                  iconCache.add(iconPath);
-                }
+                // if (!iconCache.has(iconPath)) {
+                //   const img = new Image();
+                //   img.src = iconPath;
+                //   iconCache.add(iconPath);
+                // }
 
                 // Validación de coordenadas
                 const coordString =
@@ -183,5 +183,48 @@ export const leerTerritoriosCSV = async () => {
         });
       })
       .catch((error) => reject(error));
+  });
+};
+
+// Retorna un arreglo limpio de objetos base
+export const leerMatrizCallesSegmentos = async () => {
+  return new Promise((resolve, reject) => {
+    Papa.parse(`${process.env.PUBLIC_URL}/data/CallesSegmentos.csv`, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => {
+        try {
+          const matrizCallesSegmentos = result.data
+            .filter((row) => row.Nombre && row.Coordenada)
+            .map((row, i) => {
+              let coords;
+              console.log(`Fila ${i} coordenada cruda:`, row.Coordenada);
+              try {
+                const raw = row.Coordenada.trim().replace(/“|”/g, '"');
+                coords = JSON.parse(raw);
+              } catch (err) {
+                console.error("Error al parsear coordenadas:", row.Coordenada);
+                coords = [];
+              }
+
+              return {
+                nombre: row.Nombre,
+                direccion: row.Dirección,
+                territorio: row.Territorio,
+                descripcion: row["Descripción (sólo si es necesario)"],
+                categoria: row.Categoría,
+                coordenadas: coords,
+                estado: "Pavimentación",
+              };
+            });
+
+          resolve({ matrizCallesSegmentos });
+        } catch (err) {
+          reject(err);
+        }
+      },
+      error: (error) => reject(error),
+    });
   });
 };

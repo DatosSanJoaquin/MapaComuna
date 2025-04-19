@@ -17,21 +17,32 @@ function ModalInformativo(props) {
       </Modal.Header>
       <Modal.Body>
         <Row>
+          {props.informacion.foto.toLowerCase().includes("no disponible") ? (
+            ""
+          ) : (
+            <Col md={5} className="foto-container">
+              <p className="titulo-seccion">Fotografía</p>
+              <hr className="divider-Imagen" />
+              <div className="foto-wrapper">
+                <img
+                  src={props.informacion.foto || "placeholder.jpg"}
+                  alt="Fotografía"
+                  className="foto"
+                />
+              </div>
+            </Col>
+          )}
           {/* Columna izquierda - Fotografía */}
-          <Col md={5} className="foto-container">
-            <p className="titulo-seccion">Fotografía</p>
-            <hr className="divider-Imagen" />
-            <div className="foto-wrapper">
-              <img
-                src={props.informacion.foto || "placeholder.jpg"}
-                alt="Fotografía"
-                className="foto"
-              />
-            </div>
-          </Col>
 
           {/* Columna derecha - Información */}
-          <Col md={7} className="info-container">
+          <Col
+            md={
+              props.informacion.foto.toLowerCase().includes("no disponible")
+                ? 12
+                : 7
+            }
+            className="info-container"
+          >
             <div className="info-item">
               <p className="titulo-seccion">Dirección</p>
               <hr className="divider" />

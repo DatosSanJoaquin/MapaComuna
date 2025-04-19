@@ -9,6 +9,7 @@ import {
   useMapEvents,
   Rectangle,
   SVGOverlay,
+  Polygon,
 } from "react-leaflet";
 import {
   Contrast,
@@ -23,6 +24,9 @@ import { styled } from "@mui/material/styles";
 import { readCSVFile } from "./Function/readFile";
 import { Row, Col, Button } from "react-bootstrap";
 import L from "leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import { useMemo } from "react";
+import { getHoverHandler, getCalleStyle } from "./Funciones"; // Asegúrate de importar la función getCalleStyle
 
 function Mapa(props) {
   // Estilos de mapas disponibles
@@ -43,6 +47,7 @@ function Mapa(props) {
     MostrarModalInformativo,
     ShowPanel,
     ShowPanelInfoTerritorios,
+    CallesSegmentos,
   } = props;
 
   const [showMarkers, setShowMarkers] = useState(true);
@@ -57,6 +62,7 @@ function Mapa(props) {
       const currentZoom = map.getZoom();
       console.log("zoom effect", currentZoom);
       setShowMarkers(true); // ✅ Mantener siempre visibles los marcadores
+      console.log("calles segmentos", CallesSegmentos);
     }, [map]);
 
     return null;
@@ -315,20 +321,13 @@ function Mapa(props) {
             });
           }
 
+          const hoverEvents = getHoverHandler(feature.properties.estado);
+
           layer.on({
-            mouseover: (e) => {
-              e.target.openTooltip();
-              e.target.setStyle({
-                weight: 3, // Resalta al pasar el mouse
-              });
-            },
-            mouseout: (e) => {
-              e.target.closeTooltip();
-              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
-            },
+            ...hoverEvents,
             click: (e) => {
-              e.originalEvent.preventDefault(); // Evita selección predeterminada
-              e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
+              e.originalEvent.preventDefault();
+              e.target.setStyle(getCalleStyle(feature.properties.estado));
             },
           });
         }}
@@ -336,33 +335,93 @@ function Mapa(props) {
     );
   };
 
-  const getCalleStyle = (estado) => {
-    console.log("Estado", estado);
+  const construirGeoJSONDesdeSegmentos = (segmentos) => {
+    return {
+      type: "FeatureCollection",
+      features: segmentos.map((item) => ({
+        type: "Feature",
+        properties: {
+          nombre: item.nombre,
+          descripcion: item.descripcion,
+          estado: item.estado,
+        },
+        geometry: {
+          type: "Polygon",
+          coordinates: [item.coordenadas],
+        },
+      })),
+    };
+  };
 
-    switch (estado) {
-      case "Proyecto":
-        return {
-          color: "transparent", // 🔥 Elimina el borde
-          fillColor: "rgba(255, 0, 0, 0.9)", // 🔥 Rojo intenso
-          weight: 0,
-          fillOpacity: 0.6, // 🔥 Alta opacidad para que se vea bien
-        };
-      case "Pavimentación":
-        return {
-          color: "green",
-          fillColor: "rgba(0, 255, 0, 0.5)",
-          weight: 2,
-          fillPattern: true,
-        };
-      case "Reparación de Veredas":
-        return { color: "#5D428B", fillColor: "rgb(157, 137, 191)", weight: 2 };
-      default:
-        return {
-          color: "gray",
-          fillColor: "rgba(128, 128, 128, 0.5)",
-          weight: 2,
-        };
-    }
+  const fondoGris = useMemo(() => {
+    if (!sanJoaquinGeoJSON?.features?.length) return null;
+
+    return {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: [
+              [
+                [-180, 90],
+                [180, 90],
+                [180, -90],
+                [-180, -90],
+                [-180, 90],
+              ],
+              sanJoaquinGeoJSON.features[0].geometry.coordinates[0], // Se excluye San Joaquín
+            ],
+          },
+        },
+      ],
+    };
+  }, [sanJoaquinGeoJSON]);
+
+  const CallesSegmentosLayer = ({ segmentos }) => {
+    const geojsonData = useMemo(() => {
+      if (!segmentos || segmentos.length === 0) return null;
+      return construirGeoJSONDesdeSegmentos(segmentos);
+    }, [segmentos]);
+
+    if (!geojsonData) return null;
+    return (
+      <GeoJSON
+        data={geojsonData}
+        style={(feature) => ({
+          ...getCalleStyle(feature.properties.estado),
+          interactive: true,
+        })}
+        onEachFeature={(feature, layer) => {
+          if (feature.properties && feature.properties.descripcion) {
+            layer.bindTooltip(feature.properties.descripcion, {
+              permanent: false,
+              direction: "top",
+              opacity: 0.9,
+              className: "custom-tooltip",
+            });
+          }
+
+          layer.on({
+            mouseover: (e) => {
+              e.target.openTooltip();
+              e.target.setStyle({
+                weight: 3,
+              });
+            },
+            mouseout: (e) => {
+              e.target.closeTooltip();
+              e.target.setStyle(getCalleStyle(feature.properties.estado));
+            },
+            click: (e) => {
+              e.originalEvent.preventDefault();
+              e.target.setStyle(getCalleStyle(feature.properties.estado));
+            },
+          });
+        }}
+      />
+    );
   };
 
   const CenterLogger = () => {
@@ -377,6 +436,62 @@ function Mapa(props) {
 
     return null; // No necesita renderizar nada en pantalla
   };
+
+  // const ZoneLabels = () => {
+  //   const map = useMap();
+  //   const [zoomLevel, setZoomLevel] = useState(map.getZoom());
+
+  //   useEffect(() => {
+  //     const updateZoom = () => {
+  //       setZoomLevel(map.getZoom());
+  //     };
+
+  //     map.on("zoomend", updateZoom);
+  //     return () => {
+  //       map.off("zoomend", updateZoom);
+  //     };
+  //   }, [map]);
+
+  //   return (
+  //     <>
+  //       {zonas.map((zona, index) => {
+  //         // 📌 Variables de tamaño y opacidad
+  //         let fontSize;
+  //         let opacity;
+
+  //         if (zoomLevel >= 14) {
+  //           // 🔹 Cuando el zoom es 14 o mayor, los números crecen progresivamente
+  //           fontSize = 50 + (zoomLevel - 13) * 5;
+  //           opacity = Math.max(0.2, 1 - (zoomLevel - 14) * 0.2);
+  //         } else {
+  //           // 🔹 Cuando el zoom es menor a 14, reducción MUY agresiva
+  //           fontSize = Math.max(2, 50 - (14 - zoomLevel) * 15); // 🔥 Llega hasta 2px
+  //           opacity = 1; // Mantiene opacidad máxima para que no desaparezca
+  //         }
+
+  //         return (
+  //           <Marker
+  //             key={index}
+  //             position={zona.posicionLabel}
+  //             interactive={false}
+  //             icon={L.divIcon({
+  //               className: "zone-label",
+  //               html: `<div style="
+  //                 font-size: ${fontSize}px;
+  //                 opacity: ${opacity};
+  //                 font-weight: bold;
+  //                 color: rgb(237, 103, 23, 0.5);
+  //                 text-align: center;
+  //       pointer-events: none;">${zona.name}</div>`, // 🚀 Bloqueamos eventos
+
+  //               iconSize: [20],
+  //             })}
+  //           />
+  //         );
+  //       })}
+  //     </>
+  //   );
+  // };
 
   const ZoneLabels = () => {
     const map = useMap();
@@ -393,45 +508,41 @@ function Mapa(props) {
       };
     }, [map]);
 
-    return (
-      <>
-        {zonas.map((zona, index) => {
-          // 📌 Variables de tamaño y opacidad
-          let fontSize;
-          let opacity;
+    const labelMarkers = useMemo(() => {
+      return zonas.map((zona, index) => {
+        let fontSize;
+        let opacity;
 
-          if (zoomLevel >= 14) {
-            // 🔹 Cuando el zoom es 14 o mayor, los números crecen progresivamente
-            fontSize = 50 + (zoomLevel - 13) * 5;
-            opacity = Math.max(0.2, 1 - (zoomLevel - 14) * 0.2);
-          } else {
-            // 🔹 Cuando el zoom es menor a 14, reducción MUY agresiva
-            fontSize = Math.max(2, 50 - (14 - zoomLevel) * 15); // 🔥 Llega hasta 2px
-            opacity = 1; // Mantiene opacidad máxima para que no desaparezca
-          }
+        if (zoomLevel >= 14) {
+          fontSize = 50 + (zoomLevel - 13) * 5;
+          opacity = Math.max(0.2, 1 - (zoomLevel - 14) * 0.2);
+        } else {
+          fontSize = Math.max(2, 50 - (14 - zoomLevel) * 15);
+          opacity = 1;
+        }
 
-          return (
-            <Marker
-              key={index}
-              position={zona.posicionLabel}
-              interactive={false}
-              icon={L.divIcon({
-                className: "zone-label",
-                html: `<div style="
-                  font-size: ${fontSize}px;
-                  opacity: ${opacity};
-                  font-weight: bold;
-                  color: rgb(237, 103, 23, 0.5);
-                  text-align: center;
-        pointer-events: none;">${zona.name}</div>`, // 🚀 Bloqueamos eventos
+        return (
+          <Marker
+            key={index}
+            position={zona.posicionLabel}
+            interactive={false}
+            icon={L.divIcon({
+              className: "zone-label",
+              html: `<div style="
+                font-size: ${fontSize}px;
+                opacity: ${opacity};
+                font-weight: bold;
+                color: rgb(237, 103, 23, 0.5);
+                text-align: center;
+                pointer-events: none;">${zona.name}</div>`,
+              iconSize: [20],
+            })}
+          />
+        );
+      });
+    }, [zonas, zoomLevel]); // ✅ Se recalcula solo si cambia el zoom o las zonas
 
-                iconSize: [20],
-              })}
-            />
-          );
-        })}
-      </>
-    );
+    return <>{labelMarkers}</>;
   };
 
   return (
@@ -467,11 +578,11 @@ function Mapa(props) {
         setIsHighContrast={setIsHighContrast}
         setAllowManualZoom={setAllowManualZoom} // ✅ Pasamos el estado para permitir zoom manual
       />
-      <MoveToTerritory
+      {/* <MoveToTerritory
         selectedTerritory={selectedTerritory}
         allowManualZoom={allowManualZoom} // ✅ Lo pasamos para evitar que `flyTo` se active
         setAllowManualZoom={setAllowManualZoom} // ✅ Para resetear el estado si es necesario
-      />
+      /> */}
       <ManualZoomHandler setAllowManualZoom={setAllowManualZoom} />
       {/* Zoom manual (horizontal) */}
       {/* <HighContrastToggle
@@ -482,36 +593,17 @@ function Mapa(props) {
       {/* Área fuera de los límites de San Joaquín (gris) */}
       <CustomTopRightButton />
       <CustomTopLeftButton />
-      <GeoJSON
-        data={{
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: {},
-              geometry: {
-                type: "Polygon",
-                coordinates: [
-                  [
-                    [-180, 90],
-                    [180, 90],
-                    [180, -90],
-                    [-180, -90],
-                    [-180, 90],
-                  ],
-                  sanJoaquinGeoJSON.features[0].geometry.coordinates[0], // Se excluye San Joaquín
-                ],
-              },
-            },
-          ],
-        }}
-        style={{
-          fillColor: "#d3d3d3",
-          color: "none",
-          weight: 0,
-          fillOpacity: 0.7,
-        }}
-      />
+      {fondoGris && (
+        <GeoJSON
+          data={fondoGris}
+          style={{
+            fillColor: "#d3d3d3",
+            color: "none",
+            weight: 0,
+            fillOpacity: 0.7,
+          }}
+        />
+      )}
       {/* Límite de San Joaquín (borde rojo) */}
       <GeoJSON
         data={sanJoaquinGeoJSON}
@@ -525,7 +617,7 @@ function Mapa(props) {
       {/* Calles en reparación */}
       {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
       {/* <PatternedGeoJSON data={callesEnReparacion} /> */}
-      <CallesReparacionLayer />
+      {/* <CallesReparacionLayer /> */}
       {/* <GeoJSON data={callesEnReparacion} style={() => estiloCalles} /> */}
       {/* 🟢 Zona 1 dentro de San Joaquín */}
       {/* <GeoJSON
@@ -536,6 +628,12 @@ function Mapa(props) {
                 mouseout: onMouseOut,
               }}
             /> */}
+
+      <CallesReparacionLayer />
+      {CallesSegmentos?.length > 0 && (
+        <CallesSegmentosLayer segmentos={props.CallesSegmentos} />
+      )}
+
       {zonas.map((zona, index) => (
         <GeoJSON
           key={index}
@@ -554,73 +652,37 @@ function Mapa(props) {
           }}
         />
       ))}
-      {/* {showLabels &&
-                zonas.map((zona, index) => (
-                  <Marker
-                    key={index}
-                    position={zona.posicionLabel}
-                    // icon={L.divIcon({
-                    //   className: "zone-label",
-                    //   html: `<div style='color: rgba(132,55,123, 0.4); font-weight: bold;font-size: 50px ;padding: 4px; border-radius: 4px;'>${zona.name}</div>`,
-                    //   //html: `<div style='color: black; font-weight: bold; background: rgba(255,255,255,0.8); padding: 2px 6px 2px 5px; border-radius: 4px;'>${zona.name}</div>`,
-                    //   iconSize: [20],
-                    //   //iconAnchor: [50, 15],
-                    // })}
-                    icon={L.divIcon({
-                      className: "zone-label",
-                      html: `<div class="floating-label">${zona.name}</div>`,
-                      iconSize: [20],
-                    })}
-                  />
-                ))} */}
+
       {/* 📍 Renderizar marcadores con iconos personalizados */}
       {/* 📍 Renderizar los marcadores generales al iniciar, pero ocultarlos si el usuario acerca el zoom */}
-      <MarkerVisibilityController />
-      {/* {showMarkersFirstLevel &&
-              markersDataFirstLevel.map((marker) => (
-                <Marker
-                  key={marker.id}
-                  position={marker.position}
-                  icon={marker.icon}
-                >
-                  <Popup>{marker.name}</Popup>
-                </Marker>
-              ))} */}
+      {/* <MarkerVisibilityController /> */}
+
       {/* 📍 Renderizar los marcadores solo si `showMarkers` es true */}
-      {showMarkers
-        ? filteredMarkers.map((marker) => (
+
+      {showMarkers ? (
+        <MarkerClusterGroup
+          maxClusterRadius={30}
+          spiderfyOnMaxZoom={true}
+          showCoverageOnHover={false}
+          chunkedLoading={true}
+        >
+          {filteredMarkers.map((marker) => (
             <Marker
               key={marker.id}
               position={marker.position}
               icon={marker.icon}
               eventHandlers={{
-                mouseover: (e) => e.target.openPopup(), // ✅ Abre el popup cuando pasas el mouse
-                mouseout: (e) => e.target.closePopup(), // ✅ Cierra el popup cuando sales
-                click: () => MostrarModalInformativo(marker), // ✅ Muestra un alert con el nombre del marcador
+                mouseover: (e) => e.target.openPopup(),
+                mouseout: (e) => e.target.closePopup(),
+                click: () => MostrarModalInformativo(marker),
               }}
             >
               <Popup className="custom-popup">{marker.name}</Popup>
             </Marker>
-          ))
-        : null}
-      {/* <Marker
-              key={4}
-              position={[-33.483, -70.632]}
-              icon={createCustomMarker(`${process.env.PUBLIC_URL}/icons/tree.png`)}
-            >
-              <Popup>Parque Isabel Riquelme</Popup>
-            </Marker> */}
-      {/* {showMarkersFirstLevel
-              ? markersDataFirstLevel.map((marker) => (
-                  <Marker
-                    key={marker.id}
-                    position={marker.position}
-                    icon={marker.icon}
-                  >
-                    <Popup>{marker.name}</Popup>
-                  </Marker>
-                ))
-              : null} */}
+          ))}
+        </MarkerClusterGroup>
+      ) : null}
+
       <CenterLogger />
       {/* <TestMarker /> */}
       <ZoneLabels />
