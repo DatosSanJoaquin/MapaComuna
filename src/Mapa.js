@@ -629,7 +629,7 @@ function Mapa(props) {
               }}
             /> */}
 
-      <CallesReparacionLayer />
+      {/* <CallesReparacionLayer /> */}
       {CallesSegmentos?.length > 0 && (
         <CallesSegmentosLayer segmentos={props.CallesSegmentos} />
       )}
