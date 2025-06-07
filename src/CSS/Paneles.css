@@ -91,7 +91,10 @@
   position: absolute;
   top: 20px; /* Margen superior */
   left: 10px; /* Margen izquierdo */
-  width: 320px; /* Ancho del panel */
+  width: 350px; /* Ancho del panel */
+  max-height: 90vh;
+  overflow-y: auto !important;
+  scroll-behavior: smooth;
   /* height: calc(100vh - 100px); */
   /* height: calc(40vh - 100px); */
   /* height: 280px; */

@@ -41,7 +41,7 @@ import {
   CampoDropDownSearchSimple,
   SelectWithCheckboxes,
 } from "./Function/Campos";
-import ModalInformativo from "./Function/Modal";
+import { ModalInformativo, ModalInformativoCalle } from "./Function/Modal";
 import Mapa from "./Mapa";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -689,6 +689,8 @@ function App() {
   const [showPanel, setShowPanel] = useState(false);
   const [showPanelTerritorios, setShowPanelTerritorios] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
+  const [showModalCalle, setShowModalCalle] = useState(false);
+  const [informacionModalCalle, setInformacionModalCalle] = useState(null);
   const [informacionMarker, setInformacionMarker] = useState(null);
 
   //STATE DE MATRICES
@@ -1065,6 +1067,13 @@ function App() {
     setInformacionMarker(marker);
   };
 
+  const MostrarModalInformativoCalle = (info) => {
+    console.log("informacion calle", info);
+
+    setInformacionModalCalle(info);
+    setShowModalCalle(true);
+  };
+
   // const CallesReparacionLayer = () => {
   //   const map = useMap();
 
@@ -1337,12 +1346,16 @@ function App() {
                     <hr className="divider" />
                   </Col>
                   <Col md={12}>
-                    <p
+                    <div
                       className="contenido-seccion-panel"
                       style={{ whiteSpace: "pre-line" }}
                     >
-                      {categoria.informacion}
-                    </p>
+                      {categoria.informacion.split("\n").map((linea, i) => (
+                        <p key={i} style={{ marginBottom: "4px" }}>
+                          {"> " + linea}
+                        </p>
+                      ))}
+                    </div>
                   </Col>
                 </div>
               ))
@@ -1365,6 +1378,7 @@ function App() {
           allowManualZoom={allowManualZoom}
           setAllowManualZoom={setAllowManualZoom}
           MostrarModalInformativo={MostrarModalInformativo}
+          MostrarModalInformativoCalle={MostrarModalInformativoCalle}
           ShowPanel={mostrarPanel}
           ShowPanelInfoTerritorios={mostrarPanelTerritorios}
           CallesSegmentos={callesSegmentos}
@@ -1408,6 +1422,11 @@ function App() {
           informacion={informacionMarker}
         />
       )}
+      <ModalInformativoCalle
+        show={showModalCalle}
+        handleClose={() => setShowModalCalle(false)}
+        informacion={informacionModalCalle}
+      />
     </>
   );
 }

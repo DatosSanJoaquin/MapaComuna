@@ -1,40 +1,252 @@
 ﻿Territorio,Categoría,Información
-1,Seguridad,"Seguridad de la comuna :
-1. Tratar de superar ….
-2. Vigilancia municipal"
-1,Deportes,Areas recreativas avanzaron un 80% desde….
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
-,,
+1,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+16 Nuevos Vehículos se agregaron para Patrullaje
+108 Comités de Seguridad Formados"
+1,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+En el territorio 1 se recolectaron 7.989 toneladas de residuos domiciliarios y 1.923 toneladas de escombros."
+1,Salud," Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+1,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+1,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2 ($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+1,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+1,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+1,Obras," Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Inversión en el territorio 1: $781.460.000 (Proyecto Aceras VII).
+ Calles intervenidas: Vías como Tocornal, Liszt y Santa Elena.
+ Seguridad vial: Instalación de lomos de toro en Borodón y Chopin, y demarcación en Av. Central."
+2,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+2,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 2 se recolectaron 6.085 toneladas de residuos domiciliarios y 1.465 toneladas de escombros."
+2,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+2,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+2,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+2,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+2,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+2,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Inversión en el territorio 2. $1.586.915.000 (Proyecto Aceras VII).
+ Calles intervenidas: Darwin, Drake, Antartica, San Gregorio, Cabildo, Mateo de Toro y Zambrano, Zenon Torrealba, Matta Vial, Leal, Copacabana, Embajador Noel, Prensa, Comercio, Carlos Fau, Magallanes, Maestranza, Los Copihues, Aysen, Springhill, Schawager, Esfuerzo y Progreso.
+ Seguridad vial: Reconstrucción de veredas, Demarcación Señalización y Lomo de Toros.
+"
+3,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+3,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 3 se recolectaron 5.553 toneladas de residuos domiciliarios y 1.337 toneladas de escombros."
+3,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Controles médicos y consultas: 38,469 atenciones en el territorio 3 (mayor demanda en CESFAM San Joaquín).
+ Salud mental: 5689 atenciones (3.411 atenciones en el territorio 3).
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+3,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+3,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+3,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+3,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+3,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Inversión en el territorio 3: $174.521.000 (Proyecto Aceras VII).
+ Calles intervenidas: Castelar Sur, Pasaje Rio Valdivia, Alcalde Pedro Alarcon y Salomon Sumar 
+ Seguridad vial: Reconstrucción de veredas, Demarcación Señalización y Lomo de Toros."
+4,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+4,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 4 se recolectaron 5.655 toneladas de residuos domiciliarios y 1.361 toneladas de escombros."
+4,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+4,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+4,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+4,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+4,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+4,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Inversión en el territorio 4: $599.008.000 (Proyecto Aceras VII).
+ Calles intervenidas: Nurember, Llico, Cristobal de Erazo, Gaspar de Espinoza, Pasaje Francisco de Castañeda, Francisco de Toledo, Vasco Nuñes de Balboa y Cabildo"
+5,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+5,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 5 se recolectaron 6.407 toneladas de residuos domiciliarios y 1.542 toneladas de escombros."
+5,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+5,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+5,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Circuitos de calistenia inclusivos en territorio 5.
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+5,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+5,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+5,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Ciclovías: Implementación en Av. Haydn (territorio 6) y Av. Las Industrias (territorio 5).
+ Inversión en el territorio 5: $603.267.000 (Proyecto Aceras VII).
+ Calles intervenidas: San Juan, Pasaje Dagoberto Godoy, Pirámide, Pasaje Ollagüe, Llico, Pasaje Cuya, Ureta Cox, Pasaje Pica, Winnipeg, Toronto, Vancouver, Ingeniero Budge.
+ Seguridad vial: Conservación de ciclovía Av. Las Industrias, Demarcacion de Señalizacion Peatonal."
+6,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+6,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 6 se recolectaron 5.815 toneladas de residuos domiciliarios y 1.400 toneladas de escombros."
+6,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+6,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+6,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+6,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+6,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+6,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Ciclovías: Implementación en Av. Haydn (territorio 6) y Av. Las Industrias (territorio 5).
+ Inversión en el territorio 6: $789.852.126 (Proyecto Aceras VII).
+ Calles intervenidas: Pasaje Pedro Sarmiento, Pasaje Ingeniero Mario Díaz, Castilla, Aragón, El Prado, Berlioz, Pintor Durero, Pintor Murillo, Benozzo Gozzolli,
+ Seguridad vial: Lomos de toro en Varas Mena y ciclovía en Carmen Mena ($83.330.000)."
+7,Seguridad,"Aumento de Cámaras de televigilancia de 87 camaras a 160 cámaras de televigilancia.
+  16 Nuevos Vehículos se agregaron para Patrullaje
+ 108 Comités de Seguridad Formados"
+7,Aseo y reciclaje,"Se recolectaron 40.932 toneladas de residuos domiciliarios y 9.853 toneladas de escombros.
+ En el territorio 7 se recolectaron 3.438 toneladas de residuos domiciliarios y 825 toneladas de escombros."
+7,Salud,"Inversión en salud: $1.482 millones en infraestructura y equipos médicos.
+ Atenciones: 52.317 atenciones de salud en toda la comuna (controles, urgencias, vacunas).
+ Salud mental: 5689 atenciones (2.268 atenciones en el territorio 7).
+ Vacunación: 14,905 dosis de influenza aplicadas.
+ FALP: Coordinacion y ejecucion de 15 operativos de mamografías gratuitas a nivel comunal.
+ Ampliación de SAPU y CESFAM: Mejora de horarios y cobertura en Territorios 1 y 5.
+ Reposición CESFAM Dr. Arturo Baeza Gofil: En licitación en territorio 2 ($10,573 millones).
+ Sala para niños con TEA: En construcción en Territorio 6 ($131,9 millones)."
+7,Personas Mayores,"58 talleres en toda la comuna: yoga, manualidades, danzas latinoamericanas, alfabetización digital, teatro, salud integrativa, entre otros.
+ Más de 800 adultos mayores participaron.
+ Celebración del Día del Adulto Mayor con actividades recreativas y culturales.
+ Certificaciones en talleres de coro, teatro y bordado mexicano son algunas de las certificacones.
+ Saneamiento sanitario en sedes sociales de la comuna.
+ Centro de Atención Integral del Adulto Mayor en diseño (en el territorio 3, inversión: $1.319 millones)."
+7,Vida Sana,"Talleres deportivos: 72 disciplinas en toda la comuna (zumba, fútbol, patinaje, yoga, tenis).
+ Multicanchas techadas (territorio 6: $88.2 millones en Villa Cervantes).
+ Circuitos de calistenia inclusivos en territorio 7.
+ Ferias ""Elige Vivir Sano"": Distribución de material educativo y degustaciones.
+ 12 Huertos comunitarios.
+ Parque del Amor y los Animales en postulación en el territorio 1 (área verde con enfoque comunitario).
+ Centro Deportivo Inclusivo en diseño para el territorio 2($161 millones).
+ Participación de 4.500 vecinos en talleres deportivos y 2.100 en actividades ecológicas."
+7,Infancia,"Se realizaron 115 Talleres deportivos y culturales con el fin de llegar a los niños y niñas de la comuna, además se realizaron Campeonatos con inclusión Deportiva y actividades itinerantes como Vacaciones en tu Plaza, Verano en tu Barrio con los cuales llegamos a todos los territorios."
+7,Mujeres,"Reposición y mejoramiento de infraestructura del Espacio Mujer en Carmen Mena 230.
+ 185 mujeres inscritas en 2024 en el Programa Mujeres Jefas de Hogar, con talleres de formación, ferias laborales y apoyo en trámites."
+7,Obras,"Total invertido 20242025 en obras: $9.159.912.000
+ Obras de infraestructura, iluminación peatonal, pavimentación de veredas, mitigaciones urbanas, seguridad vial, demarcaciones, entre otros.
+ 15 Lomos de toro: instalados en puntos críticos para reducir las probabilidades de accidentes.
+ Ciclovías: Implementación en Av. Haydn (territorio 6) y Av. Las Industrias (territorio 5).
+ Inversión en el territorio 7: $229.281.000 (Proyecto Aceras VII).
+ Calles intervenidas: Varas Mena, Estadio y Punta Arenas.
+ Seguridad vial: Iluminación en Carmen Mena, pasos peatonales y estudio para semáforo en Haydn/Carmen Mena."

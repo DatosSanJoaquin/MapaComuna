@@ -45,6 +45,7 @@ function Mapa(props) {
     allowManualZoom,
     setAllowManualZoom,
     MostrarModalInformativo,
+    MostrarModalInformativoCalle,
     ShowPanel,
     ShowPanelInfoTerritorios,
     CallesSegmentos,
@@ -54,16 +55,34 @@ function Mapa(props) {
   const [tileLayer, setTileLayer] = useState(tileLayers.normal);
   const [isHighContrast, setIsHighContrast] = useState(false);
 
-  const MarkerVisibilityController = () => {
+  // const MarkerVisibilityController = () => {
+  //   const map = useMap();
+  //   //const lastZoom = useRef(null);
+
+  //   useEffect(() => {
+  //     const currentZoom = map.getZoom();
+  //     console.log("zoom effect", currentZoom);
+  //     setShowMarkers(true); // ✅ Mantener siempre visibles los marcadores
+  //     console.log("calles segmentos", CallesSegmentos);
+  //   }, [map]);
+
+  //   return null;
+  // };
+
+  const MarkerVisibilityController = ({ CallesSegmentos }) => {
     const map = useMap();
-    //const lastZoom = useRef(null);
+    const [hasInitialized, setHasInitialized] = useState(false);
 
     useEffect(() => {
+      if (!map || hasInitialized) return; // Evita ejecución doble
+
       const currentZoom = map.getZoom();
-      console.log("zoom effect", currentZoom);
-      setShowMarkers(true); // ✅ Mantener siempre visibles los marcadores
-      console.log("calles segmentos", CallesSegmentos);
-    }, [map]);
+      //console.log("🔍 Zoom inicial:", currentZoom);
+      //console.log("📋 Calles segmentos iniciales:", CallesSegmentos);
+
+      setShowMarkers(true); // Mantener siempre visibles los marcadores
+      setHasInitialized(true); // Marcar que ya se ejecutó
+    }, [map, hasInitialized, CallesSegmentos]);
 
     return null;
   };
@@ -344,6 +363,9 @@ function Mapa(props) {
           nombre: item.nombre,
           descripcion: item.descripcion,
           estado: item.estado,
+          direccion: item.direccion,
+          territorio: item.territorio,
+          categoria: item.categoria,
         },
         geometry: {
           type: "Polygon",
@@ -394,8 +416,8 @@ function Mapa(props) {
           interactive: true,
         })}
         onEachFeature={(feature, layer) => {
-          if (feature.properties && feature.properties.descripcion) {
-            layer.bindTooltip(feature.properties.descripcion, {
+          if (feature.properties && feature.properties.nombre) {
+            layer.bindTooltip(feature.properties.nombre, {
               permanent: false,
               direction: "top",
               opacity: 0.9,
@@ -417,6 +439,20 @@ function Mapa(props) {
             click: (e) => {
               e.originalEvent.preventDefault();
               e.target.setStyle(getCalleStyle(feature.properties.estado));
+
+              //console.log("Calle seleccionada:", feature.properties.direccion);
+
+              const info = {
+                name: feature.properties.nombre || "Sin nombre",
+                direccion: feature.properties.direccion || "No disponible",
+                territorio: feature.properties.territorio || "No disponible",
+                descripcion: feature.properties.descripcion || "No disponible",
+                coordenada: feature.geometry?.coordinates
+                  ? feature.geometry.coordinates.join(", ")
+                  : "No disponible",
+                categoria: feature.properties.estado || "No disponible",
+              };
+              MostrarModalInformativoCalle(info);
             },
           });
         }}
@@ -566,7 +602,7 @@ function Mapa(props) {
         url={tileLayer}
         attribution="&copy; OpenStreetMap contributors"
       />
-      <MarkerVisibilityController />
+      <MarkerVisibilityController CallesSegmentos={CallesSegmentos} />
 
       {/* <MarkerVisibilityControllerFirstLevel
               setShowMarkers={setShowMarkersFirstLevel}
