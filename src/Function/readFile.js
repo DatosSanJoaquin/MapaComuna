@@ -136,8 +136,11 @@ export const readCSVFile = async () => {
 };
 
 export const leerTerritoriosCSV = async () => {
+  const url_Territorio =
+    "https://raw.githubusercontent.com/DatosSanJoaquin/MapaComuna/refs/heads/main/public/data/Territorios.csv";
   return new Promise((resolve, reject) => {
-    fetch(process.env.PUBLIC_URL + "/data/Territorios.csv")
+    //fetch(process.env.PUBLIC_URL + "/data/Territorios.csv")
+    fetch(url_Territorio)
       .then((response) => response.text())
       .then((csvText) => {
         Papa.parse(csvText, {
