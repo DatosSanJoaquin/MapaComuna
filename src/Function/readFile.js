@@ -1,8 +1,8 @@
 import Papa from "papaparse";
 import { createCustomMarker } from "../Funciones";
 
-const FILE_PATH = `${process.env.PUBLIC_URL}/data/Marcadores.csv`;
-//const FILE_PATH = `https://raw.githubusercontent.com/DatosSanJoaquin/MapaComuna/refs/heads/main/public/data/Marcadores.csv`;
+//const FILE_PATH = `${process.env.PUBLIC_URL}/data/Marcadores.csv`;
+const FILE_PATH = `https://raw.githubusercontent.com/DatosSanJoaquin/MapaComuna/refs/heads/main/public/data/Marcadores.csv`;
 
 export const readCSVFile = async () => {
   return new Promise((resolve, reject) => {
