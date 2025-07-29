@@ -2,6 +2,7 @@ import Papa from "papaparse";
 import { createCustomMarker } from "../Funciones";
 
 const FILE_PATH = `${process.env.PUBLIC_URL}/data/Marcadores.csv`;
+//const FILE_PATH = `https://raw.githubusercontent.com/DatosSanJoaquin/MapaComuna/refs/heads/main/public/data/Marcadores.csv`;
 
 export const readCSVFile = async () => {
   return new Promise((resolve, reject) => {
@@ -29,10 +30,10 @@ export const readCSVFile = async () => {
               })
               .map((row) => {
                 // Reemplaza campos vacíos con "No disponible", excepto la foto
-
                 const cleanRow = {};
                 Object.keys(row).forEach((key) => {
                   if (key === "Foto (Si aplica)**") {
+                    // Si es una foto, no reemplazar
                     cleanRow[key] = row[key];
                   } else {
                     cleanRow[key] =
@@ -41,6 +42,23 @@ export const readCSVFile = async () => {
                         : "No disponible";
                   }
                 });
+
+                // 🔍 DEBUG: SOLO mostrar si el marcador TIENE FOTO
+                const fotoOriginal = row["Foto (Si aplica)**"];
+                if (
+                  fotoOriginal &&
+                  String(fotoOriginal).trim() !== "" &&
+                  String(fotoOriginal).trim() !== "null" &&
+                  String(fotoOriginal).trim() !== "undefined"
+                ) {
+                  console.log("🖼️ ¡MARCADOR CON FOTO DETECTADO!");
+                  console.log("📍 Nombre:", row["Nombre"]);
+                  console.log("📂 Foto en CSV:", `"${fotoOriginal}"`);
+                  console.log(
+                    "📂 Después de limpieza:",
+                    `"${cleanRow["Foto (Si aplica)**"]}"`
+                  );
+                }
 
                 // 🔥 Precarga de ícono
                 const iconPath = `${process.env.PUBLIC_URL}/icons/marcadores/${cleanRow["Icono (JPG o PNG)"]}`;
@@ -204,7 +222,7 @@ export const leerMatrizCallesSegmentos = async () => {
               let coords;
               console.log(`Fila ${i} coordenada cruda:`, row.Coordenada);
               try {
-                const raw = row.Coordenada.trim().replace(/“|”/g, '"');
+                const raw = row.Coordenada.trim().replace(/"|"/g, '"');
                 coords = JSON.parse(raw);
               } catch (err) {
                 console.error("Error al parsear coordenadas:", row.Coordenada);

@@ -103,3 +103,562 @@
   border-top-left-radius: 4px !important;
   border-top-right-radius: 4px !important;
 }
+
+/* Agregue estos estilos a su archivo ModalInformativo.css */
+
+.modern-modal-body {
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Hero Image Section */
+.hero-image-section {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hero-image:hover {
+  transform: scale(1.02);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 20px;
+  color: white;
+}
+
+.image-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Info Grid */
+.info-grid {
+  padding: 10px 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.info-card:hover::before {
+  opacity: 1;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: #8bc34a;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+
+.location-icon {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+}
+
+.description-icon {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+}
+
+.link-icon {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.card-content {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Link especial */
+.link-card {
+  background: linear-gradient(135deg, #fff3e0, #ffffff);
+  border-color: #ff9800;
+}
+
+.modern-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff9800;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border: 2px solid #ff9800;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.modern-link:hover {
+  background: #ff9800;
+  color: white;
+  transform: translateX(4px);
+  text-decoration: none;
+}
+
+/* Badges Section */
+.info-badges {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.badge-label {
+  font-size: 12px;
+  color: #6c757d;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.territorio-badge {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  color: white;
+}
+
+.categoria-badge {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .info-grid {
+    padding: 0 16px 16px;
+    gap: 16px;
+  }
+
+  .info-card {
+    padding: 16px;
+  }
+
+  .info-badges {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .badge-item {
+    min-width: auto;
+  }
+
+  .image-container {
+    height: 150px;
+  }
+}
+
+/* Animaciones sutiles */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.info-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.info-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.info-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.info-badges {
+  animation-delay: 0.4s;
+}
+
+/* Estilos específicos para Modal de Calles - Agregar a ModalInformativo.css */
+
+.modern-modal-body-calle {
+  padding: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.content-container-calle {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Header Section */
+.calle-header {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+  margin-bottom: 24px;
+}
+
+.calle-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.calle-title-section h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.calle-description-brief {
+  margin: 4px 0 0 0;
+  opacity: 0.9;
+  font-size: 14px;
+}
+
+/* Info Grid for Calles */
+.info-grid-calle {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card-calle {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-card-calle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.info-card-calle:hover::before {
+  opacity: 1;
+}
+
+.info-card-calle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: #8bc34a;
+}
+
+.card-header-calle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.icon-wrapper-calle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+
+.icon-wrapper-calle.location-icon {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+}
+
+.icon-wrapper-calle.description-icon {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+}
+
+.card-title-calle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.card-content-calle {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.description-text {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #9c27b0;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Badges Section para Calles */
+.info-badges-calle {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e9ecef;
+}
+
+.badge-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.badge-item-calle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.badge-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6c757d;
+}
+
+.badge-header i {
+  font-size: 14px;
+}
+
+.badge-label-calle {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.badge-calle {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.territorio-badge-calle {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  color: white;
+}
+
+.categoria-badge-calle {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+}
+
+/* Status Section */
+.proyecto-status {
+  background: linear-gradient(135deg, #e8f5e8, #ffffff);
+  border: 1px solid #8bc34a;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-text {
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive para Calles */
+@media (max-width: 768px) {
+  .calle-header {
+    padding: 20px 16px;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .info-grid-calle {
+    padding: 0 16px 16px;
+    gap: 16px;
+  }
+
+  .info-card-calle {
+    padding: 16px;
+  }
+
+  .badge-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .badge-item-calle {
+    min-width: auto;
+  }
+}
+
+/* Animaciones para Calles */
+.info-card-calle {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.info-card-calle:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.info-card-calle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.info-badges-calle {
+  animation-delay: 0.3s;
+  animation: fadeInUp 0.6s ease forwards;
+}
+.proyecto-status {
+  animation-delay: 0.4s;
+  animation: fadeInUp 0.6s ease forwards;
+}

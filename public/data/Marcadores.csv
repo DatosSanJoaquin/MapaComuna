@@ -90,7 +90,7 @@ Multicancha Plaza Las Flores,1,"-33.481776921329825, -70.62508150493213",TALLERE
 "Piscina Municipal Recreativa, Carlos Valdovinos 287",1,"-33.48370171879337, -70.63087944248839",TALLERES DEPORTIVOS ,Deportes,0028 TALLER DE PISCINA.png,,Talleres piscina Verano 
 "Piscina Municipal Temperada, Carlos Valdovinos 287",1,"-33.48364585146848, -70.63020641539326",TALLERES DEPORTIVOS ,Deportes,00145_ACTIVIDADES_PISCINA_MUNICIPAL.png,,"Talleres de Aquazumba, hidroyoga, natacion gestantes, matronatación, y ambientacion al medio acuático, seguridad en el agua, natacion inicial, natación adolecente, hidrogimnasia, natacion inicial adultos."
 "Villa Manuel de Salas , Carmen 2341",1,"-33.47623503624933, -70.63617281531414",TALLERES DEPORTIVOS ,Deportes,00146_TALLERES_MULTIDEPORTIVOS.png,,"Basquetbol niñez, Entrenamiento funcional, Zumba"
-"Skate park, Parque intercomunal Victor Jara (Isabel Riquelme 542)",1,"-33.479215415936345, -70.63774760018646",TALLERES DEPORTIVOS ,Deportes,0030 SKATE.png,,Se realiza Taller de Skate 
+"Skate park, Parque intercomunal Victor Jara (Isabel Riquelme 542)",1,"-33.479215415936345, -70.63774760018646",TALLERES DEPORTIVOS ,Deportes,0030 SKATE.png,SkateParqueVictorJara.jpg,Se realiza Taller de Skate 
 Plaza Santa María ,1,"-33.47410584809216, -70.63349211047422",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,"Mejoramiento de zonas deportivas, instalación de circuitos de calistenia y circuitos inclusivos."
 San Francisco de California ,1,"-33.47831190390589, -70.63847727062021",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,"Mejoramiento de zonas deportivas, instalación de circuitos de calistenia y circuitos inclusivos."
 Casablanca ,1,"-33.477159466966874, -70.63562845347668",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,"Mejoramiento de zonas deportivas, instalación de circuitos de calistenia y circuitos inclusivos."
@@ -233,11 +233,11 @@ Jorge Canning 513,2,"-33.48709433563712, -70.63647999247885",Atencion de Emergen
 Darwin & Av. Las Industrias,2,"-33.48595793752641, -70.62996758891705",Atencion de Emergencía DRGD,Seguridad,00128_SUSPENSION_AGUA.png,,Anomalia de suministro agua potable / Perdida de Presion 
 Mateo de Toro y Zambrano y Contancia,2,"-33.491212986352906, -70.6333267111976",Atencion de Emergencía DRGD,Seguridad,00137_ACCIDENTE_ELECTRICO.png,,Caida de plancha sobre tendido electrico
 Av. Carlos Valdovinos 560,2,"-33.48195246642198, -70.6380729535867",Atencion de Emergencía DRGD,Seguridad,00137_ACCIDENTE_ELECTRICO.png,,Caida de poste sobre tendido electrico
-Bennozo Gozzoli 4136,2,"-33.494785332183746, -70.62995477491228",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,-Caída de arboles y caída de ramas
-Santa Rosa 4040,2,"-33.49430383398814, -70.63977420529591",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,-Caída de arboles y caída de ramas
-Darwin 320,2,"-33.48587650645884, -70.6313554461643",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,-Caída de arboles y caída de ramas
-Lucrecia Fernandez & Springfield,2,"-33.486642149332525, -70.63069036557756",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,-Caída de arboles y caída de ramas
-Venecia & Padre Mariano Puga,2,"-33.487260617190366, -70.63611188249172",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,-Caída de arboles y caída de ramas
+Bennozo Gozzoli 4136,2,"-33.494785332183746, -70.62995477491228",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,#¿NOMBRE?
+Santa Rosa 4040,2,"-33.49430383398814, -70.63977420529591",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,#¿NOMBRE?
+Darwin 320,2,"-33.48587650645884, -70.6313554461643",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,#¿NOMBRE?
+Lucrecia Fernandez & Springfield,2,"-33.486642149332525, -70.63069036557756",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,#¿NOMBRE?
+Venecia & Padre Mariano Puga,2,"-33.487260617190366, -70.63611188249172",Atencion de Emergencía DRGD,Seguridad,00126_ATENCIONES_DE_EMERGENCIAS.png,,#¿NOMBRE?
 Springhill 3360,2,"-33.48893885714496, -70.63104929692102",Seguridad e Iluminación,Seguridad,00120 GESTION SEGURIDAD COMUNIDAD.png,,Comites de Seguridad Territorio 2
 Lucrecia Fernandez & Springfield,2,"-33.48665033657341, -70.63069620543703",Seguridad e Iluminación,Seguridad,00120 GESTION SEGURIDAD COMUNIDAD.png,,Comites de Seguridad Territorio 2
 Pasaje Hanga Roa,2,"-33.48554496593945, -70.63993766148313",Seguridad e Iluminación,Seguridad,00120 GESTION SEGURIDAD COMUNIDAD.png,,Comites de Seguridad Territorio 2
@@ -967,7 +967,7 @@ Plaza Ingeniero Marío Díaz (Ingeniero Mario Díaz con Pintor Murillo),6,"-33.5
 Parque La Castrina,6,"-33.51095541039328, -70.62960926135572",Proyecto Áreas Verdes y Medio Ambiente,Medioambiente,0085 FINANCIAMIENTO APROBADO.png,,Mejoramiento de Espacio Público Área Recreativa Canina (FNDR-FRIL)
 Pedro Sarmiento con Juan Planas ,6,"-33.51017024303976, -70.63183892394197",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,00141_RECUPERACION_SUSTENTABLE_DE_ESPACIOS_URBANOS.png,,Recuperación de Espacio Público (PMU-SPD)
 Filipo con Ingeniero Mario Díaz ,6,"-33.508391062753404, -70.62823451308199",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,0071 MEJORAMIENTO PLAZAS.png,,Mejoramiento para diversas plazas con instalación de sombreaderos y juegos infantiles (PMU- emergencia)
-Parque La Castrina,6,"-33.512969925671136, -70.62860686896528",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,0071 MEJORAMIENTO PLAZAS.png,,Mejoramiento Parque la Castrina (Postulación diseño SERVIU)
+Parque La Castrina,6,"-33.512969925671136, -70.62860686896528",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,0071 MEJORAMIENTO PLAZAS.png,ParqueCastrina.png,Mejoramiento Parque la Castrina (Postulación diseño SERVIU)
 Cantares de Chile con Sebastopol ,6,"-33.51694142416693, -70.6356632369293",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,0070 INTERVENCIONES COMUNITARIAS.png,,Se realizarón intervenciones comunitarias con el fin de recuperar espacios atraves de la participación ciudadana
 Plaza Asdrubal (Asdrubal con Av. Las Industrias),6,"-33.51301440606669, -70.62516424539592",Proyecto Áreas Verdes y Medio Ambiente,Desarrollo Urbano,0070 INTERVENCIONES COMUNITARIAS.png,,Se realizarón intervenciones comunitarias con el fin de recuperar espacios atraves de la participación ciudadana
 Benozzo Gozzoli 5656,6,"-33.50931674595356, -70.62841936236633",Proyecto Áreas Verdes y Medio Ambiente,Medio Ambiente ,0075 SEMBRANDO EL BUEN VIVIR.png,,Programa de educación ecológica en Jardín Infantil GÉNESIS 
@@ -1146,7 +1146,7 @@ Av. Lo Ovalle con Vecinal ,7,"-33.51417156573103, -70.61984116255358",Punto de R
 Catruman  275,7,"-33.51088192556304, -70.6238983670161",CECOSF,Salud,0018 CECOSF.png,,Centro Comunitario de Salud Familiar
 Angol 39 ,7,"-33.50983191190155, -70.61534624439122",Deporte ,TALLERES DEPORTIVOS ,04 BAILE ENTRETENIDO.png,,Baile Entretenido Adulto Funcional 
 Av. Las Industrias 5760 (10° Compañia de Bomberos),7,"-33.509860981820005, -70.6252538102619",Deporte ,TALLERES DEPORTIVOS ,00146_TALLERES_MULTIDEPORTIVOS.png,,Entrenamiento Funcional en la 10° Compañia de Bomberos
-Coñimo 286 ,7,"-33.51048064216135, -70.62406197181124",Deporte ,TALLERES DEPORTIVOS ,0010 YOGA.png,,Yoga se Realizo Centro Cultural de San Joaquín 
+Coñimo 286 ,7,"-33.51048064216135, -70.62406197181124",Deporte ,TALLERES DEPORTIVOS ,0010 YOGA.png,CentroCulturalSanJoaquin.jpg,Yoga se Realizo Centro Cultural de San Joaquín 
 Av. Las Industrias con Melinka ,7,"-33.515065551825, -70.6246418448536",Deporte ,TALLERES DEPORTIVOS ,00133_BOXEO.png,,Boxeo Niñez 
 Vecinal 5760,7,"-33.509625024197895, -70.62308371147851",Deporte ,TALLERES DEPORTIVOS ,04 BAILE ENTRETENIDO.png,,Baile Entretenido Adulto Mayor y Baile Entretenido para Todo Público
 "Melinka 262, ",7,"-33.51493164071099, -70.62381992576454",Deporte ,TALLERES DEPORTIVOS ,05 FUTBOL.png ,,Futbolito Niñez Multicancha Melinka 
@@ -1155,26 +1155,26 @@ Francia con Carmen Mena ,7,"-33.50946914843118, -70.61973023764342",Deporte ,TAL
 Frente a Coñimo 286 (Plaza Ignacio Carrera Pinto),7,"-33.5100286366274, -70.62422769282003",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,"Mejoramiento de Zonas Deportivas, Instalación de Circuitos de Calistenia y Circuitos Inclusivos con Ruta Accesible  (SUBDERE-PMU) "
 Varas Mena 265 (Complejo Deportivo San Joaquín Oriente),7,"-33.510755251278056, -70.62220196264641",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,Mejoramiento de Muro Acústico Complejo Deportivo San Joaquín Oriente  
 Plaza Quelhuenco ,7,"-33.5098476695049, -70.61926260079512",TERMINADOS 2024,Desarrollo Urbano ,0017 PROYECTOS EJECUTADOS.png,,Mejoramiento de Pista de Patinaje Villa Quelhuenco 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0066 TALLER DE TEATRO.png,,Teatro 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0055 DANZA FOLKLORICA.png,,Danza 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0060 TALLER CULTURA.png,,Música 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0060 TALLER CULTURA.png,,Diversidad Cultural y Folklor 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,Pendiente de Creación ,,Instalaciones Arte y Visitas 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00207_CINE_CULTURA.png,,Cine Infantil 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00207_CINE_CULTURA.png,,Cine 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,,Actividades Organizaciones Comunal 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,,Festival de las Artes 2024
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00208_CIRCO_HUMOR.png,,Circo Humor 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00160_CHARLA_INFORMATIVA.png,,Literatura y Charla Marcelo Lagos 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,,Inauguración Expo Palestro 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0067 FESTIVAL MMULTICULTURAL.png,,Ceremonias: We Tripantu_ Canelo y Cierres de Talleres 
-Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Diversidad y No Discriminación ,Cultura,0033 TALLER DE DIVERSIDAD GENERO Y NO DESCRIMINACION.png,,"Obra de Teatro ""Lento"" para Niños y Niñas, Día de la no Discriminación "
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0066 TALLER DE TEATRO.png,CentroCulturalSanJoaquin.jpg,Teatro 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0055 DANZA FOLKLORICA.png,CentroCulturalSanJoaquin.jpg,Danza 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0060 TALLER CULTURA.png,CentroCulturalSanJoaquin.jpg,Música 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0060 TALLER CULTURA.png,CentroCulturalSanJoaquin.jpg,Diversidad Cultural y Folklor 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,Pendiente de Creación ,CentroCulturalSanJoaquin.jpg,Instalaciones Arte y Visitas 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00207_CINE_CULTURA.png,CentroCulturalSanJoaquin.jpg,Cine Infantil 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00207_CINE_CULTURA.png,CentroCulturalSanJoaquin.jpg,Cine 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,CentroCulturalSanJoaquin.jpg,Actividades Organizaciones Comunal 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,CentroCulturalSanJoaquin.jpg,Festival de las Artes 2024
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00208_CIRCO_HUMOR.png,CentroCulturalSanJoaquin.jpg,Circo Humor 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,00160_CHARLA_INFORMATIVA.png,CentroCulturalSanJoaquin.jpg,Literatura y Charla Marcelo Lagos 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0039 FESTIVAL CULTURAL.png,CentroCulturalSanJoaquin.jpg,Inauguración Expo Palestro 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Actividades Teatro Municipal,Cultura,0067 FESTIVAL MMULTICULTURAL.png,CentroCulturalSanJoaquin.jpg,Ceremonias: We Tripantu_ Canelo y Cierres de Talleres 
+Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Diversidad y No Discriminación ,Cultura,0033 TALLER DE DIVERSIDAD GENERO Y NO DESCRIMINACION.png,CentroCulturalSanJoaquin.jpg,"Obra de Teatro ""Lento"" para Niños y Niñas, Día de la no Discriminación "
 Metro Pedrero ,7,"-33.50780336697702, -70.61266382455062",Actividades Itinerantes y en el Territorio ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,Intervenciones Mes de la Danza 
 Av. Las Industrias con Varas Mena  (Bandejon) ,7,"-33.511775498820946, -70.62504474714736",Actividades Itinerantes y en el Territorio ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,visita a Chemamul 
 Frente a Coñimo 286 (Plaza Ignacio Carrera Pinto),7,"-33.5100286366274, -70.62422769282003",Actividades Itinerantes y en el Territorio ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,Pachakuna (Chile) Teatro 
 Naciones Unidas 155,7,"-33.51303223665742, -70.61838475838609",Actividades Itinerantes y en el Territorio ,Cultura,00192_TALLER_TEJIDO_ARTESANAL.png,,Arpillera en Tela 
 Parque Estadio ,7,"-33.51054326698364, -70.61386622184045",Actividades Itinerantes y en el Territorio ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,Teatro Itinerante Barrios: Brigada Clown 
-"Coñimo 286, Butamanga (Teatro Municipal San Joaquín)",7,"-33.510573990184035, -70.62357855897412",Talleres en Centro Cultural ,Cultura,0060 TALLER CULTURA.png,,-Teatro Infantil  -Conjunto Musical -Costura Creativa -Cueca Brava1 -Escritura Creativa -Murga - Taller Bordando Libertad -Elenco coro Infantil Elenco Danzas Mestizas -Elenco El Paradero 
+"Coñimo 286, Butamanga (Teatro Municipal San Joaquín)",7,"-33.510573990184035, -70.62357855897412",Talleres en Centro Cultural ,Cultura,0060 TALLER CULTURA.png,,#¿NOMBRE?
 Carmen Mena con Vecinal ,7,"-33.50980172860666, -70.62325592067438",Fiestas y Celebración ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,Se Realiza Chilenera
 Coñimo 286 (Teatro Municipal San Joaquín),7,"-33.51048064216135, -70.62406197181124",Fiestas y Celebración ,Cultura,0049 ACTIVIDADES ITINERANTES.png,,Feria Costumbrista
 Catruman (Casa del Adulto Mayor Sur),7,"-33.51086870621777, -70.62384448142815",Actividades Comunitarias DIDECO ,Social y Comunitario ,0031 TALLER ADULTO MAYOR.png,,"Taller Personas Mayores: Manualidades, Arpillera, Yoga, Cosmetica Natural, Mente Activa 1, Danzas Latinamericanas, Gimnasia A y B, Chi Kung, Bordado Mexicano, Alfabetización Digital, Teatro, Salud Integrativa"
@@ -1245,7 +1245,7 @@ PINAR DEL RIO 42,7,"-33.50937809736099, -70.61519234873589",OPERATIVO VETERINARI
 NACIONES UNIDAS & AV. ESTADIO,7,"-33.51197162970945, -70.61419166408113",OPERATIVO VETERINARIO,ANIMALES ,00103 OPERATIVO VETERINARIO.png,,11/20/2025 OPERATIVOS DE ATENCION MASCOTAS (GATOS) JUNTA DE VECINOS NACIONES UNIDAS
 CARMEN MENA 270,7,"-33.50938426919159, -70.62384311804499",OPERATIVO VETERINARIO,ANIMALES ,00103 OPERATIVO VETERINARIO.png,,11/27/2025 OPERATIVOS DE ATENCION MASCOTAS (GATOS)  COMUNITARIO SUR
 CARMEN MENA 270,7,"-33.50938426919159, -70.62384311804499",OPERATIVO VETERINARIO,ANIMALES ,00103 OPERATIVO VETERINARIO.png,,04-dic OPERATIVOS DE ATENCION MASCOTAS (PERROS)CENTRO COMUNITARIO SUR
-VARAS MENA 211,7,"-33.51115165502209, -70.62158557757202",OPERATIVO VETERINARIO,ANIMALES ,00103 OPERATIVO VETERINARIO.png,,18-dic OPERATIVOS DE ATENCION MASCOTAS (PERROS) JJVV JOAQUIN EDWARDS BELLO SUR
+VARAS MENA 211,7,"-33.51115165502209, -70.62158557757202",OPERATIVO VETERINARIO,ANIMALES ,00103 OPERATIVO VETERINARIO.png,OperativoMascotasEdwardsBello.png,18-dic OPERATIVOS DE ATENCION MASCOTAS (PERROS) JJVV JOAQUIN EDWARDS BELLO SUR
 PH416-Vecinal / esq. Av. Departamental,7,"-33.50782506676767, -70.62333422496386",PROYECTO IMPACTO NIVEL COMUNAL,PLANES MAESTROS Y DESARROLLO URBANO,00113 PLANES MAESTROS Y DESARROLLO URBANO.png,,Plan de mantenimiento de puntos de parada de buses (en ejecución 2024)
 PH1442-Parada 5 / Departamental - Las Industrias,7,"-33.50820478392791, -70.62569632296982",PROYECTO IMPACTO NIVEL COMUNAL,PLANES MAESTROS Y DESARROLLO URBANO,00113 PLANES MAESTROS Y DESARROLLO URBANO.png,,Plan de mantenimiento de puntos de parada de buses (en ejecución 2024)
 PH737-Varas Mena / esq. Av. Las Industrias,7,"-33.51157878695633, -70.62470909387751",PROYECTO IMPACTO NIVEL COMUNAL,PLANES MAESTROS Y DESARROLLO URBANO,00113 PLANES MAESTROS Y DESARROLLO URBANO.png,,Plan de mantenimiento de puntos de parada de buses (en ejecución 2024)

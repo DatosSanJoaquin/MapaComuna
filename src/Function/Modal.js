@@ -15,82 +15,86 @@ export const ModalInformativo = (props) => {
           {props.informacion ? props.informacion.name : ""}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Row>
-          {props.informacion.foto.toLowerCase().includes("no disponible") ? (
-            ""
-          ) : (
-            <Col md={5} className="foto-container">
-              <p className="titulo-seccion">Fotografía</p>
-              <hr className="divider-Imagen" />
-              <div className="foto-wrapper">
+      <Modal.Body className="modern-modal-body">
+        <div className="content-container">
+          {/* Imagen principal con overlay moderno */}
+          {!props.informacion.foto.toLowerCase().includes("no disponible") && (
+            <div className="hero-image-section">
+              <div className="image-container">
                 <img
                   src={props.informacion.foto || "placeholder.jpg"}
                   alt="Fotografía"
-                  className="foto"
+                  className="hero-image"
                 />
+                <div className="image-overlay">
+                  <span className="image-label">Fotografía</span>
+                </div>
               </div>
-            </Col>
+            </div>
           )}
-          {/* Columna izquierda - Fotografía */}
 
-          {/* Columna derecha - Información */}
-          <Col
-            md={
-              props.informacion.foto.toLowerCase().includes("no disponible")
-                ? 12
-                : 7
-            }
-            className="info-container"
-          >
-            <div className="info-item">
-              <p className="titulo-seccion">Dirección</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
+          {/* Grid de información moderna */}
+          <div className="info-grid">
+            <div className="info-card">
+              <div className="card-header">
+                <div className="icon-wrapper location-icon">
+                  <i className="fas fa-map-marker-alt"></i>
+                </div>
+                <h4 className="card-title">Dirección</h4>
+              </div>
+              <p className="card-content">
                 {props.informacion?.direccion || "No disponible"}
               </p>
             </div>
-            <div className="info-item">
-              <p className="titulo-seccion">Descripción</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
+
+            <div className="info-card">
+              <div className="card-header">
+                <div className="icon-wrapper description-icon">
+                  <i className="fas fa-info-circle"></i>
+                </div>
+                <h4 className="card-title">Descripción</h4>
+              </div>
+              <p className="card-content">
                 {props.informacion?.descripcion || "No disponible"}
               </p>
             </div>
-            <div className="info-item">
-              <p className="titulo-seccion">Link Informativo</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.link ? (
-                  <a
-                    href={props.informacion.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-link"
-                  >
-                    {props.informacion.link}
-                  </a>
-                ) : (
-                  "No disponible"
-                )}
-              </p>
+
+            {props.informacion?.link && (
+              <div className="info-card link-card">
+                <div className="card-header">
+                  <div className="icon-wrapper link-icon">
+                    <i className="fas fa-external-link-alt"></i>
+                  </div>
+                  <h4 className="card-title">Información adicional</h4>
+                </div>
+                <a
+                  href={props.informacion.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="modern-link"
+                >
+                  Ver más información
+                  <i className="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            )}
+
+            <div className="info-badges">
+              <div className="badge-item">
+                <span className="badge-label">Territorio</span>
+                <span className="badge territorio-badge">
+                  {props.informacion?.territorio || "No disponible"}
+                </span>
+              </div>
+              <div className="badge-item">
+                <span className="badge-label">Categoría</span>
+                <span className="badge categoria-badge">
+                  {props.informacion?.categoria || "No disponible"}
+                </span>
+              </div>
             </div>
-            <div className="info-item">
-              <p className="titulo-seccion">Territorio</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.territorio || "No disponible"}
-              </p>
-            </div>
-            <div className="info-item">
-              <p className="titulo-seccion">Categoría</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.categoria || "No disponible"}
-              </p>
-            </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Modal.Body>
     </Modal>
   );
@@ -108,50 +112,81 @@ export const ModalInformativoCalle = (props) => {
           {props.informacion?.name || ""}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Row>
-          <Col md={12} className="info-container">
-            <div className="info-item">
-              <p className="titulo-seccion">Dirección</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
+      <Modal.Body className="modern-modal-body-calle">
+        <div className="content-container-calle">
+          {/* Header con ícono de calle */}
+          <div className="calle-header">
+            <div className="calle-icon-wrapper">
+              <i className="fas fa-road"></i>
+            </div>
+            <div className="calle-title-section">
+              <h3 className="calle-subtitle">Proyecto de Infraestructura</h3>
+              <p className="calle-description-brief">
+                Información del proyecto y estado actual
+              </p>
+            </div>
+          </div>
+
+          {/* Grid de información moderna */}
+          <div className="info-grid-calle">
+            <div className="info-card-calle">
+              <div className="card-header-calle">
+                <div className="icon-wrapper-calle location-icon">
+                  <i className="fas fa-map-marker-alt"></i>
+                </div>
+                <h4 className="card-title-calle">Dirección</h4>
+              </div>
+              <p className="card-content-calle">
                 {props.informacion?.direccion || "No disponible"}
               </p>
             </div>
 
-            <div className="info-item">
-              <p className="titulo-seccion">Territorio</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.territorio || "No disponible"}
-              </p>
-            </div>
-
-            <div className="info-item">
-              <p className="titulo-seccion">Descripción</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
+            <div className="info-card-calle">
+              <div className="card-header-calle">
+                <div className="icon-wrapper-calle description-icon">
+                  <i className="fas fa-info-circle"></i>
+                </div>
+                <h4 className="card-title-calle">Descripción del Proyecto</h4>
+              </div>
+              <p className="card-content-calle description-text">
                 {props.informacion?.descripcion || "No disponible"}
               </p>
             </div>
 
-            {/* <div className="info-item">
-              <p className="titulo-seccion">Coordenada</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.coordenada || "No disponible"}
-              </p>
-            </div> */}
+            {/* Badges para territorio y categoría */}
+            <div className="info-badges-calle">
+              <div className="badge-row">
+                <div className="badge-item-calle">
+                  <div className="badge-header">
+                    <i className="fas fa-map"></i>
+                    <span className="badge-label-calle">Territorio</span>
+                  </div>
+                  <span className="badge-calle territorio-badge-calle">
+                    {props.informacion?.territorio || "No disponible"}
+                  </span>
+                </div>
 
-            <div className="info-item">
-              <p className="titulo-seccion">Categoría</p>
-              <hr className="divider" />
-              <p className="contenido-seccion">
-                {props.informacion?.categoria || "No disponible"}
-              </p>
+                <div className="badge-item-calle">
+                  <div className="badge-header">
+                    <i className="fas fa-tools"></i>
+                    <span className="badge-label-calle">Categoría</span>
+                  </div>
+                  <span className="badge-calle categoria-badge-calle">
+                    {props.informacion?.categoria || "No disponible"}
+                  </span>
+                </div>
+              </div>
             </div>
-          </Col>
-        </Row>
+
+            {/* Footer con estado del proyecto */}
+            <div className="proyecto-status">
+              <div className="status-indicator">
+                <div className="status-dot"></div>
+                <span className="status-text">Proyecto en desarrollo</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </Modal.Body>
     </Modal>
   );

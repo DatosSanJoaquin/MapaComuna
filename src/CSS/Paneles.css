@@ -91,10 +91,10 @@
   position: absolute;
   top: 20px; /* Margen superior */
   left: 10px; /* Margen izquierdo */
-  width: 350px; /* Ancho del panel */
+  width: 390px; /* Ancho del panel */
   max-height: 90vh;
-  overflow-y: auto !important;
-  scroll-behavior: smooth;
+  /* overflow-y: auto !important;
+  scroll-behavior: smooth; */
   /* height: calc(100vh - 100px); */
   /* height: calc(40vh - 100px); */
   /* height: 280px; */
@@ -111,7 +111,7 @@
 }
 
 .panel-izquierdo.active {
-  left: -350px; /* Muestra el panel */
+  left: -390px; /* Muestra el panel */
 }
 
 @media only screen and (max-width: 600px) {
@@ -143,4 +143,633 @@
   .contenido-seccion-panel {
     font-size: 12px;
   }
+}
+
+/* Mantén tus estilos Panel Izquierdo: */
+
+.modern-panel {
+  background: white;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modern-panel-header {
+  background: linear-gradient(135deg, #41307c, #9c27b0);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-panel-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.header-icon-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.icon-wrapper-panel {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.panel-icon {
+  color: white !important;
+  font-size: 20px !important;
+}
+
+.header-text h3.panel-title {
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.panel-subtitle {
+  margin: 4px 0 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.hide-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white !important;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.hide-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateX(-2px);
+}
+
+.modern-panel-content {
+  padding: 0;
+  /* max-height: calc(100vh - 120px); */
+  height: calc(90vh - 120px); /* ✅ CAMBIAR de max-height a height */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #9c27b0 #f1f1f1;
+}
+
+.modern-panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modern-panel-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.modern-panel-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #9c27b0, #41307c);
+  border-radius: 10px;
+}
+
+.categorias-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.categoria-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.categoria-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.categoria-card:hover::before {
+  opacity: 1;
+}
+
+.categoria-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: #8bc34a;
+}
+
+.categoria-header {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.categoria-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: white;
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+}
+
+.categoria-title {
+  margin: 0 !important;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.categoria-content {
+  padding: 16px;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  line-height: 1.4;
+}
+
+.bullet-point {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 24px;
+  color: #9c27b0;
+}
+
+.empty-title {
+  margin: 0 0 8px 0 !important;
+  font-size: 16px;
+  font-weight: 600;
+  color: #495057;
+}
+
+.empty-description {
+  margin: 0 !important;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modern-panel-header {
+    padding: 16px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .categorias-container {
+    padding: 16px;
+    gap: 12px;
+  }
+}
+
+/* CSS Completo para Panel de Filtros Moderno - Verde Corporativo - 360px */
+
+/* Panel principal con ancho expandido */
+.modern-filter-panel {
+  background: white;
+  border-radius: 16px 0 0 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 360px !important; /* ✅ ANCHO EXPANDIDO */
+}
+
+/* Ajuste para panel lateral con nuevo ancho */
+.panel-lateral {
+  width: 360px !important;
+}
+
+.panel-lateral.active {
+  right: -360px !important; /* Ajustar según tu posición (left o right) */
+}
+
+/* Header del Panel de Filtros - Verde Corporativo */
+
+.modern-filter-header {
+  background: linear-gradient(
+    135deg,
+    #579910,
+    #5c9e10
+  ); /* ✅ GRIS AZULADO MODERADO */
+  /* O usa esta opción más neutra: */
+  /* background: linear-gradient(135deg, #6C757D, #868E96); */
+  /* O esta opción verde muy suave: */
+  /* background: linear-gradient(135deg, #7CB342, #8BC34A); */
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-filter-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-30px, -30px);
+}
+
+.filter-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.filter-icon-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.filter-icon-wrapper,
+.filter-icon-wrapper-green {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Ícono principal en verde más destacado */
+.filter-icon-wrapper-green {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+.filter-panel-icon {
+  color: white !important;
+  font-size: 20px !important;
+}
+
+.filter-header-text h3.filter-panel-title {
+  margin: 0;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.filter-panel-subtitle {
+  margin: 4px 0 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.filter-hide-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white !important;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.filter-hide-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateX(2px);
+}
+
+/* Contenido del Panel de Filtros */
+.modern-filter-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #8bc34a #f1f1f1; /* ✅ SCROLLBAR VERDE */
+}
+
+.modern-filter-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modern-filter-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.modern-filter-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    #8bc34a,
+    #4caf50
+  ); /* ✅ SCROLLBAR VERDE */
+  border-radius: 10px;
+}
+
+.filter-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Grupos de campos con efectos verdes */
+.filter-field-group {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.filter-field-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #8bc34a, #4caf50); /* ✅ BORDE VERDE */
+  border-radius: 2px 0 0 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.filter-field-group:hover::before {
+  opacity: 1;
+}
+
+.filter-field-group:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 195, 74, 0.2); /* ✅ SOMBRA VERDE */
+  border-color: #8bc34a; /* ✅ BORDE HOVER VERDE */
+}
+
+.filter-field-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+/* Íconos de campos en verde oscuro */
+.filter-field-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #689f38, #558b2f); /* ✅ VERDE OSCURO */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+}
+
+.filter-field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-field-wrapper {
+  /* Estilos para el contenedor del campo */
+}
+
+/* Botones de acción */
+.filter-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modern-filter-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Botón Filtrar - Verde */
+.apply-filter {
+  background: linear-gradient(135deg, #8bc34a, #4caf50);
+  color: white;
+}
+
+.apply-filter:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7cb342, #43a047);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 195, 74, 0.4);
+}
+
+.apply-filter:disabled {
+  background: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botón Limpiar - Rojo */
+.clear-filter {
+  background: linear-gradient(135deg, #ff5722, #d32f2f);
+  color: white;
+}
+
+.clear-filter:hover {
+  background: linear-gradient(135deg, #f4511e, #c62828);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+}
+
+/* Mejoras para los campos Select */
+.filter-field-wrapper .titulo-campo-panel {
+  display: none; /* Ocultamos el título original porque ya tenemos uno moderno */
+}
+
+/* Responsive para 360px */
+@media (max-width: 768px) {
+  .modern-filter-panel {
+    width: 320px !important; /* Ancho menor en móvil */
+  }
+
+  .panel-lateral {
+    width: 320px !important;
+  }
+
+  .panel-lateral.active {
+    right: -320px !important;
+  }
+
+  .modern-filter-header {
+    padding: 16px;
+  }
+
+  .filter-header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modern-filter-content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .filter-field-group {
+    padding: 12px;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .modern-filter-btn {
+    padding: 14px 16px;
+  }
+}
+
+/* Animaciones */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.filter-field-group {
+  animation: slideInRight 0.6s ease forwards;
+}
+
+.filter-field-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.filter-field-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.filter-actions {
+  animation-delay: 0.3s;
+  animation: slideInRight 0.6s ease forwards;
 }

@@ -386,16 +386,6 @@ const zonas = [
   },
 ];
 
-// const ZoneLabels = ({ setShowLabels }) => {
-//   const map = useMapEvents({
-//     zoomend: () => {
-//       const zoom = map.getZoom();
-//       setShowLabels(zoom < MIN_ZOOM_TO_HIDE_LABELS);
-//     },
-//   });
-//   return null;
-// };
-
 const ZoneLabels = () => {
   const map = useMap();
   const [zoomLevel, setZoomLevel] = useState(map.getZoom());
@@ -510,182 +500,11 @@ const FloatingBox = () => {
   );
 };
 
-const CenterLogger = () => {
-  const [center, setCenter] = useState(null);
-  const map = useMapEvents({
-    moveend: () => {
-      const newCenter = map.getCenter();
-      setCenter(newCenter);
-      console.log("📍 Nueva posición central del mapa:", newCenter);
-    },
-  });
-
-  return null; // No necesita renderizar nada en pantalla
-};
-
-// Definir un icono de prueba
-const testIcon = L.icon({
-  iconUrl: "https://leafletjs.com/examples/custom-icons/leaf-red.png", // Puedes cambiarlo por cualquier otra URL de imagen
-  iconSize: [38, 38],
-  iconAnchor: [19, 38], // Ajuste de la base del icono
-  popupAnchor: [0, -38], // Ajuste del popup
-});
-
-const callesEnReparacion = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {
-        nombre: "Calle en reparación 1",
-        descripcion: "Trabajos en la vía: reparación de pavimento",
-        estado: "Pavimentación",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-70.63922212577691, -33.48853514789772],
-            [-70.63570609788977, -33.489617895671024],
-            [-70.63567555029688, -33.48955930025526],
-            [-70.63918852342515, -33.488481647068646],
-          ],
-        ],
-      },
-    },
-    {
-      type: "Feature",
-      properties: {
-        nombre: "Calle en reparación 2",
-        descripcion: "Reparación de Veredas",
-        estado: "Reparación de Veredas",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-70.62470154719018, -33.50039546780977],
-            [-70.6238593111893, -33.504587708983],
-            [-70.62370382146582, -33.504587708983],
-            [-70.62455901494384, -33.500384662802404],
-          ],
-        ],
-      },
-    },
-    {
-      type: "Feature",
-      properties: {
-        nombre: "Calle en reparación 3",
-        descripcion: "Proyecto Aceras Calle Primero de Mayo",
-        estado: "Proyecto",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-70.62432835846798, -33.49027337203907],
-            [-70.62400712780602, -33.49173405142709],
-            [-70.62386180917358, -33.491714916048],
-            [-70.62421363323163, -33.49026699347318],
-          ],
-        ],
-      },
-    },
-    {
-      type: "Feature",
-      properties: {
-        nombre: "Calle en reparación 3",
-        descripcion: "Proyecto Aceras Calle el Pinar",
-        estado: "Proyecto",
-      },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [-70.62401477615673, -33.49164475295804],
-            [-70.62653108300715, -33.4916638883521],
-            [-70.62653108300715, -33.491753186801596],
-            [-70.62399947945894, -33.49174042988618],
-          ],
-        ],
-      },
-    },
-  ],
-};
-
-const getCalleStyle = (estado) => {
-  console.log("Estado", estado);
-
-  switch (estado) {
-    case "Proyecto":
-      return {
-        color: "transparent", // 🔥 Elimina el borde
-        fillColor: "rgba(255, 0, 0, 0.9)", // 🔥 Rojo intenso
-        weight: 0,
-        fillOpacity: 0.6, // 🔥 Alta opacidad para que se vea bien
-      };
-    case "Pavimentación":
-      return {
-        color: "green",
-        fillColor: "rgba(0, 255, 0, 0.5)",
-        weight: 2,
-        fillPattern: true,
-      };
-    case "Reparación de Veredas":
-      return { color: "#5D428B", fillColor: "rgb(157, 137, 191)", weight: 2 };
-    default:
-      return {
-        color: "gray",
-        fillColor: "rgba(128, 128, 128, 0.5)",
-        weight: 2,
-      };
-  }
-};
-
-// 📌 Componente para aplicar el patrón a las calles en reparación
-// 📌 Componente para renderizar el rectángulo con líneas internas usando `SVG Pattern`
-const PatternedGeoJSON = ({ data }) => {
-  const map = useMap();
-
-  useEffect(() => {
-    // 📌 Crear el patrón SVG para las líneas
-    const svgPattern = `
-      <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-        <line x1="5" y1="0" x2="5" y2="10" stroke="#00AEEF" stroke-width="1.5" opacity="0.8"/>
-      </svg>
-    `;
-    const encodedSvg = encodeURIComponent(svgPattern);
-    const dataUrl = `data:image/svg+xml,${encodedSvg}`;
-
-    // 📌 Agregar la capa de GeoJSON con el patrón de relleno
-    const geoJsonLayer = L.geoJSON(data, {
-      style: () => ({
-        color: "#00AEEF", // Color del borde
-        weight: 2, // Grosor del borde
-        fillOpacity: 0.2, // Transparencia del fondo
-        fillPattern: { patternUrl: dataUrl }, // 📌 Aplicamos el patrón SVG
-      }),
-    }).addTo(map);
-  }, [map, data]);
-
-  return null;
-};
-
-// 📌 Estilos para el rectángulo con líneas verticales en su interior
-// 📌 Estilos para el rectángulo con líneas internas
-const estiloCalles = {
-  color: "#00AEEF", // Borde celeste
-  weight: 2, // Grosor del borde
-  fillOpacity: 0.3, // Semitransparente
-  fill: "url(#linePattern)", // Aplicar el patrón de líneas celestes
-};
-
 function App() {
   const [tileLayer, setTileLayer] = useState(tileLayers.normal);
   const [isHighContrast, setIsHighContrast] = useState(false);
   //const [showMarkers, setShowMarkers] = useState(false);
   const [showMarkers, setShowMarkers] = useState(true);
-  const [showMarkersFirstLevel, setShowMarkersFirstLevel] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [showPanelTerritorios, setShowPanelTerritorios] = useState(false);
   const [showPanelInformativo, setShowPanelInformativo] = useState(false);
@@ -703,7 +522,6 @@ function App() {
   const [opcionCategorias, setOpcionCategorias] = useState([]);
   const [opcionTerritorios, setOpcionTerritorios] = useState([]);
   const [selectedTerritory, setSelectedTerritory] = useState(null);
-  const [showLabels, setShowLabels] = useState(true);
   const [allowManualZoom, setAllowManualZoom] = useState(false);
   const [filteredMarkers, setFilteredMarkers] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -727,99 +545,6 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // const callesEnReparacion = {
-  //   type: "FeatureCollection",
-  //   features: [
-  //     {
-  //       type: "Feature",
-  //       properties: { name: "Calle en reparación" },
-  //       geometry: {
-  //         type: "Polygon",
-  //         coordinates: [
-  //           [
-  //             [-70.6384304892283, -33.488722060236924], // Esquina 1
-  //             [-70.63760004911441, -33.488974335375275], // Esquina 2
-  //             [-70.63763011029482, -33.48903701231364], // Esquina 3
-  //             [-70.63847370217533, -33.488776902720254], // Esquina 4
-  //           ],
-  //         ],
-  //       },
-  //     },
-  //   ],
-  // };
-
-  // // const estiloCalles = {
-  // //   color: "#00AEEF", // Azul celeste
-  // //   weight: 3, // Grosor de la línea
-  // //   dashArray: "4,3", // Línea punteada para indicar reparación
-  // //   fillOpacity: 0.7,
-  // // };
-
-  // // 📌 Aplicamos estilos personalizados para usar el patrón SVG en la reparación
-  // const estiloCalles = () => ({
-  //   color: "transparent", // Quitamos el borde
-  //   weight: 0, // Sin borde
-  //   fillOpacity: 1, // Opacidad total del fondo
-  //   fill: "url(#patronSegmentado)", // Referencia al patrón SVG
-  // });
-
-  // function MarkerVisibilityController() {
-  //   const map = useMap();
-  //   const lastZoom = useRef(null); // Guarda el último nivel de zoom para evitar estados innecesarios
-
-  //   useEffect(() => {
-  //     const updateMarkersVisibility = () => {
-  //       const currentZoom = map.getZoom();
-
-  //       // Evitar ejecuciones innecesarias comparando con el último zoom
-  //       if (currentZoom === lastZoom.current) return;
-  //       lastZoom.current = currentZoom; // Actualizamos el zoom solo si cambia
-
-  //       console.log("zoom effect", currentZoom);
-
-  //       setShowMarkers((prev) =>
-  //         prev !== currentZoom >= MIN_ZOOM_FOR_MARKERS
-  //           ? currentZoom >= MIN_ZOOM_FOR_MARKERS
-  //           : prev
-  //       );
-  //       setShowMarkersFirstLevel((prev) =>
-  //         prev !== currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
-  //           ? currentZoom <= SHOW_FIRST_LEVEL_MARKERS_ZOOM
-  //           : prev
-  //       );
-  //       setShowLabels((prev) =>
-  //         prev !== (currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14)
-  //           ? currentZoom <= MIN_ZOOM_TO_HIDE_LABELS && currentZoom >= 14
-  //           : prev
-  //       );
-  //     };
-
-  //     // 📌 Ejecutar la función al cargar la página
-  //     updateMarkersVisibility();
-
-  //     // 📌 Escuchar cambios en el zoom
-  //     map.on("zoomend", updateMarkersVisibility);
-
-  //     return () => {
-  //       map.off("zoomend", updateMarkersVisibility);
-  //     };
-  //   }, [map]); // ✅ Ahora solo se ejecuta cuando el mapa cambia
-
-  //   return null;
-  // }
-
-  const MarkerVisibilityController = () => {
-    const map = useMap();
-    //const lastZoom = useRef(null);
-
-    useEffect(() => {
-      const currentZoom = map.getZoom();
-      console.log("zoom effect", currentZoom);
-      setShowMarkers(true); // ✅ Mantener siempre visibles los marcadores
-    }, [map]);
-
-    return null;
-  };
   useEffect(() => {
     if (!hasFetched.current) {
       hasFetched.current = true;
@@ -858,31 +583,31 @@ function App() {
     }
   }, []); // Se ejecuta solo una vez al montar el componente
 
-  // 📌 Lógica de filtrado en tiempo real
-  // 📌 Método para filtrar marcadores
-  // const filtrarMarcadores = (nuevoFiltro) => {
-  //   const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
-  //   setSelectedFilters(filtrosActualizados);
+  const getCategoriaIcon = (nombreCategoria) => {
+    const iconMap = {
+      seguridad: "fas fa-shield-alt",
+      aseo: "fas fa-recycle",
+      reciclaje: "fas fa-recycle",
+      salud: "fas fa-heartbeat",
+      "personas mayores": "fas fa-users",
+      mayor: "fas fa-users",
+      educación: "fas fa-graduation-cap",
+      deporte: "fas fa-running",
+      cultura: "fas fa-theater-masks",
+      transporte: "fas fa-bus",
+      vivienda: "fas fa-home",
+      trabajo: "fas fa-briefcase",
+      economía: "fas fa-chart-line",
+      "medio ambiente": "fas fa-leaf",
+      infraestructura: "fas fa-tools",
+    };
 
-  //   console.log("Filtros actualizados:", filtrosActualizados);
+    const categoria = Object.keys(iconMap).find((key) =>
+      nombreCategoria.toLowerCase().includes(key)
+    );
 
-  //   let filtrados = markersData;
-  //   console.log("Filtrados por territorio:", filtrados);
-
-  //   if (filtrosActualizados.territorio) {
-  //     filtrados = filtrados.filter(
-  //       (marker) => marker.territorio === filtrosActualizados.territorio.label
-  //     );
-  //   }
-
-  //   if (filtrosActualizados.categoria) {
-  //     filtrados = filtrados.filter(
-  //       (marker) => marker.categoria === filtrosActualizados.categoria.label
-  //     );
-  //   }
-
-  //   setFilteredMarkers(filtrados);
-  // };
+    return iconMap[categoria] || "fas fa-info-circle";
+  };
 
   const getInformacionTerritorio = (territorio) => {
     console.warn("Territorio seleccionado:", territorio);
@@ -902,40 +627,6 @@ function App() {
       }
     }
   };
-
-  // const actualizarFiltros = (nuevoFiltro) => {
-  //   const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
-  //   setSelectedFilters(filtrosActualizados);
-
-  //   // ✅ Sincronizar también selectedTerritory (para mover el mapa)
-  //   if (nuevoFiltro.territorio !== undefined) {
-  //     setSelectedTerritory(nuevoFiltro.territorio);
-  //   }
-
-  //   const territorioSeleccionado = filtrosActualizados.territorio;
-  //   const categoriasSeleccionadas = filtrosActualizados.categoria || [];
-
-  //   let filtrados = markersData;
-
-  //   console.info("filtro actualizado", filtrosActualizados);
-
-  //   if (territorioSeleccionado) {
-  //     filtrados = filtrados.filter(
-  //       (marker) => marker.territorio === territorioSeleccionado.label
-  //     );
-
-  //     getInformacionTerritorio(filtrosActualizados.territorio);
-  //   }
-
-  //   if (categoriasSeleccionadas.length > 0) {
-  //     const categoriasLabels = categoriasSeleccionadas.map((c) => c.label);
-  //     filtrados = filtrados.filter((marker) =>
-  //       categoriasLabels.includes(marker.categoria)
-  //     );
-  //   }
-
-  //   setFilteredMarkers(filtrados);
-  // };
 
   const actualizarFiltros = (nuevoFiltro) => {
     const filtrosActualizados = { ...selectedFilters, ...nuevoFiltro };
@@ -999,68 +690,6 @@ function App() {
     });
   };
 
-  // const MoveToTerritory = ({
-  //   selectedTerritory,
-  //   allowManualZoom,
-  //   setAllowManualZoom,
-  // }) => {
-  //   const map = useMap();
-  //   const lastTerritory = useRef("");
-  //   const hasMoved = useRef(false);
-
-  //   useEffect(() => {
-  //     if (
-  //       !selectedTerritory ||
-  //       selectedTerritory.label === lastTerritory.current ||
-  //       allowManualZoom
-  //     )
-  //       return;
-
-  //     console.log("🔄 Moviendo al territorio:", selectedTerritory.label);
-
-  //     const territory = zonas.find(
-  //       (zona) => zona.name === selectedTerritory.label
-  //     );
-
-  //     if (territory) {
-  //       setAllowManualZoom(false); // ✅ resetea el zoom manual
-  //       const animationDuration = hasMoved.current ? 1.5 : 0.2;
-
-  //       map.flyTo(territory.center, 16, {
-  //         animate: true,
-  //         duration: animationDuration,
-  //         easeLinearity: 0.8,
-  //       });
-
-  //       hasMoved.current = true;
-  //       lastTerritory.current = selectedTerritory.label;
-  //     }
-  //   }, [selectedTerritory]);
-
-  //   return null;
-  // };
-
-  // const ManualZoomHandler = ({ setAllowManualZoom }) => {
-  //   const map = useMap();
-
-  //   useEffect(() => {
-  //     const handleZoom = () => {
-  //       console.log(
-  //         "🖱️ Zoom manual detectado (scroll del mouse o control de zoom)"
-  //       );
-  //       setAllowManualZoom(true);
-  //     };
-
-  //     map.on("zoomstart", handleZoom);
-
-  //     return () => {
-  //       map.off("zoomstart", handleZoom);
-  //     };
-  //   }, [map]);
-
-  //   return null;
-  // };
-
   const MostrarModalInformativo = (marker) => {
     setShowPanelInformativo(!showPanelInformativo);
     console.log("informacion marker", marker);
@@ -1073,56 +702,6 @@ function App() {
     setInformacionModalCalle(info);
     setShowModalCalle(true);
   };
-
-  // const CallesReparacionLayer = () => {
-  //   const map = useMap();
-
-  //   return (
-  //     <GeoJSON
-  //       data={callesEnReparacion}
-  //       style={(feature) => ({
-  //         ...getCalleStyle(feature.properties.estado),
-  //         interactive: true, // Asegura que los eventos del mouse sigan funcionando
-  //       })}
-  //       onEachFeature={(feature, layer) => {
-  //         if (feature.properties && feature.properties.descripcion) {
-  //           layer.bindTooltip(feature.properties.descripcion, {
-  //             permanent: false,
-  //             direction: "top",
-  //             opacity: 0.9,
-  //             className: "custom-tooltip",
-  //           });
-  //         }
-
-  //         layer.on({
-  //           mouseover: (e) => {
-  //             e.target.openTooltip();
-  //             e.target.setStyle({
-  //               weight: 3, // Resalta al pasar el mouse
-  //             });
-  //           },
-  //           mouseout: (e) => {
-  //             e.target.closeTooltip();
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Restaura el estilo original
-  //           },
-  //           click: (e) => {
-  //             e.originalEvent.preventDefault(); // Evita selección predeterminada
-  //             e.target.setStyle(getCalleStyle(feature.properties.estado)); // Evita que el borde cambie al hacer clic
-  //           },
-  //         });
-  //       }}
-  //     />
-  //   );
-  // };
-
-  // const crearPatronSVG = () => {
-  //   const svgPattern = `
-  //     <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  //       <line x1="5" y1="0" x2="5" y2="10" stroke="#67B730" stroke-width="2" />
-  //     </svg>
-  //   `;
-  //   return `data:image/svg+xml;base64,${btoa(svgPattern)}`;
-  // };
 
   const mostrarPanel = () => {
     setShowPanel(!showPanel);
@@ -1154,220 +733,199 @@ function App() {
   return (
     <>
       <div style={{ width: "100vw", height: "100vh" }}>
-        <div className={`panel-lateral ${!showPanel ? "active" : ""}`}>
-          <div
-            style={{
-              padding: "10px",
-              background: "#41307C",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <Tune className="icon-panel" />{" "}
-              <span className="titulo-panel">Filtros</span>
-            </div>
-            <div>
-              {/* <LightTooltip title="Ocultar Panel" placement="bottom">
-                <VisibilityOff
-                  style={{
-                    color: "white",
-                    fontSize: "17px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setShowPanel(!showPanel)}
-                />{" "}
-              </LightTooltip> */}
-              <span
-                className="ocultar-panel"
-                style={{ cursor: "pointer" }}
+        <div
+          className={`panel-lateral modern-filter-panel ${
+            !showPanel ? "active" : ""
+          }`}
+        >
+          {/* Header modernizado */}
+          <div className="modern-filter-header">
+            <div className="filter-header-content">
+              <div className="filter-icon-section">
+                <div className="filter-icon-wrapper">
+                  <Tune className="filter-panel-icon" />
+                </div>
+                <div className="filter-header-text">
+                  <h3 className="filter-panel-title">Filtros</h3>
+                  <p className="filter-panel-subtitle">
+                    Personaliza tu búsqueda
+                  </p>
+                </div>
+              </div>
+              <button
+                className="filter-hide-button"
                 onClick={() => setShowPanel(!showPanel)}
               >
-                Ocultar
-              </span>
+                <span>Ocultar</span>
+                <i className="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
-          {/* <p>Aquí puedes agregar información adicional.</p> */}
-          <Row style={{ padding: "20px 14px 20px 14px" }}>
-            <CampoDropDownSearchSimple
-              PropiedadesCampo={{
-                Ancho: 12,
-                NombreCampo: "Territorio",
-                IdCampo: "Territorio",
-                MultiSelect: false,
-                Disabled: false,
-                Opciones: opcionTerritorios,
-                Clearable: false,
-                IsSearchable: false,
-              }}
-              Valor={selectedFilters.territorio}
-              OnChange={(e, i) => {
-                console.log("e", e);
-                actualizarFiltros({ territorio: e });
-                setAllowManualZoom(false); // ✅ Sigue permitiendo que flyTo funcione
-              }}
-            />
-            {/* <CampoDropDownSearchSimple
-              PropiedadesCampo={{
-                Ancho: 12,
-                NombreCampo: "Categoría",
-                IdCampo: "Categoría",
-                MultiSelect: false,
-                Disabled: false,
-                Opciones: opcionCategorias,
-                Clearable: false,
-                IsSearchable: false,
-              }}
-              Valor={selectedFilters.categoria}
-              OnChange={(e, i) => {
-                console.log("e", e);
-                console.log("i", i);
-                filtrarMarcadores({ categoria: e });
-              }} */}
 
-            <CampoDropDownSearch
-              PropiedadesCampo={{
-                Ancho: 12,
-                NombreCampo: "Categoría",
-                IdCampo: "Categoría",
-                MultiSelect: true,
-                Disabled: false,
-                Opciones: opcionCategorias,
-                Clearable: false,
-                IsSearchable: false,
-              }}
-              Valor={selectedFilters.categoria}
-              OnChange={(e, i) => {
-                console.log("e", e);
-                console.log("i", i);
-                //filtrarMarcadores({ categoria: e });
-                actualizarFiltros({ categoria: e });
-              }}
-            />
-          </Row>
-          <Row
-            style={{
-              margin: "5px 10px 10px 10px",
-              justifyContent: "center",
-              gap: "10px",
-            }}
-          >
-            <Button
-              className="filter"
-              onClick={() => {
-                filtrarMarcadores(); // 🔹 Filtra los marcadores
-              }}
-              disabled={
-                selectedFilters.territorio == null &&
-                selectedFilters.categoria.length === 0
-                  ? true
-                  : false
-              }
-            >
-              <div className="texto-boton-panel">Filtrar</div>
-              <div style={{ marginTop: "-2px" }}>
-                <FilterAlt style={{ color: "white" }} />
+          {/* Contenido de filtros modernizado */}
+          <div className="modern-filter-content">
+            <div className="filter-form-container">
+              {/* Campo Territorio */}
+              <div className="filter-field-group">
+                <div className="filter-field-header">
+                  <div className="filter-field-icon">
+                    <i className="fas fa-map-marked-alt"></i>
+                  </div>
+                  <label className="filter-field-label">Territorio</label>
+                </div>
+                <div className="filter-field-wrapper">
+                  <CampoDropDownSearchSimple
+                    PropiedadesCampo={{
+                      Ancho: 12,
+                      NombreCampo: "Territorio",
+                      IdCampo: "Territorio",
+                      MultiSelect: false,
+                      Disabled: false,
+                      Opciones: opcionTerritorios,
+                      Clearable: false,
+                      IsSearchable: false,
+                    }}
+                    Valor={selectedFilters.territorio}
+                    OnChange={(e, i) => {
+                      console.log("e", e);
+                      actualizarFiltros({ territorio: e });
+                      setAllowManualZoom(false);
+                    }}
+                  />
+                </div>
               </div>
-            </Button>
 
-            <Button
-              className="remove-filter"
-              onClick={() => {
-                limpiarFiltros(); // 🔹 Limpia los filtros
-              }}
-            >
-              <div className="texto-boton-panel">Borrar Filtro</div>
-              <div style={{ marginTop: "-2px" }}>
-                <DeleteSweep style={{ color: "white" }} />
-              </div>
-            </Button>
-          </Row>
-        </div>
-        <div
-          className={`panel-izquierdo ${!showPanelTerritorios ? "active" : ""}`}
-        >
-          <div
-            style={{
-              padding: "10px",
-              background: "#41307C",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              justifyContent: "space-between",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                gap: "3px",
-                alignItems: "anchor-center",
-              }}
-            >
-              <Info className="icon-panel" />{" "}
-              <div>
-                <span className="titulo-panel">
-                  Información Territorio{" "}
-                  {territorioSeleccionado
-                    ? territorioSeleccionado.territorio
-                    : ""}
-                </span>
+              {/* Campo Categoría */}
+              <div className="filter-field-group">
+                <div className="filter-field-header">
+                  <div className="filter-field-icon">
+                    <i className="fas fa-tags"></i>
+                  </div>
+                  <label className="filter-field-label">Categoría</label>
+                </div>
+                <div className="filter-field-wrapper">
+                  <CampoDropDownSearch
+                    PropiedadesCampo={{
+                      Ancho: 12,
+                      NombreCampo: "Categoría",
+                      IdCampo: "Categoría",
+                      MultiSelect: true,
+                      Disabled: false,
+                      Opciones: opcionCategorias,
+                      Clearable: false,
+                      IsSearchable: false,
+                    }}
+                    Valor={selectedFilters.categoria}
+                    OnChange={(e, i) => {
+                      console.log("e", e);
+                      console.log("i", i);
+                      actualizarFiltros({ categoria: e });
+                    }}
+                  />
+                </div>
               </div>
             </div>
-            <div>
-              {/* <LightTooltip title="Ocultar Panel" placement="bottom">
-                <VisibilityOff
-                  style={{
-                    color: "white",
-                    fontSize: "17px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setShowPanelTerritorios(!showPanelTerritorios)}
-                />{" "}
-              </LightTooltip> */}
-              <span
-                className="ocultar-panel"
-                style={{ cursor: "pointer" }}
+
+            {/* Botones de acción modernizados */}
+            <div className="filter-actions">
+              <button
+                className="modern-filter-btn apply-filter"
+                onClick={() => filtrarMarcadores()}
+                disabled={
+                  selectedFilters.territorio == null &&
+                  selectedFilters.categoria.length === 0
+                }
+              >
+                <i className="fas fa-filter"></i>
+                <span>Filtrar</span>
+              </button>
+
+              <button
+                className="modern-filter-btn clear-filter"
+                onClick={() => limpiarFiltros()}
+              >
+                <i className="fas fa-broom"></i>
+                <span>Limpiar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className={`panel-izquierdo modern-panel ${
+            !showPanelTerritorios ? "active" : ""
+          }`}
+        >
+          {/* Header modernizado */}
+          <div className="modern-panel-header">
+            <div className="header-content">
+              <div className="header-icon-section">
+                <div className="icon-wrapper-panel">
+                  <Info className="panel-icon" />
+                </div>
+                <div className="header-text">
+                  <h3 className="panel-title">
+                    Información Territorio{" "}
+                    {territorioSeleccionado
+                      ? territorioSeleccionado.territorio
+                      : ""}
+                  </h3>
+                  <p className="panel-subtitle">
+                    Datos y estadísticas del sector
+                  </p>
+                </div>
+              </div>
+              <button
+                className="hide-button"
                 onClick={() => setShowPanelTerritorios(!showPanelTerritorios)}
               >
-                Ocultar
-              </span>
+                <span>Ocultar</span>
+                <i className="fas fa-chevron-left"></i>
+              </button>
             </div>
           </div>
-          <Row style={{ padding: "20px 14px 20px 14px" }}>
+
+          {/* Contenido modernizado */}
+          <div className="modern-panel-content">
             {territorioSeleccionado ? (
-              territorioSeleccionado.categorias.map((categoria, index) => (
-                <div style={{ marginBottom: "10px" }} key={index}>
-                  <Col md={12}>
-                    <p className="titulo-seccion-panel">{categoria.nombre}</p>
-                    <hr className="divider" />
-                  </Col>
-                  <Col md={12}>
-                    <div
-                      className="contenido-seccion-panel"
-                      style={{ whiteSpace: "pre-line" }}
-                    >
-                      {categoria.informacion.split("\n").map((linea, i) => (
-                        <p key={i} style={{ marginBottom: "4px" }}>
-                          {"> " + linea}
-                        </p>
-                      ))}
+              <div className="categorias-container">
+                {territorioSeleccionado.categorias.map((categoria, index) => (
+                  <div className="categoria-card" key={index}>
+                    <div className="categoria-header">
+                      <div className="categoria-icon">
+                        <i className={getCategoriaIcon(categoria.nombre)}></i>
+                      </div>
+                      <h4 className="categoria-title">{categoria.nombre}</h4>
                     </div>
-                  </Col>
-                </div>
-              ))
+
+                    <div className="categoria-content">
+                      <div className="info-list">
+                        {categoria.informacion.split("\n").map((linea, i) => (
+                          <div className="info-item-panel" key={i}>
+                            <div className="bullet-point"></div>
+                            <span className="info-text">{linea}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <Col md={12}>
-                <p className="titulo-seccion-panel">
-                  Selecciona un territorio para ver su información
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <i className="fas fa-map-marked-alt"></i>
+                </div>
+                <h4 className="empty-title">Selecciona un territorio</h4>
+                <p className="empty-description">
+                  Elige un territorio en el mapa para ver información detallada
+                  y estadísticas
                 </p>
-              </Col>
+              </div>
             )}
-          </Row>
+          </div>
         </div>
+
         <Mapa
           position={[-33.488, -70.625]}
           zonas={zonas}
